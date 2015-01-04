@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8BD95C30-9973-4ADC-9D5F-FAD5CB77B561}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Epicycle.Math</RootNamespace>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AssemblyName>Epicycle.Math_cs</AssemblyName>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Android\Debug</OutputPath>
+    <DefineConstants>DEBUG;__MOBILE__;__ANDROID__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidLinkMode>None</AndroidLinkMode>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Android\Release</OutputPath>
+    <DefineConstants>__MOBILE__;__ANDROID__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="YamlDotNet">
+      <HintPath>..\..\externals\NuGet\YamlDotNet.3.0.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>..\..\externals\lib\Clipper-6.2.1\bin\Release\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Geometry\Box2.cs" />
+    <Compile Include="Geometry\Box2i.cs" />
+    <Compile Include="Geometry\Box2Utils.cs" />
+    <Compile Include="Geometry\Box2iUtils.cs" />
+    <Compile Include="Geometry\Box3.cs" />
+    <Compile Include="Geometry\Box3Utils.cs" />
+    <Compile Include="Geometry\Rotation2Order4.cs" />
+    <Compile Include="Geometry\Differential\AffineSpace.cs" />
+    <Compile Include="Geometry\Differential\IManifold.cs" />
+    <Compile Include="Geometry\Differential\ProductManifold.cs" />
+    <Compile Include="Geometry\Differential\Rotation2Manifold.cs" />
+    <Compile Include="Geometry\Differential\Rotation3Manifold.cs" />
+    <Compile Include="Geometry\Polytopes\ClosedPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\ClosedPolyline3.cs" />
+    <Compile Include="Geometry\Polytopes\IClosedPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\IClosedPolyline3.cs" />
+    <Compile Include="Geometry\Interval.cs" />
+    <Compile Include="Geometry\IntervalUtils.cs" />
+    <Compile Include="Geometry\Polytopes\IOpenPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\IOpenPolylineBuilder.cs" />
+    <Compile Include="Geometry\Polytopes\IPartialPolysurface.cs" />
+    <Compile Include="Geometry\Polytopes\IPolygon.cs" />
+    <Compile Include="Geometry\Polytopes\IPolygon3.cs" />
+    <Compile Include="Geometry\Polytopes\IPolyhedron.cs" />
+    <Compile Include="Geometry\Polytopes\IPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\IPolysurface.cs" />
+    <Compile Include="Geometry\Line2.cs" />
+    <Compile Include="Geometry\Line2Utils.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\IClosedSphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolygon.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\OpenPolyline.cs" />
+    <Compile Include="Geometry\Plane.cs" />
+    <Compile Include="Geometry\PlaneUtils.cs" />
+    <Compile Include="Geometry\Polytopes\Polygon.cs" />
+    <Compile Include="Geometry\Polytopes\Polygon3.cs" />
+    <Compile Include="Geometry\Polytopes\PolygonBuilder.cs" />
+    <Compile Include="Geometry\Polytopes\PolygonUtils.cs" />
+    <Compile Include="Geometry\Polytopes\Polygon3Utils.cs" />
+    <Compile Include="Geometry\Polytopes\PolylineUtils.cs" />
+    <Compile Include="Geometry\Polytopes\Polysurface.cs" />
+    <Compile Include="Geometry\Polytopes\PolysurfaceBuilder.cs" />
+    <Compile Include="Geometry\Polytopes\PolysurfaceUtils.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\ClosedSphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\SphericalPolygon.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\SphericalPolygonBuilder.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\SphericalPolylineUtils.cs" />
+    <Compile Include="Geometry\Polytopes\TransformedPolyhedron.cs" />
+    <Compile Include="Geometry\Polytopes\VerticalPrism.cs" />
+    <Compile Include="Geometry\Polytopes\VerticalPrismalSurface.cs" />
+    <Compile Include="Geometry\Quaternion.cs" />
+    <Compile Include="Geometry\QuaternionUtils.cs" />
+    <Compile Include="Geometry\Ray2.cs" />
+    <Compile Include="Geometry\Ray3.cs" />
+    <Compile Include="Geometry\Ray2Utils.cs" />
+    <Compile Include="Geometry\Ray3Utils.cs" />
+    <Compile Include="Geometry\Rotation2.cs" />
+    <Compile Include="Geometry\Rotation2Order4Utils.cs" />
+    <Compile Include="Geometry\Rotation3.cs" />
+    <Compile Include="Geometry\Rotation3Utils.cs" />
+    <Compile Include="Geometry\Rotation2Utils.cs" />
+    <Compile Include="Geometry\RotoTranslation3.cs" />
+    <Compile Include="Geometry\RotoTranslation3Utils.cs" />
+    <Compile Include="Geometry\Segment2.cs" />
+    <Compile Include="Geometry\Segment2Utils.cs" />
+    <Compile Include="Geometry\Segment3.cs" />
+    <Compile Include="Geometry\Segment3Utils.cs" />
+    <Compile Include="Geometry\Polytopes\TransformedPolysurface.cs" />
+    <Compile Include="Geometry\UnitVector3.cs" />
+    <Compile Include="Geometry\Vector2.cs" />
+    <Compile Include="Geometry\Vector2iUtils.cs" />
+    <Compile Include="Geometry\Vector3.cs" />
+    <Compile Include="Geometry\Vector2Utils.cs" />
+    <Compile Include="Geometry\Vector3Utils.cs" />
+    <Compile Include="LinearAlgebra\BaseMatrix.cs" />
+    <Compile Include="LinearAlgebra\BaseSquareMatrix.cs" />
+    <Compile Include="LinearAlgebra\IMatrix.cs" />
+    <Compile Include="LinearAlgebra\ISquareMatrix.cs" />
+    <Compile Include="LinearAlgebra\ISymmetricMatrix.cs" />
+    <Compile Include="LinearAlgebra\IVector.cs" />
+    <Compile Include="LinearAlgebra\Matrix.cs" />
+    <Compile Include="LinearAlgebra\SquareMatrix.cs" />
+    <Compile Include="LinearAlgebra\SymmetricMatrix.cs" />
+    <Compile Include="LinearAlgebra\Vector.cs" />
+    <Compile Include="Probability\AffineIntegralStochasticProcess.cs" />
+    <Compile Include="Probability\AffineStochasticTransformation.cs" />
+    <Compile Include="Probability\ExtensionStochasticProcess.cs" />
+    <Compile Include="Probability\IntegralStochasticProcess.cs" />
+    <Compile Include="Probability\IStochasticProcess.cs" />
+    <Compile Include="Probability\IStochasticMapping.cs" />
+    <Compile Include="Probability\KalmanFilter.cs" />
+    <Compile Include="Probability\OrnsteinUhlenbeckProcess.cs" />
+    <Compile Include="Probability\ProductStochasticProcess.cs" />
+    <Compile Include="Probability\RotatingWienerProcess.cs" />
+    <Compile Include="Probability\StochasticManifoldPoint.cs" />
+    <Compile Include="Probability\StochasticProcessUtils.cs" />
+    <Compile Include="Probability\StochasticVector.cs" />
+    <Compile Include="Probability\TotalIntegralStochasticProcess.cs" />
+    <Compile Include="Probability\WienerProcess.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Geometry\Vector2i.cs" />
+    <Compile Include="Geometry\Polytopes\IMultiPolygon3.cs" />
+    <Compile Include="Geometry\Polytopes\MultiPolygon3.cs" />
+    <Compile Include="Geometry\Polytopes\MultiPolygon3Utils.cs" />
+    <Compile Include="Geometry\RotoTranslation2.cs" />
+    <Compile Include="Geometry\RotoTranslation2Utils.cs" />
+    <Compile Include="Geometry\SymmetricMatrix2.cs" />
+    <Compile Include="Geometry\SymmetricMatrix2Utils.cs" />
+    <Compile Include="Geometry\Matrix3.cs" />
+    <Compile Include="Geometry\Matrix3Utils.cs" />
+    <Compile Include="Geometry\SymmetricMatrix3.cs" />
+    <Compile Include="Geometry\SymmetricMatrix3Utils.cs" />
+    <Compile Include="CubicEquation.cs" />
+    <Compile Include="Combinatorics.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Epicycle.Commons_cs\Epicycle.Commons_cs.xamarin.csproj">
+      <Project>{6652378D-516F-4A63-807E-C486265ABBC3}</Project>
+      <Name>Epicycle.Commons_cs.xamarin</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LinearAlgebra\" />
+    <Folder Include="Probability\" />
+  </ItemGroup>
+</Project>

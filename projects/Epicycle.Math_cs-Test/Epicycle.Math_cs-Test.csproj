@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC4D21D5-9B10-4B96-9B13-93B1DF1F7470}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Epicycle.Math</RootNamespace>
+    <AssemblyName>Epicycle.Math_cs-Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\win\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>..\..\bin\win\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Epicycle.Commons_cs">
+      <HintPath>..\..\externals\lib\Epicycle.Commons-cs\Epicycle.Commons_cs.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\externals\NuGet\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CubicEquationTest.cs" />
+    <Compile Include="Geometry\Box2Test.cs" />
+    <Compile Include="Geometry\Box3Test.cs" />
+    <Compile Include="Geometry\Differential\ProductManifoldTest.cs" />
+    <Compile Include="Geometry\IntervalTest.cs" />
+    <Compile Include="Geometry\Line2Test.cs" />
+    <Compile Include="Geometry\Matrix3Test.cs" />
+    <Compile Include="Geometry\Polytopes\VerticalPrismalSurfaceTest.cs" />
+    <Compile Include="Geometry\Polytopes\Polygon3Test.cs" />
+    <Compile Include="Geometry\Polytopes\PolygonTest.cs" />
+    <Compile Include="Geometry\Polytopes\PolylineTest.cs" />
+    <Compile Include="Geometry\QuaternionTest.cs" />
+    <Compile Include="Geometry\Ray2Test.cs" />
+    <Compile Include="Geometry\Ray3Test.cs" />
+    <Compile Include="Geometry\Rotation3Test.cs" />
+    <Compile Include="Geometry\RotoTranslation3Test.cs" />
+    <Compile Include="Geometry\Segment3Test.cs" />
+    <Compile Include="Geometry\SymmetricMatrix2Test.cs" />
+    <Compile Include="Geometry\SymmetricMatrix3Test.cs" />
+    <Compile Include="Geometry\TestUtils.cs" />
+    <Compile Include="Geometry\Polytopes\TransformedPolysurfaceTest.cs" />
+    <Compile Include="Geometry\Vector3Test.cs" />
+    <Compile Include="Geometry\Vector2Test.cs" />
+    <Compile Include="Probability\IntegralStochasticProcessTest.cs" />
+    <Compile Include="Probability\KalmanFilterTest.cs" />
+    <Compile Include="Probability\OrnsteinUhlenbeckProcessTest.cs" />
+    <Compile Include="Probability\TestUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.csproj">
+      <Project>{d29f1814-64b2-4b3f-9382-c564d5827522}</Project>
+      <Name>Epicycle.Math_cs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
