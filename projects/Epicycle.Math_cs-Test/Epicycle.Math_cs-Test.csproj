@@ -70,17 +70,19 @@
     <Compile Include="Geometry\Segment3Test.cs" />
     <Compile Include="Geometry\SymmetricMatrix2Test.cs" />
     <Compile Include="Geometry\SymmetricMatrix3Test.cs" />
-    <Compile Include="Geometry\TestUtils.cs" />
     <Compile Include="Geometry\Polytopes\TransformedPolysurfaceTest.cs" />
     <Compile Include="Geometry\Vector3Test.cs" />
     <Compile Include="Geometry\Vector2Test.cs" />
     <Compile Include="Probability\IntegralStochasticProcessTest.cs" />
     <Compile Include="Probability\KalmanFilterTest.cs" />
     <Compile Include="Probability\OrnsteinUhlenbeckProcessTest.cs" />
-    <Compile Include="Probability\TestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Epicycle.Math.TestUtils_cs\Epicycle.Math.TestUtils_cs.csproj">
+      <Project>{d450fe15-6343-431a-877f-58fc122fb891}</Project>
+      <Name>Epicycle.Math.TestUtils_cs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.csproj">
       <Project>{d29f1814-64b2-4b3f-9382-c564d5827522}</Project>
       <Name>Epicycle.Math_cs</Name>
