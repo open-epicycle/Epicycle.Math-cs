@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-#if !__ANDROID__
-using System.Drawing;
-#endif
-
 // Authors: squark, untrots
 
 namespace Epicycle.Math.Geometry
@@ -44,20 +40,6 @@ namespace Epicycle.Math.Geometry
             _y = (int)Math.Round(v.Y);
         }
 
-        #if !__ANDROID__
-        public Vector2i(Point p)
-        {
-        _x = p.X;
-        _y = p.Y;
-        }
-
-        public Vector2i(PointF p)
-        {
-        _x = (int)Math.Round(p.X);
-        _y = (int)Math.Round(p.Y);
-        }
-        #endif
-
         #endregion
 
         #region conversion operators
@@ -66,28 +48,6 @@ namespace Epicycle.Math.Geometry
         {
             return new Vector2i(v);
         }
-
-        #if !__ANDROID__
-        public static implicit operator Vector2i(Point p)
-        {
-        return new Vector2i(p);
-        }
-
-        public static explicit operator Vector2i(PointF p)
-        {
-        return new Vector2i(p);
-        }
-
-        public static implicit operator Point(Vector2i v)
-        {
-        return new Point(v.X, v.Y);
-        }
-
-        public static implicit operator PointF(Vector2i v)
-        {
-        return new PointF(v.X, v.Y);
-        }
-        #endif
 
         #endregion
 

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicycle.Math_cs-Test", "Ep
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicycle.Math.TestUtils_cs", "Epicycle.Math.TestUtils_cs\Epicycle.Math.TestUtils_cs.csproj", "{D450FE15-6343-431A-877F-58FC122FB891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicycle.Math.Windows_cs", "Epicycle.Math.Windows_cs\Epicycle.Math.Windows_cs.csproj", "{542D3EBC-BABE-4FFA-B357-C61712C6FA21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D450FE15-6343-431A-877F-58FC122FB891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D450FE15-6343-431A-877F-58FC122FB891}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D450FE15-6343-431A-877F-58FC122FB891}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542D3EBC-BABE-4FFA-B357-C61712C6FA21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542D3EBC-BABE-4FFA-B357-C61712C6FA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542D3EBC-BABE-4FFA-B357-C61712C6FA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542D3EBC-BABE-4FFA-B357-C61712C6FA21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
