@@ -16,14 +16,9 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Epicycle.Commons;
-using Epicycle.Math.LinearAlgebra;
 using Epicycle.Math.Geometry;
 using Epicycle.Math.Geometry.Differential;
+using Epicycle.Math.LinearAlgebra;
 
 namespace Epicycle.Math.Probability
 {

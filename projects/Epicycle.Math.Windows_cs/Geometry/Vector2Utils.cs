@@ -16,8 +16,6 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Drawing;
 
 namespace Epicycle.Math.Geometry.Windows

@@ -16,14 +16,12 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons;
 using System.Collections.Generic;
 using System.Linq;
 
-using Epicycle.Commons;
-
 namespace Epicycle.Math.Geometry.Polytopes
 {
-    using System;
 
     public static class Polygon3Utils
     {

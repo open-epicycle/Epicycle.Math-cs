@@ -16,12 +16,9 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using ClipperLib;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using ClipperLib;
 
 namespace Epicycle.Math.Geometry.Polytopes
 {

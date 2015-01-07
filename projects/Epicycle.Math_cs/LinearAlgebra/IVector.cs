@@ -16,10 +16,8 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Collections.Generic;
-using System.Linq;
-
 using Epicycle.Math.Geometry.Differential;
+using System.Collections.Generic;
 
 namespace Epicycle.Math.LinearAlgebra
 {

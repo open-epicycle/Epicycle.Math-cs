@@ -16,17 +16,11 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace Epicycle.Math.Geometry
 {
-    using System;
-
     [TestFixture]
     public sealed class Box2Test : AssertionHelper
     {

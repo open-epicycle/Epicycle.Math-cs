@@ -16,11 +16,8 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-
 using Epicycle.Commons;
+using System.Numerics;
 
 namespace Epicycle.Math
 {

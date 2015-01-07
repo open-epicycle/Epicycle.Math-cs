@@ -16,7 +16,6 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using Epicycle.Commons;
 using Epicycle.Commons.Collections;
 
 namespace Epicycle.Math.Geometry.Polytopes.Spherical

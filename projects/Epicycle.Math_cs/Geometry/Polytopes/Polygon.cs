@@ -21,7 +21,6 @@ using System.Linq;
 
 namespace Epicycle.Math.Geometry.Polytopes
 {
-    using System;
 
     public sealed class Polygon : IPolygon
     {

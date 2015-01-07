@@ -16,15 +16,11 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System;
+using Epicycle.Commons.Collections;
+using Moq;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-
-using NUnit.Framework;
-using Moq;
-
-using Epicycle.Commons;
-using Epicycle.Commons.Collections;
 
 namespace Epicycle.Math.Geometry.Polytopes
 {

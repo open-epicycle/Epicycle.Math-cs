@@ -16,11 +16,8 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Linq;
-
-using Epicycle.Commons;
-using Epicycle.Math.LinearAlgebra;
 using Epicycle.Math.Geometry.Polytopes;
+using System.Linq;
 
 namespace Epicycle.Math.Geometry
 {

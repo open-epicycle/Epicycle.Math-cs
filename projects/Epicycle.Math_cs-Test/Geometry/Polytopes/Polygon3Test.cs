@@ -16,15 +16,12 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-using NUnit.Framework;
-
 namespace Epicycle.Math.Geometry.Polytopes
 {
-    using System;
-
     [TestFixture]
     public sealed class Polygon3Test : AssertionHelper
     {

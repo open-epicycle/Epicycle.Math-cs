@@ -16,14 +16,8 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Epicycle.Math.Geometry
 {
-    using System;
 
     // oriented plane in 3D Euclidean space
     public struct Plane

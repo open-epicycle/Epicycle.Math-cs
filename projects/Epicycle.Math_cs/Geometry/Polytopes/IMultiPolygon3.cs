@@ -16,9 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Epicycle.Math.Geometry.Polytopes
 {

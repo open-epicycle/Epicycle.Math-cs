@@ -16,14 +16,9 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using NUnit.Framework;
-using Moq;
-
 using Epicycle.Math.LinearAlgebra;
+using Moq;
+using NUnit.Framework;
 
 namespace Epicycle.Math.Geometry.Differential
 {

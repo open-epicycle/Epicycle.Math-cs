@@ -18,8 +18,6 @@
 
 namespace Epicycle.Math.Geometry
 {
-    using System;
-
     public struct Ray3
     {
         public Ray3(Vector3 origin, Vector3 direction)

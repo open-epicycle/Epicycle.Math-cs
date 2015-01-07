@@ -17,9 +17,6 @@
 // ]]]]
 
 using System.Collections.Generic;
-using System.Linq;
-
-using Epicycle.Commons;
 
 namespace Epicycle.Math.Geometry
 {

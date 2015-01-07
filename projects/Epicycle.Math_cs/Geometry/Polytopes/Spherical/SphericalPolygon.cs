@@ -21,8 +21,6 @@ using System.Linq;
 
 namespace Epicycle.Math.Geometry.Polytopes.Spherical
 {
-    using System;
-
     public sealed class SphericalPolygon : ISphericalPolygon
     {
         #region creation

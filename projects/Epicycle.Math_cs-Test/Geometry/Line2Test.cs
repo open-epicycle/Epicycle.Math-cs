@@ -20,8 +20,6 @@ using NUnit.Framework;
 
 namespace Epicycle.Math.Geometry
 {
-    using System;
-    
     [TestFixture]
     public sealed class Line2Test : AssertionHelper
     {
