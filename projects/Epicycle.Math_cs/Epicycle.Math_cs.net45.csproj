@@ -4,39 +4,54 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D29F1814-64B2-4B3F-9382-C564D5827522}</ProjectGuid>
+    <ProjectGuid>{E4A1724E-C625-48F9-A222-9445AF10CD9C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Epicycle.Math</RootNamespace>
     <AssemblyName>Epicycle.Math_cs</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\win\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\bin\net45\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\Epicycle.Math_cs.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\win\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\bin\net45\Release\</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\Epicycle.Math_cs.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="clipper_library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\externals\lib\Clipper-6.2.1\bin\Release\clipper_library.dll</HintPath>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="clipper_library">
+      <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicycle.Commons.TestUtils_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\lib\Epicycle.Commons-cs\Epicycle.Commons_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.dll</HintPath>
@@ -44,45 +59,34 @@
     <Reference Include="MathNet.Numerics.IO">
       <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.IO.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=2.0.1.41986, Culture=neutral, PublicKeyToken=2b53052c5884d7a1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\externals\NuGet\YamlDotNet.3.0.0\lib\net35\YamlDotNet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combinatorics.cs" />
     <Compile Include="CubicEquation.cs" />
     <Compile Include="Geometry\Box2.cs" />
-    <Compile Include="Geometry\Box2i.cs" />
     <Compile Include="Geometry\Box2Utils.cs" />
+    <Compile Include="Geometry\Box2i.cs" />
     <Compile Include="Geometry\Box2iUtils.cs" />
     <Compile Include="Geometry\Box3.cs" />
     <Compile Include="Geometry\Box3Utils.cs" />
-    <Compile Include="Geometry\Matrix3.cs" />
-    <Compile Include="Geometry\Matrix3Utils.cs" />
-    <Compile Include="Geometry\Polytopes\IMultiPolygon3.cs" />
-    <Compile Include="Geometry\Polytopes\MultiPolygon3.cs" />
-    <Compile Include="Geometry\Polytopes\MultiPolygon3Utils.cs" />
-    <Compile Include="Geometry\Rotation2Order4.cs" />
     <Compile Include="Geometry\Differential\AffineSpace.cs" />
     <Compile Include="Geometry\Differential\IManifold.cs" />
     <Compile Include="Geometry\Differential\ProductManifold.cs" />
     <Compile Include="Geometry\Differential\Rotation2Manifold.cs" />
     <Compile Include="Geometry\Differential\Rotation3Manifold.cs" />
+    <Compile Include="Geometry\Interval.cs" />
+    <Compile Include="Geometry\IntervalUtils.cs" />
+    <Compile Include="Geometry\Line2.cs" />
+    <Compile Include="Geometry\Line2Utils.cs" />
+    <Compile Include="Geometry\Matrix3.cs" />
+    <Compile Include="Geometry\Matrix3Utils.cs" />
+    <Compile Include="Geometry\Plane.cs" />
+    <Compile Include="Geometry\PlaneUtils.cs" />
     <Compile Include="Geometry\Polytopes\ClosedPolyline.cs" />
     <Compile Include="Geometry\Polytopes\ClosedPolyline3.cs" />
     <Compile Include="Geometry\Polytopes\IClosedPolyline.cs" />
     <Compile Include="Geometry\Polytopes\IClosedPolyline3.cs" />
-    <Compile Include="Geometry\Interval.cs" />
-    <Compile Include="Geometry\IntervalUtils.cs" />
+    <Compile Include="Geometry\Polytopes\IMultiPolygon3.cs" />
     <Compile Include="Geometry\Polytopes\IOpenPolyline.cs" />
     <Compile Include="Geometry\Polytopes\IOpenPolylineBuilder.cs" />
     <Compile Include="Geometry\Polytopes\IPartialPolysurface.cs" />
@@ -91,41 +95,41 @@
     <Compile Include="Geometry\Polytopes\IPolyhedron.cs" />
     <Compile Include="Geometry\Polytopes\IPolyline.cs" />
     <Compile Include="Geometry\Polytopes\IPolysurface.cs" />
-    <Compile Include="Geometry\Line2.cs" />
-    <Compile Include="Geometry\Line2Utils.cs" />
-    <Compile Include="Geometry\Polytopes\Spherical\IClosedSphericalPolyline.cs" />
-    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolygon.cs" />
-    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\MultiPolygon3.cs" />
+    <Compile Include="Geometry\Polytopes\MultiPolygon3Utils.cs" />
     <Compile Include="Geometry\Polytopes\OpenPolyline.cs" />
-    <Compile Include="Geometry\Plane.cs" />
-    <Compile Include="Geometry\PlaneUtils.cs" />
     <Compile Include="Geometry\Polytopes\Polygon.cs" />
     <Compile Include="Geometry\Polytopes\Polygon3.cs" />
+    <Compile Include="Geometry\Polytopes\Polygon3Utils.cs" />
     <Compile Include="Geometry\Polytopes\PolygonBuilder.cs" />
     <Compile Include="Geometry\Polytopes\PolygonUtils.cs" />
-    <Compile Include="Geometry\Polytopes\Polygon3Utils.cs" />
     <Compile Include="Geometry\Polytopes\PolylineUtils.cs" />
     <Compile Include="Geometry\Polytopes\Polysurface.cs" />
     <Compile Include="Geometry\Polytopes\PolysurfaceBuilder.cs" />
     <Compile Include="Geometry\Polytopes\PolysurfaceUtils.cs" />
     <Compile Include="Geometry\Polytopes\Spherical\ClosedSphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\IClosedSphericalPolyline.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolygon.cs" />
+    <Compile Include="Geometry\Polytopes\Spherical\ISphericalPolyline.cs" />
     <Compile Include="Geometry\Polytopes\Spherical\SphericalPolygon.cs" />
     <Compile Include="Geometry\Polytopes\Spherical\SphericalPolygonBuilder.cs" />
     <Compile Include="Geometry\Polytopes\Spherical\SphericalPolylineUtils.cs" />
     <Compile Include="Geometry\Polytopes\TransformedPolyhedron.cs" />
+    <Compile Include="Geometry\Polytopes\TransformedPolysurface.cs" />
     <Compile Include="Geometry\Polytopes\VerticalPrism.cs" />
     <Compile Include="Geometry\Polytopes\VerticalPrismalSurface.cs" />
     <Compile Include="Geometry\Quaternion.cs" />
     <Compile Include="Geometry\QuaternionUtils.cs" />
     <Compile Include="Geometry\Ray2.cs" />
-    <Compile Include="Geometry\Ray3.cs" />
     <Compile Include="Geometry\Ray2Utils.cs" />
+    <Compile Include="Geometry\Ray3.cs" />
     <Compile Include="Geometry\Ray3Utils.cs" />
     <Compile Include="Geometry\Rotation2.cs" />
+    <Compile Include="Geometry\Rotation2Order4.cs" />
     <Compile Include="Geometry\Rotation2Order4Utils.cs" />
+    <Compile Include="Geometry\Rotation2Utils.cs" />
     <Compile Include="Geometry\Rotation3.cs" />
     <Compile Include="Geometry\Rotation3Utils.cs" />
-    <Compile Include="Geometry\Rotation2Utils.cs" />
     <Compile Include="Geometry\RotoTranslation2.cs" />
     <Compile Include="Geometry\RotoTranslation2Utils.cs" />
     <Compile Include="Geometry\RotoTranslation3.cs" />
@@ -134,14 +138,16 @@
     <Compile Include="Geometry\Segment2Utils.cs" />
     <Compile Include="Geometry\Segment3.cs" />
     <Compile Include="Geometry\Segment3Utils.cs" />
-    <Compile Include="Geometry\Polytopes\TransformedPolysurface.cs" />
     <Compile Include="Geometry\SymmetricMatrix2.cs" />
     <Compile Include="Geometry\SymmetricMatrix2Utils.cs" />
+    <Compile Include="Geometry\SymmetricMatrix3.cs" />
+    <Compile Include="Geometry\SymmetricMatrix3Utils.cs" />
     <Compile Include="Geometry\UnitVector3.cs" />
     <Compile Include="Geometry\Vector2.cs" />
+    <Compile Include="Geometry\Vector2Utils.cs" />
+    <Compile Include="Geometry\Vector2i.cs" />
     <Compile Include="Geometry\Vector2iUtils.cs" />
     <Compile Include="Geometry\Vector3.cs" />
-    <Compile Include="Geometry\Vector2Utils.cs" />
     <Compile Include="Geometry\Vector3Utils.cs" />
     <Compile Include="LinearAlgebra\BaseMatrix.cs" />
     <Compile Include="LinearAlgebra\BaseSquareMatrix.cs" />
@@ -152,14 +158,13 @@
     <Compile Include="LinearAlgebra\Matrix.cs" />
     <Compile Include="LinearAlgebra\SquareMatrix.cs" />
     <Compile Include="LinearAlgebra\SymmetricMatrix.cs" />
-    <Compile Include="Geometry\SymmetricMatrix3.cs" />
     <Compile Include="LinearAlgebra\Vector.cs" />
     <Compile Include="Probability\AffineIntegralStochasticProcess.cs" />
     <Compile Include="Probability\AffineStochasticTransformation.cs" />
     <Compile Include="Probability\ExtensionStochasticProcess.cs" />
-    <Compile Include="Probability\IntegralStochasticProcess.cs" />
-    <Compile Include="Probability\IStochasticProcess.cs" />
     <Compile Include="Probability\IStochasticMapping.cs" />
+    <Compile Include="Probability\IStochasticProcess.cs" />
+    <Compile Include="Probability\IntegralStochasticProcess.cs" />
     <Compile Include="Probability\KalmanFilter.cs" />
     <Compile Include="Probability\OrnsteinUhlenbeckProcess.cs" />
     <Compile Include="Probability\ProductStochasticProcess.cs" />
@@ -170,13 +175,13 @@
     <Compile Include="Probability\TotalIntegralStochasticProcess.cs" />
     <Compile Include="Probability\WienerProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Geometry\Vector2i.cs" />
-    <Compile Include="Geometry\SymmetricMatrix3Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

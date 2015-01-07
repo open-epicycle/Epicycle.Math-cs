@@ -1,0 +1,8 @@
+﻿<NUnitProject>
+  <Settings activeconfig="Debug" processModel="Default" domainUsage="Default" />
+  <Config name="Debug" binpathtype="Auto">
+    <assembly path="..\bin\net45\Debug\Epicycle.Math_cs-Test.dll" />
+    <assembly path="..\bin\net45\Release\Epicycle.Math_cs-Test.dll" />
+  </Config>
+  <Config name="Release" binpathtype="Auto" />
+</NUnitProject>

@@ -11,44 +11,60 @@
     <AssemblyName>Epicycle.Math_cs-Test</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\win\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\bin\net45\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\Epicycle.Math_cs-Test.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\win\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <OutputPath>..\..\bin\net45\Release\</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\net45\Debug\Epicycle.Math_cs-Test.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\lib\Epicycle.Commons-cs\Epicycle.Commons_cs.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\externals\NuGet\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="clipper_library">
+      <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicycle.Commons.TestUtils_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicycle.Commons_cs">
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.IO">
+      <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\externals\NuGet\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CubicEquationTest.cs" />
@@ -58,10 +74,11 @@
     <Compile Include="Geometry\IntervalTest.cs" />
     <Compile Include="Geometry\Line2Test.cs" />
     <Compile Include="Geometry\Matrix3Test.cs" />
-    <Compile Include="Geometry\Polytopes\VerticalPrismalSurfaceTest.cs" />
     <Compile Include="Geometry\Polytopes\Polygon3Test.cs" />
     <Compile Include="Geometry\Polytopes\PolygonTest.cs" />
     <Compile Include="Geometry\Polytopes\PolylineTest.cs" />
+    <Compile Include="Geometry\Polytopes\TransformedPolysurfaceTest.cs" />
+    <Compile Include="Geometry\Polytopes\VerticalPrismalSurfaceTest.cs" />
     <Compile Include="Geometry\QuaternionTest.cs" />
     <Compile Include="Geometry\Ray2Test.cs" />
     <Compile Include="Geometry\Ray3Test.cs" />
@@ -70,26 +87,25 @@
     <Compile Include="Geometry\Segment3Test.cs" />
     <Compile Include="Geometry\SymmetricMatrix2Test.cs" />
     <Compile Include="Geometry\SymmetricMatrix3Test.cs" />
-    <Compile Include="Geometry\Polytopes\TransformedPolysurfaceTest.cs" />
-    <Compile Include="Geometry\Vector3Test.cs" />
     <Compile Include="Geometry\Vector2Test.cs" />
+    <Compile Include="Geometry\Vector3Test.cs" />
     <Compile Include="Probability\IntegralStochasticProcessTest.cs" />
     <Compile Include="Probability\KalmanFilterTest.cs" />
     <Compile Include="Probability\OrnsteinUhlenbeckProcessTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Epicycle.Math.TestUtils_cs\Epicycle.Math.TestUtils_cs.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epicycle.Math.TestUtils_cs\Epicycle.Math.TestUtils_cs.net45.csproj">
       <Project>{d450fe15-6343-431a-877f-58fc122fb891}</Project>
       <Name>Epicycle.Math.TestUtils_cs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.csproj">
-      <Project>{d29f1814-64b2-4b3f-9382-c564d5827522}</Project>
+    <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.net45.csproj">
+      <Project>{e4a1724e-c625-48f9-a222-9445af10cd9c}</Project>
       <Name>Epicycle.Math_cs</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
