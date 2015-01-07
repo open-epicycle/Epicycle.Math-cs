@@ -1,0 +1,8 @@
+project_guid: E4A1724E-C625-48F9-A222-9445AF10CD9C
+assemblyinfo_guid: def9a2d5-e7c7-42cc-bd61-d4fc6517c8fb
+
+external_libs:
+ - System.Numerics
+ - Epicycle.Commons-cs
+ - MathNet.Numerics
+ - Clipper

@@ -1,0 +1,9 @@
+project_guid: D450FE15-6343-431A-877F-58FC122FB891
+assemblyinfo_guid: fe5c7f1c-f0e5-4d82-ada9-1edaabdad31f
+
+references:
+ - Epicycle.Math_cs
+
+external_libs: 
+ - NUnit
+ - Moq

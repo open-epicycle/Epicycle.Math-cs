@@ -1,0 +1,9 @@
+project_guid: DC4D21D5-9B10-4B96-9B13-93B1DF1F7470
+assemblyinfo_guid: 869fa01f-a174-49ce-9de0-c2415a80ea56
+
+references:
+ - Epicycle.Math.TestUtils_cs
+
+external_libs: 
+ - NUnit
+ - Moq
