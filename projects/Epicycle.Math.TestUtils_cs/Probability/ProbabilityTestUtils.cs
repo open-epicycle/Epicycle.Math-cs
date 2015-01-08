@@ -18,11 +18,12 @@
 
 using Epicycle.Math.Geometry.Differential;
 using Epicycle.Math.LinearAlgebra;
+using Epicycle.Math.Probability;
 using NUnit.Framework;
 
-namespace Epicycle.Math.Probability
+namespace Epicycle.Math.TestUtils.Probability
 {
-    public static class TestUtils
+    public static class ProbabilityTestUtils
     {
         public static void ValidateMappingDifferential(IStochasticMapping mapping, IManifoldPoint point, double eps, double tolerance)
         {

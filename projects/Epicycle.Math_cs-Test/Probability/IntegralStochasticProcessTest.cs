@@ -19,6 +19,7 @@
 using Epicycle.Math.Geometry;
 using Epicycle.Math.Geometry.Differential;
 using Epicycle.Math.LinearAlgebra;
+using Epicycle.Math.TestUtils.Probability;
 using NUnit.Framework;
 
 namespace Epicycle.Math.Probability
@@ -67,7 +68,7 @@ namespace Epicycle.Math.Probability
             var baseProcess = new RotatingWienerProcess(diffusionCoefficient: 0.577, angularVelocity: new Vector3(-0.8, 0.4, 1.3));
             var integralProcess = CreateIntegralProcess(baseProcess);
 
-            TestUtils.ValidateProcess(integralProcess, _point, _time, eps: 1e-5, tolerance: 1e-7);
+            ProbabilityTestUtils.ValidateProcess(integralProcess, _point, _time, eps: 1e-5, tolerance: 1e-7);
         }
 
         [Test]

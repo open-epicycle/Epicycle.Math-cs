@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Math.TestUtils.Geometry;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -131,7 +132,7 @@ namespace Epicycle.Math.Geometry
 
         [Test]
         public void DistanceTo_of_Vector2_and_Box2_is_correct
-            ([ValueSource(typeof(TestUtils), "Distance_of_Vector2_and_Box2_TestCases")] TestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
+            ([ValueSource(typeof(GeometryTestUtils), "Distance_of_Vector2_and_Box2_TestCases")] GeometryTestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
         {
             var result = testCase.Point.DistanceTo(testCase.Box);
 

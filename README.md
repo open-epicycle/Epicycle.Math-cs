@@ -64,6 +64,7 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ### Version 0.1 
 
 * **Version 0.1.1** [IN DEVELOPMENT]
+  * Fixing namespaces
 
 * **Version 0.1.0** [2015-01-08]
   * Initial release

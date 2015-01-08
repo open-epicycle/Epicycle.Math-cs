@@ -17,16 +17,17 @@
 // ]]]]
 
 using Epicycle.Commons.Collections;
+using Epicycle.Math.Geometry;
 using Epicycle.Math.Geometry.Polytopes;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Epicycle.Math.Geometry
+namespace Epicycle.Math.TestUtils.Geometry
 {
     using System;
 
-    public static class TestUtils
+    public static class GeometryTestUtils
     {
         public static void ExpectClosedPolylinesAreEqual(IClosedPolyline3 line1, IClosedPolyline3 line2, double tolerance)
         {
