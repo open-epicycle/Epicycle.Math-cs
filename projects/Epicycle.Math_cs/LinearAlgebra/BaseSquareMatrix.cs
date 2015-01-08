@@ -18,7 +18,7 @@
 
 using Epicycle.Commons;
 using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.LinearAlgebra.Generic;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace Epicycle.Math.LinearAlgebra
 {
@@ -40,7 +40,7 @@ namespace Epicycle.Math.LinearAlgebra
 
         public ISquareMatrix Id()
         {
-            return new SquareMatrix(DenseMatrix.Identity(this.RowCount));
+            return new SquareMatrix(DenseMatrix.CreateIdentity(this.RowCount));
         }
 
         public ISquareMatrix Add(ISquareMatrix matrix)

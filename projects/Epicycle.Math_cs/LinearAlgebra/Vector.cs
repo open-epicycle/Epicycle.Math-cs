@@ -17,7 +17,7 @@
 // ]]]]
 
 using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.LinearAlgebra.Generic;
+using MathNet.Numerics.LinearAlgebra;
 using System.Linq;
 
 namespace Epicycle.Math.LinearAlgebra
