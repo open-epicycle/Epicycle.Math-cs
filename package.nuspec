@@ -9,12 +9,16 @@
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/open-epicycle/Epicycle.Math-cs</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>TODO</description>
-    <summary>TODO</summary>
+    <description>Epicycle .NET math library. Includes: 2D/3D geometry, polygons, linear algebra, differential geometry, stochastic processes, Kalman filter.
+
+* Details &amp; release notes: https://github.com/open-epicycle/Epicycle.Math-cs/blob/ver-$version$/README.md
+* Sources: https://github.com/open-epicycle/Epicycle.Math-cs/tree/ver-$version$
+* Git repository: https://github.com/open-epicycle/Epicycle.Math-cs</description>
+    <summary>Epicycle .NET math library. Includes: 2D/3D geometry, polygons, linear algebra, differential geometry, stochastic processes, Kalman filter.</summary>
     <releaseNotes>https://github.com/open-epicycle/Epicycle.Math-cs/blob/ver-$version$/README.md</releaseNotes>
     <copyright>Copyright 2015 Epicycle</copyright>
     <language />
-    <tags>TODO</tags>
+    <tags>epicycle math vectors matrices geometry 2D 3D polygons multiploygons linear algebra differential geometry stochastic process kalman filter lib library util utilities c#</tags>
 
     <dependencies>
       <dependency id="Epicycle" version="Commons-cs.0.1.4.0" />
