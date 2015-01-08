@@ -19,7 +19,7 @@
 using Epicycle.Commons;
 using Epicycle.Math.Geometry;
 using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.LinearAlgebra.Generic;
+using MathNet.Numerics.LinearAlgebra;
 using System;
 
 namespace Epicycle.Math.LinearAlgebra
@@ -67,7 +67,7 @@ namespace Epicycle.Math.LinearAlgebra
 
         public new ISymmetricMatrix Id()
         {
-            return new SymmetricMatrix(DenseMatrix.Identity(this.RowCount));
+            return new SymmetricMatrix(DenseMatrix.CreateIdentity(this.RowCount));
         }
 
         public ISymmetricMatrix Conjugate(IMatrix matrix)
@@ -177,7 +177,7 @@ namespace Epicycle.Math.LinearAlgebra
 
         public static OSymmetricMatrix Id(int dimension)
         {
-            return new SymmetricMatrix(DenseMatrix.Identity(dimension));
+            return new SymmetricMatrix(DenseMatrix.CreateIdentity(dimension));
         }
 
         public static OSymmetricMatrix Scalar(int dimension, double value)

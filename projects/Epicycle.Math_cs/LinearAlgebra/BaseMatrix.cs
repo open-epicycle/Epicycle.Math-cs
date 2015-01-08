@@ -17,7 +17,7 @@
 // ]]]]
 
 using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.LinearAlgebra.Generic;
+using MathNet.Numerics.LinearAlgebra;
 using System.Linq;
 
 namespace Epicycle.Math.LinearAlgebra
@@ -163,7 +163,7 @@ namespace Epicycle.Math.LinearAlgebra
             }
             else
             {
-                return "(" + string.Join(", ", _data.RowEnumerator().Select(x => new Vector(x.Item2).ToString())) + ")";
+                return "(" + string.Join(", ", _data.EnumerateRows().Select(x => x.ToString())) + ")";
             }
         }
     }
