@@ -3,7 +3,5 @@
   <Config name="All" binpathtype="Auto">
     <assembly path="..\bin\net40\Debug\Epicycle.Math_cs-Test.dll" />
     <assembly path="..\bin\net40\Release\Epicycle.Math_cs-Test.dll" />
-    <assembly path="..\bin\net45\Debug\Epicycle.Math_cs-Test.dll" />
-    <assembly path="..\bin\net45\Release\Epicycle.Math_cs-Test.dll" />
   </Config>
 </NUnitProject>
