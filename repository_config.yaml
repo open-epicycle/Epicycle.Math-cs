@@ -10,6 +10,7 @@ license_url: http://www.apache.org/licenses/LICENSE-2.0
 release_notes: https://github.com/open-epicycle/Epicycle.Math-cs/blob/ver-$version$/README.md
 
 dotnet_frameworks:
+ - net35
  - net40
  - net45
 
