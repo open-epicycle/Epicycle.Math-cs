@@ -49,10 +49,10 @@
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons.TestUtils_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.4.0\lib\net45\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.3.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.4.0\lib\net45\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
       <HintPath>..\..\externals\NuGet\MathNet.Numerics.2.6.2\lib\net40\MathNet.Numerics.dll</HintPath>
