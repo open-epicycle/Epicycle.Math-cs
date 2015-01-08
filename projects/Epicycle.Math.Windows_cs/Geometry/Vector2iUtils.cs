@@ -16,9 +16,10 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Math.Geometry;
 using System.Drawing;
 
-namespace Epicycle.Math.Geometry.Windows
+namespace Epicycle.Math.Windows.Geometry
 {
     using System;
 
