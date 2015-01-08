@@ -163,7 +163,7 @@ namespace Epicycle.Math.LinearAlgebra
             }
             else
             {
-                return "(" + string.Join(", ", _data.EnumerateRows().Select(x => x.ToString())) + ")";
+                return "(" + string.Join(", ", _data.EnumerateRows().Select(x => x.ToString()).ToArray()) + ")";
             }
         }
     }

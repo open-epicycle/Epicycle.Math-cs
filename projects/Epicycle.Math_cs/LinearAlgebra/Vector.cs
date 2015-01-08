@@ -181,7 +181,7 @@ namespace Epicycle.Math.LinearAlgebra
             }
             else
             {
-                return "(" + string.Join(", ", _data.Select(x => x.ToString())) + ")";
+                return "(" + string.Join(", ", _data.Select(x => x.ToString()).ToArray()) + ")";
             }
         }
     }

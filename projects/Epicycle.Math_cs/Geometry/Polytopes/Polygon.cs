@@ -51,7 +51,7 @@ namespace Epicycle.Math.Geometry.Polytopes
             _boundingBox = Box2.Hull(_contours.SelectMany(c => c.Vertices));
         }
 
-        public Polygon(IEnumerable<IEnumerable<Vector2>> contours) : this(contours.Select(c => new ClosedPolyline(c))) { }
+        public Polygon(IEnumerable<IEnumerable<Vector2>> contours) : this(contours.Select(c => (IClosedPolyline)new ClosedPolyline(c))) { }
 
         internal Polygon(PolygonBuilder builder) : this(builder.Contours) {}
 

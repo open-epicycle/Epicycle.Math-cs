@@ -118,7 +118,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerable<IPolysurfaceEdge> Edges
             {
-                get { return _edges.Select(e => e.Source == this ? e : e.CreateReverse()); }
+                get { return _edges.Select(e => (IPolysurfaceEdge)(e.Source == this ? e : e.CreateReverse())); }
             }
 
             public bool Equals(IPolysurfaceVertex other)
@@ -223,7 +223,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerable<IPolysurfaceEdge> Edges
             {
-                get { return _edges.Select(e => e.LeftFace == this ? e : e.CreateReverse()); }
+                get { return _edges.Select(e => (IPolysurfaceEdge)(e.LeftFace == this ? e : e.CreateReverse())); }
             }
 
             public bool Equals(IPolysurfaceFace other)
