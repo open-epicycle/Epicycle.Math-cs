@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,12 +28,12 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
 
         private SphericalPolygon()
         {
-            _contours = new List<IClosedSphericalPolyline>();
+            _contours = new List<IClosedSphericalPolyline>().AsReadOnlyList();
         }
 
         public SphericalPolygon(IClosedSphericalPolyline contour)
         {
-            _contours = new List<IClosedSphericalPolyline> { contour };
+            _contours = new List<IClosedSphericalPolyline> { contour }.AsReadOnlyList();
         }
 
         public SphericalPolygon(IEnumerable<UnitVector3> vertices)
@@ -43,7 +44,7 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
 
         public SphericalPolygon(IEnumerable<IClosedSphericalPolyline> contours)
         {
-            _contours = contours.ToList();
+            _contours = contours.ToList().AsReadOnlyList();
         }
 
         public SphericalPolygon(IEnumerable<IEnumerable<UnitVector3>> contours) : this(contours.Select(c => new ClosedSphericalPolyline(c))) { }

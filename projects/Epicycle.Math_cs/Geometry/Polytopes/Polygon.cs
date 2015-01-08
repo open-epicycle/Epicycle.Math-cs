@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,13 +29,13 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         private Polygon()
         {
-            _contours = new List<IClosedPolyline>();
+            _contours = new List<IClosedPolyline>().AsReadOnlyList();
             _boundingBox = Box2.Empty;
         }
 
         public Polygon(IClosedPolyline contour)
         {
-            _contours = new List<IClosedPolyline> { contour };
+            _contours = new List<IClosedPolyline> { contour }.AsReadOnlyList();
             _boundingBox = Box2.Hull(contour.Vertices);
         }
 
@@ -46,7 +47,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         public Polygon(IEnumerable<IClosedPolyline> contours)
         {
-            _contours = contours.ToList();
+            _contours = contours.ToList().AsReadOnlyList();
             _boundingBox = Box2.Hull(_contours.SelectMany(c => c.Vertices));
         }
 

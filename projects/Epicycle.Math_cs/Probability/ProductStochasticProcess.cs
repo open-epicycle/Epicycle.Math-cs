@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using Epicycle.Math.Geometry.Differential;
 using Epicycle.Math.LinearAlgebra;
 using System.Collections.Generic;
@@ -69,7 +70,7 @@ namespace Epicycle.Math.Probability
                 answerCovariance.SetSubmatrix(_stateSpace.CoordinateIndex(i), stochasticFactor.Covariance);
             }
 
-            return new StochasticManifoldPoint(new ProductManifold.Point(answerFactors), answerCovariance);
+            return new StochasticManifoldPoint(new ProductManifold.Point(answerFactors.AsReadOnlyList()), answerCovariance);
         }
 
         public OSquareMatrix ExpectationDifferential(IManifoldPoint point, double time)

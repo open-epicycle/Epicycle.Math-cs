@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 
 namespace Epicycle.Math.Geometry.Polytopes
@@ -54,7 +55,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         internal IReadOnlyCollection<IClosedPolyline> Contours
         {
-            get { return _contours; }
+            get { return _contours.AsReadOnlyList(); }
         }
 
         private readonly List<IClosedPolyline> _contours;

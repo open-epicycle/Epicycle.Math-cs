@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,12 +27,12 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public ClosedPolyline3(IEnumerable<Vector3> vertices)
         {
-           _vertices = vertices.ToList();
+            _vertices = vertices.ToList().AsReadOnlyList();
         }
 
         public ClosedPolyline3(IPolysurfaceFace face)
         {
-            _vertices = face.Edges.Select(e => e.Source.Point).ToList();
+            _vertices = face.Edges.Select(e => e.Source.Point).ToList().AsReadOnlyList();
         }
 
         public static implicit operator ClosedPolyline3(List<Vector3> vertices)

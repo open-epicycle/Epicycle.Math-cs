@@ -162,7 +162,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 MockVertex(1)
             };
 
-            answer.Setup(sur => sur.Vertices).Returns(vertices);
+            answer.Setup(sur => sur.Vertices).Returns(vertices.AsReadOnlyList());
 
             var edges = new List<IPolysurfaceEdge>
             {
@@ -170,7 +170,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 MockEdge(1)
             };
 
-            answer.Setup(sur => sur.Edges).Returns(edges);
+            answer.Setup(sur => sur.Edges).Returns(edges.AsReadOnlyList());
 
             var faces = new List<IPolysurfaceFace>
             {
@@ -178,7 +178,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 MockFace(1)
             };
 
-            answer.Setup(sur => sur.Faces).Returns(faces);
+            answer.Setup(sur => sur.Faces).Returns(faces.AsReadOnlyList());
 
             answer.Setup(sur => sur.GetEdge(MockVertex(0), MockVertex(1))).Returns(MockEdge(2));
 

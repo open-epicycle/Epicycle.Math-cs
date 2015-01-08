@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +29,9 @@ namespace Epicycle.Math.Geometry.Polytopes
         internal Polysurface(IPartialPolysurface surface)
         {
             // must be copied to protect state integrity
-            _vertices = surface.Vertices.ToList();
-            _edges = surface.Edges.ToList();
-            _faces = surface.Faces.ToList();
+            _vertices = surface.Vertices.ToList().AsReadOnlyList();
+            _edges = surface.Edges.ToList().AsReadOnlyList();
+            _faces = surface.Faces.ToList().AsReadOnlyList();
 
             // TODO: Combinatorical integrity test!!!
             throw new NotImplementedException();
