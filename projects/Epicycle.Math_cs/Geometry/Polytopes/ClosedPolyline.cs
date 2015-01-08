@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,7 +27,7 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public ClosedPolyline(IEnumerable<Vector2> vertices)
         {
-            _vertices = vertices.ToList();
+            _vertices = vertices.ToList().AsReadOnlyList();
         }
 
         public ClosedPolyline(IReadOnlyList<Vector2> vertices)

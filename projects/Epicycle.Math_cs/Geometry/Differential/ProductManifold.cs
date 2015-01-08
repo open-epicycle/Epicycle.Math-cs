@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using Epicycle.Math.LinearAlgebra;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Epicycle.Math.Geometry.Differential
                 indices.Add(indices.Last() + factor.Dimension);
             }
 
-            _indices = indices;
+            _indices = indices.AsReadOnlyList();
         }
 
         private readonly IReadOnlyList<IManifold> _factors;
@@ -69,7 +70,7 @@ namespace Epicycle.Math.Geometry.Differential
                 answerFactors.Add(_factors[i].Translate(nativePoint.Factors[i], tangentVector.Subvector(_indices[i], _factors[i].Dimension)));
             }
 
-            return new Point(answerFactors);
+            return new Point(answerFactors.AsReadOnlyList());
         }
 
         public OVector GetTranslation(IManifoldPoint to, IManifoldPoint from)
@@ -89,7 +90,8 @@ namespace Epicycle.Math.Geometry.Differential
 
         public sealed class Point : IManifoldPoint
         {
-            public Point(params IManifoldPoint[] factors) : this((IReadOnlyList<IManifoldPoint>)factors)
+            public Point(params IManifoldPoint[] factors)
+                : this(factors.ToList().AsReadOnlyList())
             {
                 
             }

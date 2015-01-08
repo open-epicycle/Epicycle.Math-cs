@@ -307,10 +307,10 @@ namespace Epicycle.Math.Geometry
         public IReadOnlyList<Vector2> Vertices
         {
             get 
-            { 
+            {
                 if (this.IsEmpty)
                 {
-                    return new List<Vector2>();
+                    return new List<Vector2>().AsReadOnlyList();
                 }
             
                 return new List<Vector2>
@@ -319,7 +319,7 @@ namespace Epicycle.Math.Geometry
                     new Vector2(MaxCorner.X, MinCorner.Y),
                     MaxCorner,
                     new Vector2(MinCorner.X, MaxCorner.Y)
-                };
+                }.AsReadOnlyList();
             }
         }
 

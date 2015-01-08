@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using Epicycle.Math.TestUtils.Geometry;
 using Moq;
 using NUnit.Framework;
@@ -876,7 +877,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetVerticalFace(1);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList(), edges);
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList().AsReadOnlyList(), edges.AsReadOnlyList());
         }
 
         [Test, Combinatorial]
@@ -909,7 +910,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetHorizontalFace(side);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList(), edges);
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList().AsReadOnlyList(), edges.AsReadOnlyList());
         }
 
         [Test]

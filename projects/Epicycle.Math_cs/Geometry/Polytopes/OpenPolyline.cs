@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Commons.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,7 +58,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         public IReadOnlyList<Vector2> Vertices
         {
-            get { return _vertices; }
+            get { return _vertices.AsReadOnlyList(); }
         }
 
         private readonly List<Vector2> _vertices;
