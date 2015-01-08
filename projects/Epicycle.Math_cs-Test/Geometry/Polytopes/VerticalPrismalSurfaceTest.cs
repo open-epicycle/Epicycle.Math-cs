@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Math.TestUtils.Geometry;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
@@ -997,7 +998,7 @@ namespace Epicycle.Math.Geometry.Polytopes
             var actual = new ClosedPolyline3(face.Polygon.Vertices());
             var expected = new ClosedPolyline3(face.Vertices().Select(v => v.Point));
 
-            TestUtils.ExpectClosedPolylinesAreEqual(actual, expected, _tolerance);
+            GeometryTestUtils.ExpectClosedPolylinesAreEqual(actual, expected, _tolerance);
         }
 
         [Test]

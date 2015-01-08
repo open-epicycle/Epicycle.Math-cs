@@ -68,8 +68,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Geometry\TestUtils.cs" />
-    <Compile Include="Probability\TestUtils.cs" />
+    <Compile Include="Geometry\GeometryTestUtils.cs" />
+    <Compile Include="Probability\ProbabilityTestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

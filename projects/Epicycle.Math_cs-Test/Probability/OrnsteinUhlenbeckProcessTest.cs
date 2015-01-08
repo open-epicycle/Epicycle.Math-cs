@@ -17,6 +17,7 @@
 // ]]]]
 
 using Epicycle.Math.LinearAlgebra;
+using Epicycle.Math.TestUtils.Probability;
 using NUnit.Framework;
 
 namespace Epicycle.Math.Probability
@@ -44,7 +45,7 @@ namespace Epicycle.Math.Probability
         {
             var process = new OrnsteinUhlenbeckProcess(_diffusionMatrix, _relaxationTime, _attractorPoint);
 
-            TestUtils.ValidateProcess(process, _point, time: 7.4, eps: 1e-5, tolerance: 1e-7);
+            ProbabilityTestUtils.ValidateProcess(process, _point, time: 7.4, eps: 1e-5, tolerance: 1e-7);
         }
 
         [Test]

@@ -16,6 +16,7 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+using Epicycle.Math.TestUtils.Geometry;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,7 +86,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         [Test]
         public void DistanceTo_of_Vector2_and_IClosedPolyline_is_correct_for_a_Box2
-            ([ValueSource(typeof(TestUtils), "Distance_of_Vector2_and_Box2_TestCases")] TestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
+            ([ValueSource(typeof(GeometryTestUtils), "Distance_of_Vector2_and_Box2_TestCases")] GeometryTestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
         {
             var result = testCase.Point.DistanceTo((IClosedPolyline)testCase.Box);
 
@@ -97,7 +98,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         [Test]
         public void FindClosestPoint_is_correct_for_a_Box2
-            ([ValueSource(typeof(TestUtils), "Distance_of_Vector2_and_Box2_TestCases")] TestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
+            ([ValueSource(typeof(GeometryTestUtils), "Distance_of_Vector2_and_Box2_TestCases")] GeometryTestUtils.Distance_of_Vector2_and_Box2_TestCase testCase)
         {
             Vector2 closetPoint;
             double distance2;
