@@ -58,6 +58,9 @@
     <Reference Include="MathNet.Numerics">
       <HintPath>..\..\externals\NuGet\MathNet.Numerics.3.4.0\lib\net35\MathNet.Numerics.dll</HintPath>
     </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\externals\NuGet\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combinatorics.cs" />
