@@ -9,32 +9,32 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Epicycle.Math</RootNamespace>
     <AssemblyName>Epicycle.Math_cs</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\net40\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NET40</DefineConstants>
+    <OutputPath>..\..\bin\net35\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET35</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net40\Debug\Epicycle.Math_cs.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net35\Debug\Epicycle.Math_cs.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\net40\Release\</OutputPath>
-    <DefineConstants>TRACE;NET40</DefineConstants>
+    <OutputPath>..\..\bin\net35\Release\</OutputPath>
+    <DefineConstants>TRACE;NET35</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net40\Debug\Epicycle.Math_cs.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net35\Debug\Epicycle.Math_cs.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -44,18 +44,21 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Numerics" />
+
     <Reference Include="clipper_library">
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons.TestUtils_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net40\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net35\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net40\Epicycle.Commons_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net35\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
-      <HintPath>..\..\externals\NuGet\MathNet.Numerics.3.4.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\MathNet.Numerics.3.4.0\lib\net35\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\externals\NuGet\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

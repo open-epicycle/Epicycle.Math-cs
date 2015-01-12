@@ -47,7 +47,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         public static IEnumerable<IClosedPolyline3> Contours(this IPolygon3 @this)
         {
-            return @this.InPlane.Contours.Select(c => new ClosedPolyline3
+            return @this.InPlane.Contours.Select(c => (IClosedPolyline3)new ClosedPolyline3
                 (c.Vertices.Select(v => @this.PlaneToSpace(v))));
         }
 

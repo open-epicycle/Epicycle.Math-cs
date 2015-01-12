@@ -4,37 +4,37 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{542D3EBC-BABE-4FFA-B357-C61712C6FA21}</ProjectGuid>
+    <ProjectGuid>{D450FE15-6343-431A-877F-58FC122FB891}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Epicycle.Math.Windows</RootNamespace>
-    <AssemblyName>Epicycle.Math.Windows_cs</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>Epicycle.Math.TestUtils</RootNamespace>
+    <AssemblyName>Epicycle.Math.TestUtils_cs</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\bin\net40\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NET40</DefineConstants>
+    <OutputPath>..\..\bin\net35\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET35</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net40\Debug\Epicycle.Math.Windows_cs.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net35\Debug\Epicycle.Math.TestUtils_cs.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>..\..\bin\net40\Release\</OutputPath>
-    <DefineConstants>TRACE;NET40</DefineConstants>
+    <OutputPath>..\..\bin\net35\Release\</OutputPath>
+    <DefineConstants>TRACE;NET35</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\net40\Debug\Epicycle.Math.Windows_cs.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\net35\Debug\Epicycle.Math.TestUtils_cs.xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -44,31 +44,39 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
+
     <Reference Include="clipper_library">
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons.TestUtils_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net40\Epicycle.Commons.TestUtils_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net35\Epicycle.Commons.TestUtils_cs.dll</HintPath>
     </Reference>
     <Reference Include="Epicycle.Commons_cs">
-      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net40\Epicycle.Commons_cs.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\Epicycle.Commons-cs.0.1.5.0\lib\net35\Epicycle.Commons_cs.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics">
-      <HintPath>..\..\externals\NuGet\MathNet.Numerics.3.4.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <HintPath>..\..\externals\NuGet\MathNet.Numerics.3.4.0\lib\net35\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\externals\NuGet\Moq.4.2.1409.1722\lib\net35\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\externals\NuGet\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading">
+      <HintPath>..\..\externals\NuGet\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Geometry\Vector2Utils.cs" />
-    <Compile Include="Geometry\Vector2iUtils.cs" />
+    <Compile Include="Geometry\GeometryTestUtils.cs" />
+    <Compile Include="Probability\ProbabilityTestUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.net40.csproj">
+    <ProjectReference Include="..\Epicycle.Math_cs\Epicycle.Math_cs.net35.csproj">
       <Project>{e4a1724e-c625-48f9-a222-9445af10cd9c}</Project>
       <Name>Epicycle.Math_cs</Name>
     </ProjectReference>

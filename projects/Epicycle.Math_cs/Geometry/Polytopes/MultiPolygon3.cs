@@ -27,7 +27,7 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public MultiPolygon3(IEnumerable<IPolygon3> components)
         {
-            _components = components.ToList().AsReadOnlyList();
+            _components = components.AsReadOnlyList();
 
             _componentCount = _components.Count();
             _totalVertexCount = _components.Select(p => p.InPlane.CountVertices()).Sum();
@@ -148,7 +148,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 return _parent._components.SelectMany
                     (p => p.Contours().SelectMany
                         (c => Enumerable.Range(0, c.Vertices.Count).Select
-                            (i => new Vertex(p, c, i)))).GetEnumerator();
+                            (i => (IPolysurfaceVertex)new Vertex(p, c, i)))).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -274,7 +274,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 return _parent._components.SelectMany
                     (p => p.Contours().SelectMany
                         (c => Enumerable.Range(0, c.Vertices.Count).Select
-                            (i => new Edge(p, c, i, Edge.Direction.Forward)))).GetEnumerator();
+                            (i => (IPolysurfaceEdge)new Edge(p, c, i, Edge.Direction.Forward)))).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -396,7 +396,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerator<IPolysurfaceFace> GetEnumerator()
             {
-                return _parent._components.Select(p => new Face(p)).GetEnumerator();
+                return _parent._components.Select(p => (IPolysurfaceFace)new Face(p)).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -437,7 +437,7 @@ namespace Epicycle.Math.Geometry.Polytopes
                 {
                     return _polygon.Contours().SelectMany
                         (c => Enumerable.Range(0, c.Vertices.Count).Select
-                            (i => new Edge(_polygon, c, i, Edge.Direction.Forward)));
+                            (i => (IPolysurfaceEdge)new Edge(_polygon, c, i, Edge.Direction.Forward)));
                 }
             }
 

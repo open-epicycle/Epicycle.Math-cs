@@ -26,7 +26,7 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
     {
         public ClosedSphericalPolyline(IEnumerable<UnitVector3> vertices)
         {
-            _vertices = vertices.ToList().AsReadOnlyList();
+            _vertices = vertices.AsReadOnlyList();
         }
 
         public ClosedSphericalPolyline(IReadOnlyList<UnitVector3> vertices)

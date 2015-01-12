@@ -5,4 +5,5 @@ external_libs:
  - System.Numerics
  - Epicycle.Commons-cs
  - MathNet.Numerics
+ - TaskParallelLibrary
  - Clipper

@@ -29,9 +29,9 @@ namespace Epicycle.Math.Geometry.Polytopes
         internal Polysurface(IPartialPolysurface surface)
         {
             // must be copied to protect state integrity
-            _vertices = surface.Vertices.ToList().AsReadOnlyList();
-            _edges = surface.Edges.ToList().AsReadOnlyList();
-            _faces = surface.Faces.ToList().AsReadOnlyList();
+            _vertices = surface.Vertices.AsReadOnlyList();
+            _edges = surface.Edges.AsReadOnlyList();
+            _faces = surface.Faces.AsReadOnlyList();
 
             // TODO: Combinatorical integrity test!!!
             throw new NotImplementedException();

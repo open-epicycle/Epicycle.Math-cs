@@ -21,7 +21,7 @@
     <tags>epicycle math vectors matrices geometry 2D 3D polygons multiploygons linear algebra differential geometry stochastic process kalman filter lib library util utilities c#</tags>
 
     <dependencies>
-      <dependency id="Epicycle.Commons-cs" version="0.1.4.0" />
+      <dependency id="Epicycle.Commons-cs" version="0.1.5.0" />
       <dependency id="MathNet.Numerics" version="3.4.0" />
     </dependencies>
   </metadata>

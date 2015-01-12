@@ -91,7 +91,7 @@ namespace Epicycle.Math.Geometry.Differential
         public sealed class Point : IManifoldPoint
         {
             public Point(params IManifoldPoint[] factors)
-                : this(factors.ToList().AsReadOnlyList())
+                : this(factors.AsReadOnlyList())
             {
                 
             }

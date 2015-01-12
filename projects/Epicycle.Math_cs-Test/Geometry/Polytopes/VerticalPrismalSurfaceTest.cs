@@ -20,6 +20,7 @@ using Epicycle.Commons.Collections;
 using Epicycle.Math.TestUtils.Geometry;
 using Moq;
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -834,7 +835,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         #region faces
 
-        private void ExpectListsAreEqualUpToCyclicPermuation<T>(IReadOnlyList<T> list1, IReadOnlyList<T> list2, System.Collections.IEqualityComparer equality = null)
+        private void ExpectListsAreEqualUpToCyclicPermuation<T>(IReadOnlyList<T> list1, IReadOnlyList<T> list2, IEqualityComparer equality = null)
         {
             if (equality == null)
             {
@@ -847,15 +848,34 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             for (int i = 0; i < n; i++)
             {
-                System.Collections.IStructuralEquatable permutedList1 = Enumerable.Range(0, n).Select(j => list1[(j + i) % n]).ToArray();
+                var permutedList1 = Enumerable.Range(0, n).Select(j => list1[(j + i) % n]).ToArray();
 
-                if (permutedList1.Equals(list2.ToArray(), equality))
+                if (CompareLists(permutedList1, list2.ToArray(), equality))
                 {
                     return;
                 }
             }
 
             Expect(false);
+        }
+
+        private bool CompareLists<T>(IList<T> list1, IList<T> list2, IEqualityComparer equality)
+        {
+            if(list1.Count != list2.Count)
+            {
+                return false;
+            }
+
+            var resolvedEquality = equality ?? EqualityComparer<T>.Default;
+            for(var i = 0; i < list1.Count; i++)
+            {
+                if(!equality.Equals(list1[i], list2[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         [Test]
@@ -877,7 +897,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetVerticalFace(1);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList().AsReadOnlyList(), edges.AsReadOnlyList());
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.AsReadOnlyList(), edges.AsReadOnlyList());
         }
 
         [Test, Combinatorial]
@@ -910,7 +930,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetHorizontalFace(side);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToList().AsReadOnlyList(), edges.AsReadOnlyList());
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.AsReadOnlyList(), edges.AsReadOnlyList());
         }
 
         [Test]

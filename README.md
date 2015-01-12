@@ -62,7 +62,10 @@ Copyright 2015 Epicycle (http://epicycle.org)
 
 ## Release Notes
 ### Version 0.1 
+
 * **Version 0.1.2** [IN DEVELOPMENT]
+  * Adding support for **.NET 3.5**
+  * Upgrading to Epicycle.Commons-cs.0.1.5.0
   * Upgrading to MathNet.Numerics.3.4.0
 
 * **Version 0.1.1** [2015-01-08]

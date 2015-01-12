@@ -133,7 +133,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerator<IPolysurfaceVertex> GetEnumerator()
             {
-                return LocalVertices.Select(v => new TransformedVertex(v, _parent)).GetEnumerator();
+                return LocalVertices.Select(v => (IPolysurfaceVertex)new TransformedVertex(v, _parent)).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -163,7 +163,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerator<IPolysurfaceEdge> GetEnumerator()
             {
-                return LocalEdges.Select(v => new TransformedEdge(v, _parent)).GetEnumerator();
+                return LocalEdges.Select(v => (IPolysurfaceEdge)new TransformedEdge(v, _parent)).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -193,7 +193,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerator<IPolysurfaceFace> GetEnumerator()
             {
-                return LocalFaces.Select(v => new TransformedFace(v, _parent)).GetEnumerator();
+                return LocalFaces.Select(v => (IPolysurfaceFace)new TransformedFace(v, _parent)).GetEnumerator();
             }
 
             System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -235,7 +235,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerable<IPolysurfaceEdge> Edges
             {
-                get { return _localVertex.Edges.Select(edge => new TransformedEdge(edge, _parent)); }
+                get { return _localVertex.Edges.Select(edge => (IPolysurfaceEdge)new TransformedEdge(edge, _parent)); }
             }
 
             #region equality
@@ -372,7 +372,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             public IEnumerable<IPolysurfaceEdge> Edges
             {
-                get { return _localFace.Edges.Select(edge => new TransformedEdge(edge, _parent)); }
+                get { return _localFace.Edges.Select(edge => (IPolysurfaceEdge)new TransformedEdge(edge, _parent)); }
             }
 
             #region equality
