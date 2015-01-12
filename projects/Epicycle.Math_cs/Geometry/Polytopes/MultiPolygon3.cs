@@ -27,7 +27,7 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public MultiPolygon3(IEnumerable<IPolygon3> components)
         {
-            _components = components.ToList().AsReadOnlyList();
+            _components = components.AsReadOnlyList();
 
             _componentCount = _components.Count();
             _totalVertexCount = _components.Select(p => p.InPlane.CountVertices()).Sum();

@@ -28,12 +28,12 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
 
         private SphericalPolygon()
         {
-            _contours = new List<IClosedSphericalPolyline>().AsReadOnlyList();
+            _contours = EmptyList<IClosedSphericalPolyline>.Instance;
         }
 
         public SphericalPolygon(IClosedSphericalPolyline contour)
         {
-            _contours = new List<IClosedSphericalPolyline> { contour }.AsReadOnlyList();
+            _contours = contour.AsSingleton();
         }
 
         public SphericalPolygon(IEnumerable<UnitVector3> vertices)
@@ -44,7 +44,7 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
 
         public SphericalPolygon(IEnumerable<IClosedSphericalPolyline> contours)
         {
-            _contours = contours.ToList().AsReadOnlyList();
+            _contours = contours.AsReadOnlyList();
         }
 
         public SphericalPolygon(IEnumerable<IEnumerable<UnitVector3>> contours) : this(contours.Select(c => (IClosedSphericalPolyline)new ClosedSphericalPolyline(c))) { }

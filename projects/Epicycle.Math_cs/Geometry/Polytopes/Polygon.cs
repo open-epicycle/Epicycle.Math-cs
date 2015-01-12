@@ -29,13 +29,13 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         private Polygon()
         {
-            _contours = new List<IClosedPolyline>().AsReadOnlyList();
+            _contours = EmptyList<IClosedPolyline>.Instance;
             _boundingBox = Box2.Empty;
         }
 
         public Polygon(IClosedPolyline contour)
         {
-            _contours = new List<IClosedPolyline> { contour }.AsReadOnlyList();
+            _contours = contour.AsSingleton();
             _boundingBox = Box2.Hull(contour.Vertices);
         }
 
@@ -47,7 +47,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         public Polygon(IEnumerable<IClosedPolyline> contours)
         {
-            _contours = contours.ToList().AsReadOnlyList();
+            _contours = contours.AsReadOnlyList();
             _boundingBox = Box2.Hull(_contours.SelectMany(c => c.Vertices));
         }
 
