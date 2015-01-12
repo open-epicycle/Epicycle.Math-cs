@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Threading" />
     <Reference Include="System.Numerics" />
     <Reference Include="clipper_library">
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
@@ -63,9 +62,6 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\externals\NuGet\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading">
-      <HintPath>..\..\externals\NuGet\TaskParallelLibrary.1.0.2856.0\lib\Net35\System.Threading.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
