@@ -15,7 +15,6 @@ Epicycle .NET math library. Includes: 2D/3D geometry, linear algebra, differenti
 * Linear algebra (vectors and matrices)
 * Stochastic processes
 * Kalman filter
-* Conversion to and from **Windows.Drawing** primitives
 * Math related unit test utilities
 * Supported frameworks: **.NET 4.5**, **.NET 4.0**, **.NET 3.5**
 
@@ -53,8 +52,6 @@ Epicycle .NET math library. Includes: 2D/3D geometry, linear algebra, differenti
   * Kalman filter
 * **Epicycle.Math.TestUtils**: (separate assembly)
   * Utilities for unit tests
-* **Epicycle.Math.Windows**: (separate assembly)
-  * Utilities for converting **Windows.Drawing** primitives to and from **Epicycle.Math** primitives
 
 ## License
 Apache License 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
@@ -64,6 +61,7 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ### Version 0.1 
 
 * **Version 0.1.3** [IN DEVELOPMENT]
+  * Moving Epicycle.Math.Windows to Epicycle.Graphics
 
 * **Version 0.1.2** [2015-01-12]
   * Adding support for **.NET 3.5**
