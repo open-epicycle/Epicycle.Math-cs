@@ -1,8 +1,0 @@
-project_guid: 542D3EBC-BABE-4FFA-B357-C61712C6FA21
-assemblyinfo_guid: a37eaf24-d0cd-4ec2-a5db-cf283eb3e450
-
-references:
- - Epicycle.Math_cs
-
-external_libs: 
- - System.Drawing
