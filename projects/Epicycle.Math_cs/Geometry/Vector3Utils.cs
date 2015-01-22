@@ -72,6 +72,19 @@ namespace Epicycle.Math.Geometry
             });
         }
 
+        public static Vector3 Velocity(double t1, Vector3 p1, double t2, Vector3 p2)
+        {
+            return (p2 - p1) / (t2 - t1);
+        }
+
+        public static Vector3 Acceleration(double t1, Vector3 p1, double t2, Vector3 p2, double t3, Vector3 p3)
+        {
+            var v12 = Velocity(t1, p1, t2, p2);
+            var v23 = Velocity(t2, p2, t3, p3);
+
+            return (v23 - v12) / ((t3 - t1) / 2);
+        }
+
         // finds least-squares solution to a system of orthogonality equations (i.e. result is fitted to be orthogonal to vectors)
         public static void FitOrthogonal(IEnumerable<Vector3> vectors, out Vector3 result, out double residual)
         {
