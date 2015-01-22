@@ -44,7 +44,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-
     <Reference Include="clipper_library">
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
     </Reference>
@@ -62,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculus\Derivatives.cs" />
     <Compile Include="Combinatorics.cs" />
     <Compile Include="CubicEquation.cs" />
     <Compile Include="Geometry\Box2.cs" />
@@ -181,7 +181,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
