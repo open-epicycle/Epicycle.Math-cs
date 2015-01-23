@@ -46,5 +46,26 @@ namespace Epicycle.Math.Calculus
 
             return (v23 - v12) / ((t3 - t1) / 2);
         }
+
+        public static double MidVelocity(double t1, double p1, double t2, double p2, double t3, double p3)
+        {
+            var eta = (t3 - t2) / (t2 - t1);
+
+            return ((p2 - p1) * eta + (p3 - p2) / eta) / (t3 - t1);
+        }
+
+        public static Vector2 MidVelocity(double t1, Vector2 p1, double t2, Vector2 p2, double t3, Vector2 p3)
+        {
+            var eta = (t3 - t2) / (t2 - t1);
+
+            return ((p2 - p1) * eta + (p3 - p2) / eta) / (t3 - t1);
+        }
+
+        public static Vector3 MidVelocity(double t1, Vector3 p1, double t2, Vector3 p2, double t3, Vector3 p3)
+        {
+            var eta = (t3 - t2) / (t2 - t1);
+
+            return ((p2 - p1) * eta + (p3 - p2) / eta) / (t3 - t1);
+        }
     }
 }
