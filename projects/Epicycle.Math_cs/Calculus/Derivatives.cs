@@ -47,6 +47,16 @@ namespace Epicycle.Math.Calculus
             return (v23 - v12) / ((t3 - t1) / 2);
         }
 
+        public static Vector3 LeftAngularVelocity(double t1, Rotation3 r1, double t2, Rotation3 r2)
+        {
+            return (r2 * r1.Inv).Vector / (t2 - t1);
+        }
+
+        public static Vector3 RightAngularVelocity(double t1, Rotation3 r1, double t2, Rotation3 r2)
+        {
+            return (r1.Inv * r2).Vector / (t2 - t1);
+        }
+
         public static double MidVelocity(double t1, double p1, double t2, double p2, double t3, double p3)
         {
             var eta = (t3 - t2) / (t2 - t1);
