@@ -13,6 +13,7 @@ Epicycle .NET math library. Includes: 2D/3D geometry, linear algebra, differenti
 * 2D and 3D multi-polygons that support boolean operations and offsets
 * Differential geometry (manifolds)
 * Linear algebra (vectors and matrices)
+* Calculus
 * Stochastic processes
 * Kalman filter
 * Math related unit test utilities
@@ -22,6 +23,8 @@ Epicycle .NET math library. Includes: 2D/3D geometry, linear algebra, differenti
 * **Epicycle.Math**:
   * Combinatorics utilities (Factorials and Binomials)
   * Solvable **CubicEquation**
+* **Epicycle.Math.Calculus**:
+  * Derivatives and interpolations
 * **Epicycle.Math.Geometry**:
   * Various 2D and 3D geometric primitives. Including:
     * Vectors
@@ -60,7 +63,9 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ## Release Notes
 ### Version 0.1 
 
-* **Version 0.1.4**
+* **Version 0.1.4** [2015-01-26]
+  * Adding Epicycle.Math.Calculus.Derivatives
+  * Adding Epicycle.Math.Calculus.Interpolation
 
 * **Version 0.1.3** [2015-01-13]
   * Moving Epicycle.Math.Windows to Epicycle.Graphics
