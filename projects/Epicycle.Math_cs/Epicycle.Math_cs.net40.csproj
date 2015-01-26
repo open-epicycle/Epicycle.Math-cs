@@ -59,6 +59,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculus\Derivatives.cs" />
+    <Compile Include="Calculus\Interpolation.cs" />
     <Compile Include="Combinatorics.cs" />
     <Compile Include="CubicEquation.cs" />
     <Compile Include="Geometry\Box2.cs" />
