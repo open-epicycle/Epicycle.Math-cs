@@ -280,7 +280,7 @@ namespace Epicycle.Math.Geometry
 
         public static double Dot(Quaternion q1, Quaternion q2)
         {
-            return q1._a * q2._a + q1._b * q2._b + q1._c + q2._c + q1._d * q2._d;
+            return q1._a * q2._a + q1._b * q2._b + q1._c * q2._c + q1._d * q2._d;
         }
 
         #endregion        
