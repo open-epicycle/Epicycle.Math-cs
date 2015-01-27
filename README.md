@@ -64,6 +64,7 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ### Version 0.1 
 
 * **Version 0.1.5** [IN DEVELOPMENT]
+  * BUG FIX: Epicycle.Math.Geometry.Quaternion.Dot is wrong
 
 * **Version 0.1.4** [2015-01-26]
   * Adding Epicycle.Math.Calculus.Derivatives
