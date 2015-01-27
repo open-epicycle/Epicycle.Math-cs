@@ -44,6 +44,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+
     <Reference Include="clipper_library">
       <HintPath>..\..\externals\lib_dotnet\Clipper.6.2.1\lib\clipper_library.dll</HintPath>
     </Reference>
