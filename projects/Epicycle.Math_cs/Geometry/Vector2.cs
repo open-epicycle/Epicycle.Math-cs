@@ -23,7 +23,8 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    public struct Vector2 : IEquatable<Vector2>
+    // [### Vector2.cs.TEMPLATE> NAME = Vector2, T = double
+    ﻿public partial struct Vector2 : IEquatable<Vector2>
     {
         public double X 
         {
@@ -69,35 +70,6 @@ namespace Epicycle.Math.Geometry
         {
             _x = x;
             _y = y;
-        }
-
-        public Vector2(Vector2i v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2(OVector v)
-        {
-            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
-
-            _x = v[0];
-            _y = v[1];
-        }
-
-        public static implicit operator Vector2(Vector2i v)
-        {
-            return new Vector2(v);
-        }
-
-        public static explicit operator Vector2(OVector v)
-        {
-            return new Vector2(v);
-        }
-
-        public static implicit operator OVector(Vector2 v)
-        {
-            return new Vector(v._x, v._y);
         }
 
         #endregion
@@ -150,7 +122,7 @@ namespace Epicycle.Math.Geometry
                 {
                     return UnitX;
                 }
- 
+
                 return this / norm;
             }
         }
@@ -251,5 +223,42 @@ namespace Epicycle.Math.Geometry
         {
             return string.Format("({0}, {1})", X, Y);
         }
+    }
+    // ###]
+
+    public partial struct Vector2
+    {
+        #region creation
+
+        public Vector2(Vector2i v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+
+        public Vector2(OVector v)
+        {
+            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
+
+            _x = v[0];
+            _y = v[1];
+        }
+
+        public static implicit operator Vector2(Vector2i v)
+        {
+            return new Vector2(v);
+        }
+
+        public static explicit operator Vector2(OVector v)
+        {
+            return new Vector2(v);
+        }
+
+        public static implicit operator OVector(Vector2 v)
+        {
+            return new Vector(v._x, v._y);
+        }
+
+        #endregion
     }
 }

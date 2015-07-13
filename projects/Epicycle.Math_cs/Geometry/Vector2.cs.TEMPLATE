@@ -1,0 +1,200 @@
+﻿public partial struct [#NAME#] : IEquatable<[#NAME#]>
+{
+    public [#T#] X 
+    {
+        get { return _x; }
+    }
+
+    public [#T#] Y 
+    {
+        get { return _y; }
+    }
+
+    private readonly [#T#] _x;
+    private readonly [#T#] _y;
+
+    public enum Axis
+    {
+        X = 0,
+        Y = 1,
+        Count = 2 // used in for loops
+    }
+
+    public [#T#] this[Axis axis]
+    {
+        get
+        {
+            switch (axis)
+            {
+                case Axis.X:
+                    return _x;
+
+                case Axis.Y:
+                    return _y;
+
+                default:
+                    throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
+            }
+        }
+    }
+
+    #region creation
+
+    public [#NAME#]([#T#] x, [#T#] y)
+    {
+        _x = x;
+        _y = y;
+    }
+
+    #endregion
+
+    #region equality
+
+    public bool Equals([#NAME#] v)
+    {
+        return X == v.X && Y == v.Y;
+    }
+
+    public override bool Equals(object obj)
+    {
+        var v = obj as [#NAME#]?;
+
+        if(!v.HasValue)
+        {
+            return false;
+        }
+
+        return Equals(v.Value);
+    }
+
+    public override int GetHashCode()
+    {
+        return X.GetHashCode() ^ Y.GetHashCode();
+    }
+
+    #endregion
+
+    #region norm
+
+    public [#T#] Norm2
+    {
+        get { return _x * _x + _y * _y; }
+    }
+
+    public [#T#] Norm
+    {
+        get { return Math.Sqrt(Norm2); }
+    }
+
+    public [#NAME#] Normalized
+    {
+        get 
+        {
+            var norm = this.Norm;
+
+            if (norm < BasicMath.Epsilon)
+            {
+                return UnitX;
+            }
+
+            return this / norm;
+        }
+    }
+
+    public static [#T#] Distance2([#NAME#] v, [#NAME#] w)
+    {
+        return (v - w).Norm2;
+    }
+
+    public static [#T#] Distance([#NAME#] v, [#NAME#] w)
+    {
+        return (v - w).Norm;
+    }
+
+    #endregion
+
+    #region algebra
+
+    public static [#NAME#] operator +([#NAME#] v)
+    {
+        return v;
+    }
+
+    public static [#NAME#] operator -([#NAME#] v)
+    {
+        return new [#NAME#](-v._x, -v._y);
+    }
+
+    public static [#NAME#] operator *([#NAME#] v, [#T#] a)
+    {
+        return new [#NAME#](v._x * a, v._y * a);
+    }
+
+    public static [#NAME#] operator *([#T#] a, [#NAME#] v)
+    {
+        return v * a;
+    }
+
+    public static [#NAME#] operator /([#NAME#] v, [#T#] a)
+    {
+        return new [#NAME#](v._x / a, v._y / a);
+    }
+
+    public static [#NAME#] operator +([#NAME#] v, [#NAME#] w)
+    {
+        return new [#NAME#](v._x + w._x, v._y + w._y);
+    }
+
+    public static [#NAME#] operator -([#NAME#] v, [#NAME#] w)
+    {
+        return new [#NAME#](v._x - w._x, v._y - w._y);
+    }
+
+    public static [#T#] operator *([#NAME#] v, [#NAME#] w)
+    {
+        return v._x * w._x + v._y * w._y;
+    }
+
+    public [#T#] Cross([#NAME#] v)
+    {
+        return _x * v._y - _y * v._x;
+    }
+
+    #endregion
+
+    #region static
+
+    public static readonly [#NAME#] Zero = new [#NAME#](0, 0);
+    public static readonly [#NAME#] UnitX = new [#NAME#](1, 0);
+    public static readonly [#NAME#] UnitY = new [#NAME#](0, 1);
+
+    public static [#NAME#] Unit(Axis axis)
+    {
+        switch (axis)
+        {
+            case Axis.X:
+                return UnitX;
+
+            case Axis.Y:
+                return UnitY;
+
+            default:
+                throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
+        }
+    }
+
+    public static [#T#] Angle([#NAME#] v, [#NAME#] w)
+    {
+        var vwcos = v * w;
+        var vwsin = v.Cross(w);
+
+        return Math.Atan2(vwsin, vwcos);
+    }
+
+    #endregion
+
+    public override string ToString()
+    {
+        return string.Format("({0}, {1})", X, Y);
+    }
+}
