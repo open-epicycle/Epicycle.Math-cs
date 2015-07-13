@@ -27,12 +27,12 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public ClosedPolyline3(IEnumerable<Vector3> vertices)
         {
-            _vertices = vertices.AsReadOnlyList();
+            _vertices = vertices.ToReadOnlyList();
         }
 
         public ClosedPolyline3(IPolysurfaceFace face)
         {
-            _vertices = face.Edges.Select(e => e.Source.Point).AsReadOnlyList();
+            _vertices = face.Edges.Select(e => e.Source.Point).ToReadOnlyList();
         }
 
         public static implicit operator ClosedPolyline3(List<Vector3> vertices)

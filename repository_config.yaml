@@ -15,7 +15,7 @@ dotnet_frameworks:
  - net45
 
 nuget_dependencies:
- - Epicycle.Commons-cs.0.1.5.0
+ - Epicycle.Commons-cs.0.1.8.0
  - MathNet.Numerics.3.7.0
 
 description: |

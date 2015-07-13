@@ -47,7 +47,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
         public Polygon(IEnumerable<IClosedPolyline> contours)
         {
-            _contours = contours.AsReadOnlyList();
+            _contours = contours.ToReadOnlyList();
             _boundingBox = Box2.Hull(_contours.SelectMany(c => c.Vertices));
         }
 
