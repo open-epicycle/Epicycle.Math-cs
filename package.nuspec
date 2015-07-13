@@ -22,7 +22,7 @@
 
     <dependencies>
       <dependency id="Epicycle.Commons-cs" version="0.1.5.0" />
-      <dependency id="MathNet.Numerics" version="3.4.0" />
+      <dependency id="MathNet.Numerics" version="3.7.0" />
     </dependencies>
   </metadata>
 </package>

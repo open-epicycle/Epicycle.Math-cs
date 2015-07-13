@@ -16,7 +16,7 @@ dotnet_frameworks:
 
 nuget_dependencies:
  - Epicycle.Commons-cs.0.1.5.0
- - MathNet.Numerics.3.4.0
+ - MathNet.Numerics.3.7.0
 
 description: |
    Epicycle .NET math library. Includes: 2D/3D geometry, polygons, linear algebra, differential geometry, stochastic processes, Kalman filter.
