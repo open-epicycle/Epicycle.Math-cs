@@ -64,6 +64,7 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ### Version 0.1 
 
 * **Version 0.1.6** [IN DEVELOPMENT]
+  * Libraries upgrade
 
 * **Version 0.1.5** [2015-01-27]
   * BUG FIX: Epicycle.Math.Geometry.Quaternion.Dot is wrong
