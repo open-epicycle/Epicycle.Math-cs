@@ -145,6 +145,7 @@
     <Compile Include="Geometry\UnitVector3.cs" />
     <Compile Include="Geometry\Vector2.cs" />
     <Compile Include="Geometry\Vector2Utils.cs" />
+    <Compile Include="Geometry\Vector2f.cs" />
     <Compile Include="Geometry\Vector2i.cs" />
     <Compile Include="Geometry\Vector2iUtils.cs" />
     <Compile Include="Geometry\Vector3.cs" />
