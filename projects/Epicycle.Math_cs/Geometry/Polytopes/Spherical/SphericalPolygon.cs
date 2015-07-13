@@ -44,7 +44,7 @@ namespace Epicycle.Math.Geometry.Polytopes.Spherical
 
         public SphericalPolygon(IEnumerable<IClosedSphericalPolyline> contours)
         {
-            _contours = contours.AsReadOnlyList();
+            _contours = contours.ToReadOnlyList();
         }
 
         public SphericalPolygon(IEnumerable<IEnumerable<UnitVector3>> contours) : this(contours.Select(c => (IClosedSphericalPolyline)new ClosedSphericalPolyline(c))) { }

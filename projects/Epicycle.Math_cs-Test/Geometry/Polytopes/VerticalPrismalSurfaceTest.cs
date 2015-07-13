@@ -897,7 +897,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetVerticalFace(1);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.AsReadOnlyList(), edges.AsReadOnlyList());
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToReadOnlyList(), edges.ToReadOnlyList());
         }
 
         [Test, Combinatorial]
@@ -930,7 +930,7 @@ namespace Epicycle.Math.Geometry.Polytopes
 
             var face = surface.GetHorizontalFace(side);
 
-            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.AsReadOnlyList(), edges.AsReadOnlyList());
+            ExpectListsAreEqualUpToCyclicPermuation(face.Edges.ToReadOnlyList(), edges.ToReadOnlyList());
         }
 
         [Test]

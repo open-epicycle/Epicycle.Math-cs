@@ -27,7 +27,7 @@ namespace Epicycle.Math.Geometry.Polytopes
     {
         public ClosedPolyline(IEnumerable<Vector2> vertices)
         {
-            _vertices = vertices.AsReadOnlyList();
+            _vertices = vertices.ToReadOnlyList();
         }
 
         public ClosedPolyline(IReadOnlyList<Vector2> vertices)
