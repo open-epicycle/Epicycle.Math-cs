@@ -16,6 +16,8 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
+// Authors: squark, untrots
+
 using Epicycle.Commons;
 using Epicycle.Math.LinearAlgebra;
 
@@ -23,21 +25,21 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> NAME = Vector2, T = double
-    ﻿public partial struct Vector2 : IEquatable<Vector2>
+    // [### Vector2.cs.TEMPLATE> NAME = Vector2L, T = long
+    ﻿public partial struct Vector2L : IEquatable<Vector2L>
     {
-        public double X 
+        public long X 
         {
             get { return _x; }
         }
 
-        public double Y 
+        public long Y 
         {
             get { return _y; }
         }
 
-        private readonly double _x;
-        private readonly double _y;
+        private readonly long _x;
+        private readonly long _y;
 
         public enum Axis
         {
@@ -46,7 +48,7 @@ namespace Epicycle.Math.Geometry
             Count = 2 // used in for loops
         }
 
-        public double this[Axis axis]
+        public long this[Axis axis]
         {
             get
             {
@@ -66,7 +68,7 @@ namespace Epicycle.Math.Geometry
 
         #region creation
 
-        public Vector2(double x, double y)
+        public Vector2L(long x, long y)
         {
             _x = x;
             _y = y;
@@ -76,14 +78,14 @@ namespace Epicycle.Math.Geometry
 
         #region equality
 
-        public bool Equals(Vector2 v)
+        public bool Equals(Vector2L v)
         {
             return X == v.X && Y == v.Y;
         }
 
         public override bool Equals(object obj)
         {
-            var v = obj as Vector2?;
+            var v = obj as Vector2L?;
 
             if(!v.HasValue)
             {
@@ -98,12 +100,12 @@ namespace Epicycle.Math.Geometry
             return X.GetHashCode() ^ Y.GetHashCode();
         }
     
-        public static bool operator ==(Vector2 v, Vector2 w)
+        public static bool operator ==(Vector2L v, Vector2L w)
         {
             return v.Equals(w);
         }
 
-        public static bool operator !=(Vector2 v, Vector2 w)
+        public static bool operator !=(Vector2L v, Vector2L w)
         {
             return !v.Equals(w);
         }
@@ -112,7 +114,7 @@ namespace Epicycle.Math.Geometry
 
         #region norm
 
-        public double Norm2
+        public long Norm2
         {
             get { return _x * _x + _y * _y; }
         }
@@ -122,12 +124,12 @@ namespace Epicycle.Math.Geometry
             get { return Math.Sqrt(Norm2); }
         }
 
-        public static double Distance2(Vector2 v, Vector2 w)
+        public static long Distance2(Vector2L v, Vector2L w)
         {
             return (v - w).Norm2;
         }
     
-        public static double Distance(Vector2 v, Vector2 w)
+        public static double Distance(Vector2L v, Vector2L w)
         {
             return (v - w).Norm;
         }
@@ -136,65 +138,65 @@ namespace Epicycle.Math.Geometry
 
         #region algebra
 
-        public static Vector2 operator +(Vector2 v)
+        public static Vector2L operator +(Vector2L v)
         {
             return v;
         }
 
-        public static Vector2 operator -(Vector2 v)
+        public static Vector2L operator -(Vector2L v)
         {
-            return new Vector2(-v._x, -v._y);
+            return new Vector2L(-v._x, -v._y);
         }
 
-        public static Vector2 operator *(Vector2 v, double a)
+        public static Vector2L operator *(Vector2L v, long a)
         {
-            return new Vector2(v._x * a, v._y * a);
+            return new Vector2L(v._x * a, v._y * a);
         }
 
-        public static Vector2 operator *(double a, Vector2 v)
+        public static Vector2L operator *(long a, Vector2L v)
         {
             return v * a;
         }
 
-        public static Vector2 operator /(Vector2 v, double a)
+        public static Vector2L operator /(Vector2L v, long a)
         {
-            return new Vector2(v._x / a, v._y / a);
+            return new Vector2L(v._x / a, v._y / a);
         }
 
-        public static Vector2 operator +(Vector2 v, Vector2 w)
+        public static Vector2L operator +(Vector2L v, Vector2L w)
         {
-            return new Vector2(v._x + w._x, v._y + w._y);
+            return new Vector2L(v._x + w._x, v._y + w._y);
         }
 
-        public static Vector2 operator -(Vector2 v, Vector2 w)
+        public static Vector2L operator -(Vector2L v, Vector2L w)
         {
-            return new Vector2(v._x - w._x, v._y - w._y);
+            return new Vector2L(v._x - w._x, v._y - w._y);
         }
 
-        public static double operator *(Vector2 v, Vector2 w)
+        public static long operator *(Vector2L v, Vector2L w)
         {
             return v._x * w._x + v._y * w._y;
         }
 
-        public double Cross(Vector2 v)
+        public long Cross(Vector2L v)
         {
             return _x * v._y - _y * v._x;
         }
     
-        public static Vector2 Mul(Vector2 v, Vector2 w)
+        public static Vector2L Mul(Vector2L v, Vector2L w)
         {
-            return new Vector2(v.X * w.X, v.Y * w.Y);
+            return new Vector2L(v.X * w.X, v.Y * w.Y);
         }
 
         #endregion
 
         #region static
 
-        public static readonly Vector2 Zero = new Vector2(0, 0);
-        public static readonly Vector2 UnitX = new Vector2(1, 0);
-        public static readonly Vector2 UnitY = new Vector2(0, 1);
+        public static readonly Vector2L Zero = new Vector2L(0, 0);
+        public static readonly Vector2L UnitX = new Vector2L(1, 0);
+        public static readonly Vector2L UnitY = new Vector2L(0, 1);
 
-        public static Vector2 Unit(Axis axis)
+        public static Vector2L Unit(Axis axis)
         {
             switch (axis)
             {
@@ -209,7 +211,7 @@ namespace Epicycle.Math.Geometry
             }
         }
 
-        public static double Angle(Vector2 v, Vector2 w)
+        public static double Angle(Vector2L v, Vector2L w)
         {
             var vwcos = v * w;
             var vwsin = v.Cross(w);
@@ -224,82 +226,67 @@ namespace Epicycle.Math.Geometry
             return string.Format("({0}, {1})", X, Y);
         }
     }
-    // ###]
+     // ###]
 
-    public partial struct Vector2
-    {
-        #region creation
+     public partial struct Vector2L
+     {
+         #region constructors
 
-        public Vector2(Vector2i v)
+        public Vector2L(Vector2i v)
         {
             _x = v.X;
             _y = v.Y;
         }
 
-        public Vector2(Vector2L v)
+        public Vector2L(Vector2f v)
         {
-            _x = v.X;
-            _y = v.Y;
+            _x = (long)Math.Round(v.X);
+            _y = (long)Math.Round(v.Y);
         }
 
-        public Vector2(Vector2f v)
+        public Vector2L(Vector2 v)
         {
-            _x = v.X;
-            _y = v.Y;
+            _x = (long)Math.Round(v.X);
+            _y = (long)Math.Round(v.Y);
         }
 
-        public Vector2(OVector v)
+        public Vector2L(OVector v)
         {
             ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
 
-            _x = v[0];
-            _y = v[1];
+            _x = (long)Math.Round(v[0]);
+            _y = (long)Math.Round(v[1]);
         }
 
-        public static implicit operator Vector2(Vector2i v)
-        {
-            return new Vector2(v);
-        }
+         #endregion
 
-        public static implicit operator Vector2(Vector2L v)
-        {
-            return new Vector2(v);
-        }
+         #region conversion operators
 
-        public static implicit operator Vector2(Vector2f v)
-        {
-            return new Vector2(v);
-        }
+         public static implicit operator Vector2L(Vector2i v)
+         {
+             return new Vector2L(v);
+         }
 
-        public static explicit operator Vector2(OVector v)
-        {
-            return new Vector2(v);
-        }
+         public static explicit operator Vector2L(Vector2f v)
+         {
+             return new Vector2L(v);
+         }
 
-        public static implicit operator OVector(Vector2 v)
-        {
-            return new Vector(v._x, v._y);
-        }
+         public static explicit operator Vector2L(Vector2 v)
+         {
+             return new Vector2L(v);
+         }
 
-        #endregion
+         public static explicit operator Vector2L(OVector v)
+         {
+             return new Vector2L(v);
+         }
 
-        #region norm
+         public static explicit operator OVector(Vector2L v)
+         {
+             return new Vector(v._x, v._y);
+         }
 
-        public Vector2 Normalized
-        {
-            get
-            {
-                var norm = this.Norm;
-
-                if (norm < BasicMath.Epsilon)
-                {
-                    return UnitX;
-                }
-
-                return this / norm;
-            }
-        }
-
-        #endregion
-    }
-}
+         #endregion
+     }
+ }

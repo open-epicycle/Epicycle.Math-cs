@@ -236,6 +236,12 @@ namespace Epicycle.Math.Geometry
             _y = v.Y;
         }
 
+        public Vector2f(Vector2L v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+
         public Vector2f(Vector2 v)
         {
             _x = (float) v.X;
@@ -251,6 +257,11 @@ namespace Epicycle.Math.Geometry
         }
 
         public static implicit operator Vector2f(Vector2i v)
+        {
+            return new Vector2f(v);
+        }
+
+        public static implicit operator Vector2f(Vector2L v)
         {
             return new Vector2f(v);
         }

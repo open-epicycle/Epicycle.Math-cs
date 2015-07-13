@@ -144,6 +144,7 @@
     <Compile Include="Geometry\SymmetricMatrix3Utils.cs" />
     <Compile Include="Geometry\UnitVector3.cs" />
     <Compile Include="Geometry\Vector2.cs" />
+    <Compile Include="Geometry\Vector2L.cs" />
     <Compile Include="Geometry\Vector2Utils.cs" />
     <Compile Include="Geometry\Vector2f.cs" />
     <Compile Include="Geometry\Vector2i.cs" />
