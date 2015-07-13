@@ -71,6 +71,16 @@
     {
         return X.GetHashCode() ^ Y.GetHashCode();
     }
+    
+    public static bool operator ==([#NAME#] v, [#NAME#] w)
+    {
+        return v.Equals(w);
+    }
+
+    public static bool operator !=([#NAME#] v, [#NAME#] w)
+    {
+        return !v.Equals(w);
+    }
 
     #endregion
 
@@ -80,33 +90,18 @@
     {
         get { return _x * _x + _y * _y; }
     }
-
-    public [#T#] Norm
+    
+    public double Norm
     {
         get { return Math.Sqrt(Norm2); }
-    }
-
-    public [#NAME#] Normalized
-    {
-        get 
-        {
-            var norm = this.Norm;
-
-            if (norm < BasicMath.Epsilon)
-            {
-                return UnitX;
-            }
-
-            return this / norm;
-        }
     }
 
     public static [#T#] Distance2([#NAME#] v, [#NAME#] w)
     {
         return (v - w).Norm2;
     }
-
-    public static [#T#] Distance([#NAME#] v, [#NAME#] w)
+    
+    public static double Distance([#NAME#] v, [#NAME#] w)
     {
         return (v - w).Norm;
     }
@@ -159,6 +154,11 @@
     {
         return _x * v._y - _y * v._x;
     }
+    
+    public static [#NAME#] Mul([#NAME#] v, [#NAME#] w)
+    {
+        return new [#NAME#](v.X * w.X, v.Y * w.Y);
+    }
 
     #endregion
 
@@ -183,7 +183,7 @@
         }
     }
 
-    public static [#T#] Angle([#NAME#] v, [#NAME#] w)
+    public static double Angle([#NAME#] v, [#NAME#] w)
     {
         var vwcos = v * w;
         var vwsin = v.Cross(w);

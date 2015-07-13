@@ -97,6 +97,16 @@ namespace Epicycle.Math.Geometry
         {
             return X.GetHashCode() ^ Y.GetHashCode();
         }
+    
+        public static bool operator ==(Vector2 v, Vector2 w)
+        {
+            return v.Equals(w);
+        }
+
+        public static bool operator !=(Vector2 v, Vector2 w)
+        {
+            return !v.Equals(w);
+        }
 
         #endregion
 
@@ -106,32 +116,17 @@ namespace Epicycle.Math.Geometry
         {
             get { return _x * _x + _y * _y; }
         }
-
+    
         public double Norm
         {
             get { return Math.Sqrt(Norm2); }
-        }
-
-        public Vector2 Normalized
-        {
-            get 
-            {
-                var norm = this.Norm;
-
-                if (norm < BasicMath.Epsilon)
-                {
-                    return UnitX;
-                }
-
-                return this / norm;
-            }
         }
 
         public static double Distance2(Vector2 v, Vector2 w)
         {
             return (v - w).Norm2;
         }
-
+    
         public static double Distance(Vector2 v, Vector2 w)
         {
             return (v - w).Norm;
@@ -184,6 +179,11 @@ namespace Epicycle.Math.Geometry
         public double Cross(Vector2 v)
         {
             return _x * v._y - _y * v._x;
+        }
+    
+        public static Vector2 Mul(Vector2 v, Vector2 w)
+        {
+            return new Vector2(v.X * w.X, v.Y * w.Y);
         }
 
         #endregion
@@ -257,6 +257,25 @@ namespace Epicycle.Math.Geometry
         public static implicit operator OVector(Vector2 v)
         {
             return new Vector(v._x, v._y);
+        }
+
+        #endregion
+
+        #region norm
+
+        public Vector2 Normalized
+        {
+            get
+            {
+                var norm = this.Norm;
+
+                if (norm < BasicMath.Epsilon)
+                {
+                    return UnitX;
+                }
+
+                return this / norm;
+            }
         }
 
         #endregion
