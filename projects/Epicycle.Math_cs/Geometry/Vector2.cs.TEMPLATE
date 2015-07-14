@@ -1,65 +1,101 @@
 ﻿[%#
-identity = lambda x: x
-cast = lambda t: lambda x: "((%s)%s)" % (t, x)
-round = lambda t: lambda x: "((%s)Math.Round(%s))" % (t, x)
+
+def generate_dotnet_types_config():
+    sint_types = ['sbyte', 'short', 'int', 'long']
+    float_types = ['float', 'double' ]
+
+    identity = lambda x: x
+    cast = lambda t: lambda x: "((%s)%s)" % (t, x)
+    round = lambda t: lambda x: "((%s)Math.Round(%s))" % (t, x)
+    
+    all_types = sint_types + float_types
+    
+    types = {}
+    for t in all_types:
+        types[t] = {}
+        types[t]['name'] = t
+        types[t]['size'] = {'sbyte': 1, 'short': 2, 'int': 4, 'long': 8, 'float': 4, 'double': 8}[t]
+        types[t]['suffix'] = {'sbyte': 'b', 'short': 's', 'int': 'i', 'long': 'L', 'float': 'f', 'double': '', 'decimal': 'm'}[t]
+        
+        if t in sint_types:
+            category = "sint"
+        elif t in float_types:
+            category = "float"
+        
+        types[t]['category'] = category
+        
+    for to_type in all_types:
+        conv_config = {}
+    
+        for from_type in all_types:
+            conv_from_config = {}
+        
+            from_category = types[from_type]['category']
+            to_category = types[to_type]['category']
+            
+            conv = identity
+            convr = identity
+
+            if from_category == to_category:
+                is_implicit = types[from_type]['size'] <= types[to_type]['size']
+                conv = identity if is_implicit else cast(to_type)
+                convr = conv
+            elif from_category == "sint" and to_category == "float":
+                is_implicit = True
+            elif from_category == "float" and to_category == "sint":
+                is_implicit = False
+                conv = cast(to_type)
+                convr = round(to_type) 
+            
+            conv_from_config['conv_op_type'] = ("implicit" if is_implicit else "explicit") if from_type != to_type else "none"
+            conv_from_config['conv'] = conv
+            conv_from_config['convr'] = convr
+            conv_from_config['is_implicit'] = is_implicit
+            
+            conv_config[from_type] = conv_from_config
+            
+        types[to_type]['conv'] = conv_config
+        
+    return types
+    
+def generate_types_config(supported_types, dotnet_types_config):
+    types_config = {}
+    for type in supported_types:
+        config = Params()
+
+        dotnet_type_config = dotnet_types_config[type]
+        
+        config.type_config = dotnet_type_config
+        config.name = "Vector2%s" % dotnet_type_config['suffix']
+        config.size = dotnet_type_config['size'] * 2
+        config.isClass = config.size > 16
+        
+        config.convFrom = {}
+        config.convrFrom = {}
+        config.convOpType = {}
+        
+        for from_type in supported_types:
+            config.convFrom[from_type] = dotnet_type_config['conv'][from_type]['conv']
+            config.convrFrom[from_type] = dotnet_type_config['conv'][from_type]['convr']
+            config.convOpType[from_type] = dotnet_type_config['conv'][from_type]['conv_op_type']
+        
+        config.normalizedSupport = dotnet_type_config['category'] == "float"
+        
+        types_config[type] = config
+        
+    return types_config
+
+dotnet_types_config = generate_dotnet_types_config()    
 
 _.types = ['int', 'long', 'float', 'double']
-
-_.typesConfig = {}
-for type in _.types:
-    name = "Vector2%s" % {'int': "i", 'long': "L", 'float': "f", 'double': ""}[type]
-    config = Params()
-    
-    config.name = name
-    
-    convType = {}
-    
-    convFrom = {}
-    for t in _.types:
-        convFrom[t] = identity
-    
-    normalizedSupport = False
-    if _.T == "int":
-        convType['int'] = "none"
-        convType['long'] = "explicit"
-        convType['float'] = "explicit"
-        convType['double'] = "explicit"
-        convFrom['long'] = cast(type)
-        convFrom['float'] = round(type)
-        convFrom['double'] = round(type)
-    elif _.T == "long":
-        convType['int'] = "implicit"
-        convType['long'] = "none"
-        convType['float'] = "explicit"
-        convType['double'] = "explicit"
-        convFrom['float'] = round(type)
-        convFrom['double'] = round(type)
-    elif _.T == "float":
-        normalizedSupport = True
-        convType['int'] = "implicit"
-        convType['long'] = "implicit"
-        convType['float'] = "none"
-        convType['double'] = "explicit"
-        convFrom['double'] = cast(type)
-    elif _.T == "double":
-        normalizedSupport = True
-        convType['int'] = "implicit"
-        convType['long'] = "implicit"
-        convType['float'] = "implicit"
-        convType['double'] = "none"
-    
-    config.normalizedSupport = normalizedSupport
-    config.convType = convType
-    config.convFrom = convFrom
-    
-    _.typesConfig[type] = config
-
-_.config =  _.typesConfig[_.T]
-
+_.typesConfig = generate_types_config(_.types, dotnet_types_config)
+_.config = _.typesConfig[_.T]
 _.name = _.config.name
+_.classOrStruct = "class" if _.config.isClass else "struct"
+
 #%]
 
-public struct [#name#] : IEquatable<[#name#]>
+public [#classOrStruct#] [#name#] : IEquatable<[#name#]>
 {
     public [#T#] X 
     {
@@ -110,8 +146,8 @@ public struct [#name#] : IEquatable<[#name#]>
 [*# _.types ::
     public [#name#]([=# _.typesConfig[_item_].name #=] v)
     {
-        _x = [=# _.config.convFrom[_item_]("v.X") #=];
-        _y = [=# _.config.convFrom[_item_]("v.Y") #=];
+        _x = [=# _.config.convrFrom[_item_]("v.X") #=];
+        _y = [=# _.config.convrFrom[_item_]("v.Y") #=];
     }
 #*]
 
@@ -119,13 +155,13 @@ public struct [#name#] : IEquatable<[#name#]>
     {
         ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
 
-        _x = [=# _.config.convFrom['double']("v[0]") #=];
-        _y = [=# _.config.convFrom['double']("v[1]") #=];
+        _x = [=# _.config.convrFrom['double']("v[0]") #=];
+        _y = [=# _.config.convrFrom['double']("v[1]") #=];
     }
     
 [*# _.types ::
-[?# _.config.convType[_item_] != "none" :?
-    public static [=# _.config.convType[_item_] #=] operator [#name#]([=# _.typesConfig[_item_].name #=] v)
+[?# _.config.convOpType[_item_] != "none" :?
+    public static [=# _.config.convOpType[_item_] #=] operator [#name#]([=# _.typesConfig[_item_].name #=] v)
     {
         return new [#name#](v);
     }
@@ -214,7 +250,7 @@ public struct [#name#] : IEquatable<[#name#]>
                 return UnitX;
             }
 
-            return this / [=# _.config.convFrom['double']("norm") #=];
+            return this / [=# _.config.convrFrom['double']("norm") #=];
         }
     }
 #?]
