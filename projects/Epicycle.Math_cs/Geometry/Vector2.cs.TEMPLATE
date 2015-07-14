@@ -3,51 +3,60 @@ identity = lambda x: x
 cast = lambda t: lambda x: "((%s)%s)" % (t, x)
 round = lambda t: lambda x: "((%s)Math.Round(%s))" % (t, x)
 
-nameTemplate = "Vector2%s"
+_.types = ['int', 'long', 'float', 'double']
 
-_.nameInt = nameTemplate % "i"
-_.nameLong = nameTemplate % "L"
-_.nameFloat = nameTemplate % "f"
-_.nameDouble = nameTemplate % ""
+_.typesConfig = {}
+for type in _.types:
+    name = "Vector2%s" % {'int': "i", 'long': "L", 'float': "f", 'double': ""}[type]
+    config = Params()
+    
+    config.name = name
+    
+    convType = {}
+    
+    convFrom = {}
+    for t in _.types:
+        convFrom[t] = identity
+    
+    normalizedSupport = False
+    if _.T == "int":
+        convType['int'] = "none"
+        convType['long'] = "explicit"
+        convType['float'] = "explicit"
+        convType['double'] = "explicit"
+        convFrom['long'] = cast(type)
+        convFrom['float'] = round(type)
+        convFrom['double'] = round(type)
+    elif _.T == "long":
+        convType['int'] = "implicit"
+        convType['long'] = "none"
+        convType['float'] = "explicit"
+        convType['double'] = "explicit"
+        convFrom['float'] = round(type)
+        convFrom['double'] = round(type)
+    elif _.T == "float":
+        normalizedSupport = True
+        convType['int'] = "implicit"
+        convType['long'] = "implicit"
+        convType['float'] = "none"
+        convType['double'] = "explicit"
+        convFrom['double'] = cast(type)
+    elif _.T == "double":
+        normalizedSupport = True
+        convType['int'] = "implicit"
+        convType['long'] = "implicit"
+        convType['float'] = "implicit"
+        convType['double'] = "none"
+    
+    config.normalizedSupport = normalizedSupport
+    config.convType = convType
+    config.convFrom = convFrom
+    
+    _.typesConfig[type] = config
 
-_.fromInt = lambda x: x
-_.fromLong = lambda x: x
-_.fromFloat = lambda x: x
-_.fromDouble = lambda x: x
-if _.T == "int":
-    _.name = _.nameInt
-    _.normalizedSupport = False
-    _.convTypeInt = "none"
-    _.convTypeLong = "explicit"
-    _.convTypeFloat = "explicit"
-    _.convTypeDouble = "explicit"
-    _.fromLong = cast(_.T)
-    _.fromFloat = round(_.T)
-    _.fromDouble = round(_.T)
-elif _.T == "long":
-    _.name = _.nameLong
-    _.normalizedSupport = False
-    _.convTypeInt = "implicit"
-    _.convTypeLong = "none"
-    _.convTypeFloat = "explicit"
-    _.convTypeDouble = "explicit"
-    _.fromFloat = round(_.T)
-    _.fromDouble = round(_.T)
-elif _.T == "float":
-    _.name = _.nameFloat
-    _.normalizedSupport = True
-    _.convTypeInt = "implicit"
-    _.convTypeLong = "implicit"
-    _.convTypeFloat = "none"
-    _.convTypeDouble = "explicit"
-    _.fromDouble = cast(_.T)
-elif _.T == "double":
-    _.name = _.nameDouble
-    _.normalizedSupport = True
-    _.convTypeInt = "implicit"
-    _.convTypeLong = "implicit"
-    _.convTypeFloat = "implicit"
-    _.convTypeDouble = "none"
+_.config =  _.typesConfig[_.T]
+
+_.name = _.config.name
 #%]
 
 public struct [#name#] : IEquatable<[#name#]>
@@ -97,60 +106,31 @@ public struct [#name#] : IEquatable<[#name#]>
         _x = x;
         _y = y;
     }
+    
+[*# _.types ::
+    public [#name#]([=# _.typesConfig[_item_].name #=] v)
+    {
+        _x = [=# _.config.convFrom[_item_]("v.X") #=];
+        _y = [=# _.config.convFrom[_item_]("v.Y") #=];
+    }
+#*]
 
-    public [#name#]([#nameInt#] v)
-    {
-        _x = [=# _.fromInt("v.X") #=];
-        _y = [=# _.fromInt("v.Y") #=];
-    }
-    
-    public [#name#]([#nameLong#] v)
-    {
-        _x = [=# _.fromLong("v.X") #=];
-        _y = [=# _.fromLong("v.Y") #=];
-    }
-    
-    public [#name#]([#nameFloat#] v)
-    {
-        _x = [=# _.fromFloat("v.X") #=];
-        _y = [=# _.fromFloat("v.Y") #=];
-    }
-    
-    public [#name#]([#nameDouble#] v)
-    {
-        _x = [=# _.fromDouble("v.X") #=];
-        _y = [=# _.fromDouble("v.Y") #=];
-    }
-    
     public [#name#](OVector v)
     {
         ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
 
-        _x = [=# _.fromDouble("v[0]") #=];
-        _y = [=# _.fromDouble("v[1]") #=];
+        _x = [=# _.config.convFrom['double']("v[0]") #=];
+        _y = [=# _.config.convFrom['double']("v[1]") #=];
     }
-
-[?# _.convTypeInt != "none" :?
-    public static [#convTypeInt#] operator [#name#]([#nameInt#] v)
-    {
-        return new [#name#](v);
-    }
-#?][?# _.convTypeLong != "none" :?
-    public static [#convTypeLong#] operator [#name#]([#nameLong#] v)
-    {
-        return new [#name#](v);
-    }
-#?][?# _.convTypeFloat != "none" :?
-    public static [#convTypeFloat#] operator [#name#]([#nameFloat#] v)
-    {
-        return new [#name#](v);
-    }
-#?][?# _.convTypeDouble != "none" :?
-    public static [#convTypeDouble#] operator [#name#]([#nameDouble#] v)
+    
+[*# _.types ::
+[?# _.config.convType[_item_] != "none" :?
+    public static [=# _.config.convType[_item_] #=] operator [#name#]([=# _.typesConfig[_item_].name #=] v)
     {
         return new [#name#](v);
     }
 #?]
+#*]
 
     public static explicit operator [#name#](OVector v)
     {
@@ -222,7 +202,7 @@ public struct [#name#] : IEquatable<[#name#]>
         return (v - w).Norm;
     }
     
-[?# _.normalizedSupport :?
+[?#  _.config.normalizedSupport :?
     public [#name#] Normalized
     {
         get
@@ -234,7 +214,7 @@ public struct [#name#] : IEquatable<[#name#]>
                 return UnitX;
             }
 
-            return this / [=# _.fromDouble("norm") #=];
+            return this / [=# _.config.convFrom['double']("norm") #=];
         }
     }
 #?]

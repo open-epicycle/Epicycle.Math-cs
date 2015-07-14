@@ -75,31 +75,33 @@ namespace Epicycle.Math.Geometry
             _x = x;
             _y = y;
         }
+    
 
         public Vector2L(Vector2i v)
         {
             _x = v.X;
             _y = v.Y;
         }
-    
+
         public Vector2L(Vector2L v)
         {
             _x = v.X;
             _y = v.Y;
         }
-    
+
         public Vector2L(Vector2f v)
         {
             _x = ((long)Math.Round(v.X));
             _y = ((long)Math.Round(v.Y));
         }
-    
+
         public Vector2L(Vector2 v)
         {
             _x = ((long)Math.Round(v.X));
             _y = ((long)Math.Round(v.Y));
         }
-    
+
+
         public Vector2L(OVector v)
         {
             ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
@@ -107,6 +109,7 @@ namespace Epicycle.Math.Geometry
             _x = ((long)Math.Round(v[0]));
             _y = ((long)Math.Round(v[1]));
         }
+    
 
 
         public static implicit operator Vector2L(Vector2i v)
@@ -114,15 +117,22 @@ namespace Epicycle.Math.Geometry
             return new Vector2L(v);
         }
 
+
+
+
+
         public static explicit operator Vector2L(Vector2f v)
         {
             return new Vector2L(v);
         }
 
+
+
         public static explicit operator Vector2L(Vector2 v)
         {
             return new Vector2L(v);
         }
+
 
 
         public static explicit operator Vector2L(OVector v)
