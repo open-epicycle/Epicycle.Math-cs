@@ -25,8 +25,10 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> NAME = Vector2i, T = int
-    ﻿public partial struct Vector2i : IEquatable<Vector2i>
+    // [### Vector2.cs.TEMPLATE> T = int
+    ﻿
+
+    public struct Vector2i : IEquatable<Vector2i>
     {
         public int X 
         {
@@ -37,7 +39,7 @@ namespace Epicycle.Math.Geometry
         {
             get { return _y; }
         }
-
+    
         private readonly int _x;
         private readonly int _y;
 
@@ -74,6 +76,65 @@ namespace Epicycle.Math.Geometry
             _y = y;
         }
 
+        public Vector2i(Vector2i v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2i(Vector2L v)
+        {
+            _x = ((int)v.X);
+            _y = ((int)v.Y);
+        }
+    
+        public Vector2i(Vector2f v)
+        {
+            _x = ((int)Math.Round(v.X));
+            _y = ((int)Math.Round(v.Y));
+        }
+    
+        public Vector2i(Vector2 v)
+        {
+            _x = ((int)Math.Round(v.X));
+            _y = ((int)Math.Round(v.Y));
+        }
+    
+        public Vector2i(OVector v)
+        {
+            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
+
+            _x = ((int)Math.Round(v[0]));
+            _y = ((int)Math.Round(v[1]));
+        }
+
+
+        public static explicit operator Vector2i(Vector2L v)
+        {
+            return new Vector2i(v);
+        }
+
+        public static explicit operator Vector2i(Vector2f v)
+        {
+            return new Vector2i(v);
+        }
+
+        public static explicit operator Vector2i(Vector2 v)
+        {
+            return new Vector2i(v);
+        }
+
+
+        public static explicit operator Vector2i(OVector v)
+        {
+            return new Vector2i(v);
+        }
+
+        public static explicit operator OVector(Vector2i v)
+        {
+            return new Vector(v._x, v._y);
+        }
+    
         #endregion
 
         #region equality
@@ -133,6 +194,8 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm;
         }
+    
+
 
         #endregion
 
@@ -227,66 +290,4 @@ namespace Epicycle.Math.Geometry
         }
     }
     // ###]
-
-    public partial struct Vector2i
-    {
-        #region constructors
-
-        public Vector2i(Vector2L v)
-        {
-            _x = (int)v.X;
-            _y = (int)v.Y;
-        }
-
-        public Vector2i(Vector2f v)
-        {
-            _x = (int)Math.Round(v.X);
-            _y = (int)Math.Round(v.Y);
-        }
-
-        public Vector2i(Vector2 v)
-        {
-            _x = (int)Math.Round(v.X);
-            _y = (int)Math.Round(v.Y);
-        }
-
-        public Vector2i(OVector v)
-        {
-            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
-
-            _x = (int)Math.Round(v[0]);
-            _y = (int)Math.Round(v[1]);
-        }
-
-        #endregion
-
-        #region conversion operators
-
-        public static explicit operator Vector2i(Vector2L v)
-        {
-            return new Vector2i(v);
-        }
-
-        public static explicit operator Vector2i(Vector2f v)
-        {
-            return new Vector2i(v);
-        }
-
-        public static explicit operator Vector2i(Vector2 v)
-        {
-            return new Vector2i(v);
-        }
-
-        public static explicit operator Vector2i(OVector v)
-        {
-            return new Vector2i(v);
-        }
-
-        public static explicit operator OVector(Vector2i v)
-        {
-            return new Vector(v._x, v._y);
-        }
-
-        #endregion
-    }
 }

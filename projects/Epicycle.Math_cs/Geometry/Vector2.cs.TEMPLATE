@@ -1,4 +1,56 @@
-﻿public partial struct [#NAME#] : IEquatable<[#NAME#]>
+﻿[%#
+identity = lambda x: x
+cast = lambda t: lambda x: "((%s)%s)" % (t, x)
+round = lambda t: lambda x: "((%s)Math.Round(%s))" % (t, x)
+
+nameTemplate = "Vector2%s"
+
+_.nameInt = nameTemplate % "i"
+_.nameLong = nameTemplate % "L"
+_.nameFloat = nameTemplate % "f"
+_.nameDouble = nameTemplate % ""
+
+_.fromInt = lambda x: x
+_.fromLong = lambda x: x
+_.fromFloat = lambda x: x
+_.fromDouble = lambda x: x
+if _.T == "int":
+    _.name = _.nameInt
+    _.normalizedSupport = False
+    _.convTypeInt = "none"
+    _.convTypeLong = "explicit"
+    _.convTypeFloat = "explicit"
+    _.convTypeDouble = "explicit"
+    _.fromLong = cast(_.T)
+    _.fromFloat = round(_.T)
+    _.fromDouble = round(_.T)
+elif _.T == "long":
+    _.name = _.nameLong
+    _.normalizedSupport = False
+    _.convTypeInt = "implicit"
+    _.convTypeLong = "none"
+    _.convTypeFloat = "explicit"
+    _.convTypeDouble = "explicit"
+    _.fromFloat = round(_.T)
+    _.fromDouble = round(_.T)
+elif _.T == "float":
+    _.name = _.nameFloat
+    _.normalizedSupport = True
+    _.convTypeInt = "implicit"
+    _.convTypeLong = "implicit"
+    _.convTypeFloat = "none"
+    _.convTypeDouble = "explicit"
+    _.fromDouble = cast(_.T)
+elif _.T == "double":
+    _.name = _.nameDouble
+    _.normalizedSupport = True
+    _.convTypeInt = "implicit"
+    _.convTypeLong = "implicit"
+    _.convTypeFloat = "implicit"
+    _.convTypeDouble = "none"
+#%]
+
+public struct [#name#] : IEquatable<[#name#]>
 {
     public [#T#] X 
     {
@@ -9,7 +61,7 @@
     {
         get { return _y; }
     }
-
+    
     private readonly [#T#] _x;
     private readonly [#T#] _y;
 
@@ -40,24 +92,88 @@
 
     #region creation
 
-    public [#NAME#]([#T#] x, [#T#] y)
+    public [#name#]([#T#] x, [#T#] y)
     {
         _x = x;
         _y = y;
     }
 
+    public [#name#]([#nameInt#] v)
+    {
+        _x = [=# _.fromInt("v.X") #=];
+        _y = [=# _.fromInt("v.Y") #=];
+    }
+    
+    public [#name#]([#nameLong#] v)
+    {
+        _x = [=# _.fromLong("v.X") #=];
+        _y = [=# _.fromLong("v.Y") #=];
+    }
+    
+    public [#name#]([#nameFloat#] v)
+    {
+        _x = [=# _.fromFloat("v.X") #=];
+        _y = [=# _.fromFloat("v.Y") #=];
+    }
+    
+    public [#name#]([#nameDouble#] v)
+    {
+        _x = [=# _.fromDouble("v.X") #=];
+        _y = [=# _.fromDouble("v.Y") #=];
+    }
+    
+    public [#name#](OVector v)
+    {
+        ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
+
+        _x = [=# _.fromDouble("v[0]") #=];
+        _y = [=# _.fromDouble("v[1]") #=];
+    }
+
+[?# _.convTypeInt != "none" :?
+    public static [#convTypeInt#] operator [#name#]([#nameInt#] v)
+    {
+        return new [#name#](v);
+    }
+#?][?# _.convTypeLong != "none" :?
+    public static [#convTypeLong#] operator [#name#]([#nameLong#] v)
+    {
+        return new [#name#](v);
+    }
+#?][?# _.convTypeFloat != "none" :?
+    public static [#convTypeFloat#] operator [#name#]([#nameFloat#] v)
+    {
+        return new [#name#](v);
+    }
+#?][?# _.convTypeDouble != "none" :?
+    public static [#convTypeDouble#] operator [#name#]([#nameDouble#] v)
+    {
+        return new [#name#](v);
+    }
+#?]
+
+    public static explicit operator [#name#](OVector v)
+    {
+        return new [#name#](v);
+    }
+
+    public static explicit operator OVector([#name#] v)
+    {
+        return new Vector(v._x, v._y);
+    }
+    
     #endregion
 
     #region equality
 
-    public bool Equals([#NAME#] v)
+    public bool Equals([#name#] v)
     {
         return X == v.X && Y == v.Y;
     }
 
     public override bool Equals(object obj)
     {
-        var v = obj as [#NAME#]?;
+        var v = obj as [#name#]?;
 
         if(!v.HasValue)
         {
@@ -72,12 +188,12 @@
         return X.GetHashCode() ^ Y.GetHashCode();
     }
     
-    public static bool operator ==([#NAME#] v, [#NAME#] w)
+    public static bool operator ==([#name#] v, [#name#] w)
     {
         return v.Equals(w);
     }
 
-    public static bool operator !=([#NAME#] v, [#NAME#] w)
+    public static bool operator !=([#name#] v, [#name#] w)
     {
         return !v.Equals(w);
     }
@@ -96,79 +212,96 @@
         get { return Math.Sqrt(Norm2); }
     }
 
-    public static [#T#] Distance2([#NAME#] v, [#NAME#] w)
+    public static [#T#] Distance2([#name#] v, [#name#] w)
     {
         return (v - w).Norm2;
     }
     
-    public static double Distance([#NAME#] v, [#NAME#] w)
+    public static double Distance([#name#] v, [#name#] w)
     {
         return (v - w).Norm;
     }
+    
+[?# _.normalizedSupport :?
+    public [#name#] Normalized
+    {
+        get
+        {
+            var norm = this.Norm;
+
+            if (norm < BasicMath.Epsilon)
+            {
+                return UnitX;
+            }
+
+            return this / [=# _.fromDouble("norm") #=];
+        }
+    }
+#?]
 
     #endregion
 
     #region algebra
 
-    public static [#NAME#] operator +([#NAME#] v)
+    public static [#name#] operator +([#name#] v)
     {
         return v;
     }
 
-    public static [#NAME#] operator -([#NAME#] v)
+    public static [#name#] operator -([#name#] v)
     {
-        return new [#NAME#](-v._x, -v._y);
+        return new [#name#](-v._x, -v._y);
     }
 
-    public static [#NAME#] operator *([#NAME#] v, [#T#] a)
+    public static [#name#] operator *([#name#] v, [#T#] a)
     {
-        return new [#NAME#](v._x * a, v._y * a);
+        return new [#name#](v._x * a, v._y * a);
     }
 
-    public static [#NAME#] operator *([#T#] a, [#NAME#] v)
+    public static [#name#] operator *([#T#] a, [#name#] v)
     {
         return v * a;
     }
 
-    public static [#NAME#] operator /([#NAME#] v, [#T#] a)
+    public static [#name#] operator /([#name#] v, [#T#] a)
     {
-        return new [#NAME#](v._x / a, v._y / a);
+        return new [#name#](v._x / a, v._y / a);
     }
 
-    public static [#NAME#] operator +([#NAME#] v, [#NAME#] w)
+    public static [#name#] operator +([#name#] v, [#name#] w)
     {
-        return new [#NAME#](v._x + w._x, v._y + w._y);
+        return new [#name#](v._x + w._x, v._y + w._y);
     }
 
-    public static [#NAME#] operator -([#NAME#] v, [#NAME#] w)
+    public static [#name#] operator -([#name#] v, [#name#] w)
     {
-        return new [#NAME#](v._x - w._x, v._y - w._y);
+        return new [#name#](v._x - w._x, v._y - w._y);
     }
 
-    public static [#T#] operator *([#NAME#] v, [#NAME#] w)
+    public static [#T#] operator *([#name#] v, [#name#] w)
     {
         return v._x * w._x + v._y * w._y;
     }
 
-    public [#T#] Cross([#NAME#] v)
+    public [#T#] Cross([#name#] v)
     {
         return _x * v._y - _y * v._x;
     }
     
-    public static [#NAME#] Mul([#NAME#] v, [#NAME#] w)
+    public static [#name#] Mul([#name#] v, [#name#] w)
     {
-        return new [#NAME#](v.X * w.X, v.Y * w.Y);
+        return new [#name#](v.X * w.X, v.Y * w.Y);
     }
 
     #endregion
 
     #region static
 
-    public static readonly [#NAME#] Zero = new [#NAME#](0, 0);
-    public static readonly [#NAME#] UnitX = new [#NAME#](1, 0);
-    public static readonly [#NAME#] UnitY = new [#NAME#](0, 1);
+    public static readonly [#name#] Zero = new [#name#](0, 0);
+    public static readonly [#name#] UnitX = new [#name#](1, 0);
+    public static readonly [#name#] UnitY = new [#name#](0, 1);
 
-    public static [#NAME#] Unit(Axis axis)
+    public static [#name#] Unit(Axis axis)
     {
         switch (axis)
         {
@@ -183,7 +316,7 @@
         }
     }
 
-    public static double Angle([#NAME#] v, [#NAME#] w)
+    public static double Angle([#name#] v, [#name#] w)
     {
         var vwcos = v * w;
         var vwsin = v.Cross(w);

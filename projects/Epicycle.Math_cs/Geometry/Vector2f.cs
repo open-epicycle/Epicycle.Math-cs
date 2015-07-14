@@ -23,8 +23,10 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> NAME = Vector2f, T = float
-    ﻿public partial struct Vector2f : IEquatable<Vector2f>
+    // [### Vector2.cs.TEMPLATE> T = float
+    ﻿
+
+    public struct Vector2f : IEquatable<Vector2f>
     {
         public float X 
         {
@@ -35,7 +37,7 @@ namespace Epicycle.Math.Geometry
         {
             get { return _y; }
         }
-
+    
         private readonly float _x;
         private readonly float _y;
 
@@ -72,6 +74,65 @@ namespace Epicycle.Math.Geometry
             _y = y;
         }
 
+        public Vector2f(Vector2i v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2f(Vector2L v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2f(Vector2f v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2f(Vector2 v)
+        {
+            _x = ((float)v.X);
+            _y = ((float)v.Y);
+        }
+    
+        public Vector2f(OVector v)
+        {
+            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
+
+            _x = ((float)v[0]);
+            _y = ((float)v[1]);
+        }
+
+
+        public static implicit operator Vector2f(Vector2i v)
+        {
+            return new Vector2f(v);
+        }
+
+        public static implicit operator Vector2f(Vector2L v)
+        {
+            return new Vector2f(v);
+        }
+
+        public static explicit operator Vector2f(Vector2 v)
+        {
+            return new Vector2f(v);
+        }
+
+
+        public static explicit operator Vector2f(OVector v)
+        {
+            return new Vector2f(v);
+        }
+
+        public static explicit operator OVector(Vector2f v)
+        {
+            return new Vector(v._x, v._y);
+        }
+    
         #endregion
 
         #region equality
@@ -131,6 +192,23 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm;
         }
+    
+
+        public Vector2f Normalized
+        {
+            get
+            {
+                var norm = this.Norm;
+
+                if (norm < BasicMath.Epsilon)
+                {
+                    return UnitX;
+                }
+
+                return this / ((float)norm);
+            }
+        }
+
 
         #endregion
 
@@ -225,81 +303,4 @@ namespace Epicycle.Math.Geometry
         }
     }
     // ###]
-
-    public partial struct Vector2f
-    {
-        #region creation
-
-        public Vector2f(Vector2i v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2f(Vector2L v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2f(Vector2 v)
-        {
-            _x = (float) v.X;
-            _y = (float) v.Y;
-        }
-
-        public Vector2f(OVector v)
-        {
-            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
-
-            _x = (float) v[0];
-            _y = (float) v[1];
-        }
-
-        public static implicit operator Vector2f(Vector2i v)
-        {
-            return new Vector2f(v);
-        }
-
-        public static implicit operator Vector2f(Vector2L v)
-        {
-            return new Vector2f(v);
-        }
-
-        public static explicit operator Vector2f(Vector2 v)
-        {
-            return new Vector2f(v);
-        }
-
-        public static explicit operator Vector2f(OVector v)
-        {
-            return new Vector2f(v);
-        }
-
-        public static implicit operator OVector(Vector2f v)
-        {
-            return new Vector(v._x, v._y);
-        }
-
-        #endregion
-
-        #region norm
-
-        public Vector2f Normalized
-        {
-            get
-            {
-                var norm = this.Norm;
-
-                if (norm < BasicMath.Epsilon)
-                {
-                    return UnitX;
-                }
-
-                return this / (float) norm;
-            }
-        }
-
-        #endregion
-    }
 }

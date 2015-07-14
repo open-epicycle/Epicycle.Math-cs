@@ -23,8 +23,10 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> NAME = Vector2, T = double
-    ﻿public partial struct Vector2 : IEquatable<Vector2>
+    // [### Vector2.cs.TEMPLATE> T = double
+    ﻿
+
+    public struct Vector2 : IEquatable<Vector2>
     {
         public double X 
         {
@@ -35,7 +37,7 @@ namespace Epicycle.Math.Geometry
         {
             get { return _y; }
         }
-
+    
         private readonly double _x;
         private readonly double _y;
 
@@ -72,6 +74,65 @@ namespace Epicycle.Math.Geometry
             _y = y;
         }
 
+        public Vector2(Vector2i v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2(Vector2L v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2(Vector2f v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2(Vector2 v)
+        {
+            _x = v.X;
+            _y = v.Y;
+        }
+    
+        public Vector2(OVector v)
+        {
+            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
+
+            _x = v[0];
+            _y = v[1];
+        }
+
+
+        public static implicit operator Vector2(Vector2i v)
+        {
+            return new Vector2(v);
+        }
+
+        public static implicit operator Vector2(Vector2L v)
+        {
+            return new Vector2(v);
+        }
+
+        public static implicit operator Vector2(Vector2f v)
+        {
+            return new Vector2(v);
+        }
+
+
+        public static explicit operator Vector2(OVector v)
+        {
+            return new Vector2(v);
+        }
+
+        public static explicit operator OVector(Vector2 v)
+        {
+            return new Vector(v._x, v._y);
+        }
+    
         #endregion
 
         #region equality
@@ -131,6 +192,23 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm;
         }
+    
+
+        public Vector2 Normalized
+        {
+            get
+            {
+                var norm = this.Norm;
+
+                if (norm < BasicMath.Epsilon)
+                {
+                    return UnitX;
+                }
+
+                return this / norm;
+            }
+        }
+
 
         #endregion
 
@@ -225,81 +303,4 @@ namespace Epicycle.Math.Geometry
         }
     }
     // ###]
-
-    public partial struct Vector2
-    {
-        #region creation
-
-        public Vector2(Vector2i v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2(Vector2L v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2(Vector2f v)
-        {
-            _x = v.X;
-            _y = v.Y;
-        }
-
-        public Vector2(OVector v)
-        {
-            ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
-
-            _x = v[0];
-            _y = v[1];
-        }
-
-        public static implicit operator Vector2(Vector2i v)
-        {
-            return new Vector2(v);
-        }
-
-        public static implicit operator Vector2(Vector2L v)
-        {
-            return new Vector2(v);
-        }
-
-        public static implicit operator Vector2(Vector2f v)
-        {
-            return new Vector2(v);
-        }
-
-        public static explicit operator Vector2(OVector v)
-        {
-            return new Vector2(v);
-        }
-
-        public static implicit operator OVector(Vector2 v)
-        {
-            return new Vector(v._x, v._y);
-        }
-
-        #endregion
-
-        #region norm
-
-        public Vector2 Normalized
-        {
-            get
-            {
-                var norm = this.Norm;
-
-                if (norm < BasicMath.Epsilon)
-                {
-                    return UnitX;
-                }
-
-                return this / norm;
-            }
-        }
-
-        #endregion
-    }
 }
