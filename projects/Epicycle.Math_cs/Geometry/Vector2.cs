@@ -23,7 +23,7 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> T = double
+    // [### Vector2.cs.TEMPLATE> T = double, D = 2
     ﻿
 
     public struct Vector2 : IEquatable<Vector2>

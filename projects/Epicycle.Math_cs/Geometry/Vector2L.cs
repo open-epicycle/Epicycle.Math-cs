@@ -25,7 +25,7 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### Vector2.cs.TEMPLATE> T = long
+    // [### Vector2.cs.TEMPLATE> T = long, D = 2
     ﻿
 
     public struct Vector2L : IEquatable<Vector2L>
