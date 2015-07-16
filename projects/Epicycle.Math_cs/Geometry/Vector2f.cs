@@ -16,8 +16,6 @@
 // For more information check https://github.com/open-epicycle/Epicycle.Math-cs
 // ]]]]
 
-// Authors: squark, untrots
-
 using Epicycle.Commons;
 using Epicycle.Math.LinearAlgebra;
 
@@ -25,20 +23,20 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### VectorN.cs.TEMPLATE> T = int, D = 2
+    // [### VectorN.cs.TEMPLATE> T = float, D = 2
     ﻿
-    public struct Vector2i : IEquatable<Vector2i>
+    public struct Vector2f : IEquatable<Vector2f>
     {
         #region Constants
 
-        public static readonly Vector2i Zero = new Vector2i(0, 0);
+        public static readonly Vector2f Zero = new Vector2f(0, 0);
     
-        public static readonly Vector2i UnitX = new Vector2i(1, 0);
+        public static readonly Vector2f UnitX = new Vector2f(1, 0);
     
-        public static readonly Vector2i UnitY = new Vector2i(0, 1);
+        public static readonly Vector2f UnitY = new Vector2f(0, 1);
     
 
-        public static Vector2i Unit(Axis axis)
+        public static Vector2f Unit(Axis axis)
         {
             switch (axis)
             {
@@ -60,16 +58,16 @@ namespace Epicycle.Math.Geometry
         #region Members
     
     
-        private readonly int _x;
+        private readonly float _x;
     
-        private readonly int _y;
+        private readonly float _y;
     
     
         #endregion
     
         #region Construction and conversion
     
-        public Vector2i(int x, int y)
+        public Vector2f(float x, float y)
         {
             _x = x;
             _y = y;
@@ -78,77 +76,77 @@ namespace Epicycle.Math.Geometry
     
 
     
-        public Vector2i(Vector2i v)
+        public Vector2f(Vector2i v)
         {
             _x = v.X;
             _y = v.Y;
         }
     
-        public Vector2i(Vector2L v)
+        public Vector2f(Vector2L v)
         {
-            _x = ((int)v.X);
-            _y = ((int)v.Y);
+            _x = v.X;
+            _y = v.Y;
         }
     
-        public Vector2i(Vector2f v)
+        public Vector2f(Vector2f v)
         {
-            _x = ((int)Math.Round(v.X));
-            _y = ((int)Math.Round(v.Y));
+            _x = v.X;
+            _y = v.Y;
         }
     
-        public Vector2i(Vector2 v)
+        public Vector2f(Vector2 v)
         {
-            _x = ((int)Math.Round(v.X));
-            _y = ((int)Math.Round(v.Y));
+            _x = ((float)v.X);
+            _y = ((float)v.Y);
         }
     
 
-        public Vector2i(OVector v)
+        public Vector2f(OVector v)
         {
             ArgAssert.Equal(v.Dimension, "v.Dimension", 2, "2");
 
-            _x = ((int)Math.Round(v[0]));
-            _y = ((int)Math.Round(v[1]));
+            _x = ((float)v[0]);
+            _y = ((float)v[1]);
         }
 
-        public int[] ToArray()
+        public float[] ToArray()
         {
-            return new int[] { _x, _y };
+            return new float[] { _x, _y };
         }
 
     
     
-    
-    
-        public static explicit operator Vector2i(Vector2L v)
+        public static implicit operator Vector2f(Vector2i v)
         {
-            return new Vector2i(v);
+            return new Vector2f(v);
         }
     
     
     
-        public static explicit operator Vector2i(Vector2f v)
+        public static implicit operator Vector2f(Vector2L v)
         {
-            return new Vector2i(v);
+            return new Vector2f(v);
         }
     
     
     
-        public static explicit operator Vector2i(Vector2 v)
+    
+    
+        public static explicit operator Vector2f(Vector2 v)
         {
-            return new Vector2i(v);
+            return new Vector2f(v);
         }
     
     
 
     
 
-        public static explicit operator Vector2i(OVector v)
+        public static explicit operator Vector2f(OVector v)
         {
-            return new Vector2i(v);
+            return new Vector2f(v);
         }
 
-        public static implicit operator OVector(Vector2i v)
+        public static implicit operator OVector(Vector2f v)
         {
             return new Vector(v._x, v._y);
         }
@@ -158,12 +156,12 @@ namespace Epicycle.Math.Geometry
         #region Properties
     
     
-        public int X
+        public float X
         {
             get { return _x; }
         }
     
-        public int Y
+        public float Y
         {
             get { return _y; }
         }
@@ -180,7 +178,7 @@ namespace Epicycle.Math.Geometry
             Count = 2 // used in for loops
         }
 
-        public int this[Axis axis]
+        public float this[Axis axis]
         {
             get
             {
@@ -209,7 +207,7 @@ namespace Epicycle.Math.Geometry
     
         #region Equality & HashCode
 
-        public bool Equals(Vector2i v)
+        public bool Equals(Vector2f v)
         {
             return _x == v._x && _y == v._y;
         }
@@ -217,7 +215,7 @@ namespace Epicycle.Math.Geometry
         public override bool Equals(object obj)
         {
         
-            var v = obj as Vector2i?;
+            var v = obj as Vector2f?;
 
             if(!v.HasValue)
             {
@@ -233,12 +231,12 @@ namespace Epicycle.Math.Geometry
             return _x.GetHashCode() ^ _y.GetHashCode();
         }
 
-        public static bool operator ==(Vector2i v, Vector2i w)
+        public static bool operator ==(Vector2f v, Vector2f w)
         {
             return v.Equals(w);
         }
 
-        public static bool operator !=(Vector2i v, Vector2i w)
+        public static bool operator !=(Vector2f v, Vector2f w)
         {
             return !v.Equals(w);
         }
@@ -256,7 +254,7 @@ namespace Epicycle.Math.Geometry
     
         #region Norm & Distance
 
-        public int Norm2
+        public float Norm2
         {
             get { return (_x * _x) + (_y * _y); }
         }
@@ -266,81 +264,96 @@ namespace Epicycle.Math.Geometry
             get { return Math.Sqrt(Norm2); }
         }
 
-        public static int Distance2(Vector2i v, Vector2i w)
+        public static float Distance2(Vector2f v, Vector2f w)
         {
             return (v - w).Norm2;
         }
 
-        public static double Distance(Vector2i v, Vector2i w)
+        public static double Distance(Vector2f v, Vector2f w)
         {
             return (v - w).Norm;
         }
 
+    
+        public Vector2f Normalized
+        {
+            get
+            {
+                var norm = this.Norm;
+
+                if (norm < BasicMath.Epsilon)
+                {
+                    return UnitX;
+                }
+
+                return this / ((float)norm);
+            }
+        }
     
     
         #endregion
     
         #region Algebra
 
-        public static Vector2i operator +(Vector2i v)
+        public static Vector2f operator +(Vector2f v)
         {
             return v;
         }
 
-        public static Vector2i operator -(Vector2i v)
+        public static Vector2f operator -(Vector2f v)
         {
-            return new Vector2i(-v._x, -v._y);
+            return new Vector2f(-v._x, -v._y);
         }
 
-        public static Vector2i operator *(Vector2i v, int a)
+        public static Vector2f operator *(Vector2f v, float a)
         {
-            return new Vector2i(v._x * a, v._y * a);
+            return new Vector2f(v._x * a, v._y * a);
         }
 
-        public static Vector2i operator *(int a, Vector2i v)
+        public static Vector2f operator *(float a, Vector2f v)
         {
             return v * a;
         }
 
-        public static Vector2i operator /(Vector2i v, int a)
+        public static Vector2f operator /(Vector2f v, float a)
         {
-            return new Vector2i(v._x / a, v._y / a);
+            return new Vector2f(v._x / a, v._y / a);
         }
 
-        public static Vector2i operator +(Vector2i v, Vector2i w)
+        public static Vector2f operator +(Vector2f v, Vector2f w)
         {
-            return new Vector2i(v._x + w._x, v._y + w._y);
+            return new Vector2f(v._x + w._x, v._y + w._y);
         }
 
-        public static Vector2i operator -(Vector2i v, Vector2i w)
+        public static Vector2f operator -(Vector2f v, Vector2f w)
         {
-            return new Vector2i(v._x - w._x, v._y - w._y);
+            return new Vector2f(v._x - w._x, v._y - w._y);
         }
 
-        public static int operator *(Vector2i v, Vector2i w)
+        public static float operator *(Vector2f v, Vector2f w)
         {
             return (v._x * w._x) + (v._y * w._y);
         }
 
     
-        public int Cross(Vector2i v)
+        public float Cross(Vector2f v)
         {
             return _x * v._y - _y * v._x;
         }
     
 
-        public static Vector2i Mul(Vector2i v, Vector2i w)
+        public static Vector2f Mul(Vector2f v, Vector2f w)
         {
-            return new Vector2i(v._x * w._x, v._y * w._y);
+            return new Vector2f(v._x * w._x, v._y * w._y);
         }
 
-        public static Vector2i Div(Vector2i v, Vector2i w)
+        public static Vector2f Div(Vector2f v, Vector2f w)
         {
-            return new Vector2i(v._x / w._x, v._y / w._y);
+            return new Vector2f(v._x / w._x, v._y / w._y);
         }
     
     
-        public static double Angle(Vector2i v, Vector2i w)
+        public static double Angle(Vector2f v, Vector2f w)
         {
             var vwcos = v * w;
             var vwsin = v.Cross(w);

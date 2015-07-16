@@ -23,22 +23,22 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### VectorN.cs.TEMPLATE> T = double, D = 3
+    // [### VectorN.cs.TEMPLATE> T = float, D = 3
     ﻿
-    public sealed class Vector3 : IEquatable<Vector3>
+    public struct Vector3f : IEquatable<Vector3f>
     {
         #region Constants
 
-        public static readonly Vector3 Zero = new Vector3(0, 0, 0);
+        public static readonly Vector3f Zero = new Vector3f(0, 0, 0);
     
-        public static readonly Vector3 UnitX = new Vector3(1, 0, 0);
+        public static readonly Vector3f UnitX = new Vector3f(1, 0, 0);
     
-        public static readonly Vector3 UnitY = new Vector3(0, 1, 0);
+        public static readonly Vector3f UnitY = new Vector3f(0, 1, 0);
     
-        public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
+        public static readonly Vector3f UnitZ = new Vector3f(0, 0, 1);
     
 
-        public static Vector3 Unit(Axis axis)
+        public static Vector3f Unit(Axis axis)
         {
             switch (axis)
             {
@@ -63,18 +63,18 @@ namespace Epicycle.Math.Geometry
         #region Members
     
     
-        private readonly double _x;
+        private readonly float _x;
     
-        private readonly double _y;
+        private readonly float _y;
     
-        private readonly double _z;
+        private readonly float _z;
     
     
         #endregion
     
         #region Construction and conversion
     
-        public Vector3(double x, double y, double z)
+        public Vector3f(float x, float y, float z)
         {
             _x = x;
             _y = y;
@@ -82,7 +82,7 @@ namespace Epicycle.Math.Geometry
         }
 
      
-        public Vector3(Vector2 xy, double z = 0)
+        public Vector3f(Vector2f xy, float z = 0)
         {
             _x = xy.X;
             _y = xy.Y;
@@ -91,87 +91,87 @@ namespace Epicycle.Math.Geometry
     
 
     
-        public Vector3(Vector3i v)
+        public Vector3f(Vector3i v)
         {
             _x = v.X;
             _y = v.Y;
             _z = v.Z;
         }
     
-        public Vector3(Vector3L v)
+        public Vector3f(Vector3L v)
         {
             _x = v.X;
             _y = v.Y;
             _z = v.Z;
         }
     
-        public Vector3(Vector3f v)
+        public Vector3f(Vector3f v)
         {
             _x = v.X;
             _y = v.Y;
             _z = v.Z;
         }
     
-        public Vector3(Vector3 v)
+        public Vector3f(Vector3 v)
         {
-            _x = v.X;
-            _y = v.Y;
-            _z = v.Z;
+            _x = ((float)v.X);
+            _y = ((float)v.Y);
+            _z = ((float)v.Z);
         }
     
 
-        public Vector3(OVector v)
+        public Vector3f(OVector v)
         {
             ArgAssert.Equal(v.Dimension, "v.Dimension", 3, "3");
 
-            _x = v[0];
-            _y = v[1];
-            _z = v[2];
+            _x = ((float)v[0]);
+            _y = ((float)v[1]);
+            _z = ((float)v[2]);
         }
 
-        public double[] ToArray()
+        public float[] ToArray()
         {
-            return new double[] { _x, _y, _z };
+            return new float[] { _x, _y, _z };
         }
 
     
     
-        public static implicit operator Vector3(Vector3i v)
+        public static implicit operator Vector3f(Vector3i v)
         {
-            return new Vector3(v);
+            return new Vector3f(v);
         }
     
     
     
-        public static implicit operator Vector3(Vector3L v)
+        public static implicit operator Vector3f(Vector3L v)
         {
-            return new Vector3(v);
+            return new Vector3f(v);
         }
     
     
     
-        public static implicit operator Vector3(Vector3f v)
+    
+    
+        public static explicit operator Vector3f(Vector3 v)
         {
-            return new Vector3(v);
+            return new Vector3f(v);
         }
-    
-    
     
     
 
     
-        public static explicit operator Vector3(Vector2 v)
+        public static explicit operator Vector3f(Vector2f v)
         {
-            return new Vector3(v);
+            return new Vector3f(v);
         }
     
 
-        public static explicit operator Vector3(OVector v)
+        public static explicit operator Vector3f(OVector v)
         {
-            return new Vector3(v);
+            return new Vector3f(v);
         }
 
-        public static implicit operator OVector(Vector3 v)
+        public static implicit operator OVector(Vector3f v)
         {
             return new Vector(v._x, v._y, v._z);
         }
@@ -181,17 +181,17 @@ namespace Epicycle.Math.Geometry
         #region Properties
     
     
-        public double X
+        public float X
         {
             get { return _x; }
         }
     
-        public double Y
+        public float Y
         {
             get { return _y; }
         }
     
-        public double Z
+        public float Z
         {
             get { return _z; }
         }
@@ -209,7 +209,7 @@ namespace Epicycle.Math.Geometry
             Count = 3 // used in for loops
         }
 
-        public double this[Axis axis]
+        public float this[Axis axis]
         {
             get
             {
@@ -236,19 +236,19 @@ namespace Epicycle.Math.Geometry
         #region Sub-vectors
     
     
-        public Vector2 XY
+        public Vector2f XY
         {
-            get { return new Vector2(_x, _y); }
+            get { return new Vector2f(_x, _y); }
         }
 
-        public Vector2 YZ
+        public Vector2f YZ
         {
-            get { return new Vector2(_y, _z); }
+            get { return new Vector2f(_y, _z); }
         }
 
-        public Vector2 ZX
+        public Vector2f ZX
         {
-            get { return new Vector2(_z, _x); }
+            get { return new Vector2f(_z, _x); }
         }
     
     
@@ -256,7 +256,7 @@ namespace Epicycle.Math.Geometry
     
         #region Equality & HashCode
 
-        public bool Equals(Vector3 v)
+        public bool Equals(Vector3f v)
         {
             return _x == v._x && _y == v._y && _z == v._z;
         }
@@ -264,12 +264,14 @@ namespace Epicycle.Math.Geometry
         public override bool Equals(object obj)
         {
         
-            if(obj == null || !(obj is Vector3))
+            var v = obj as Vector3f?;
+
+            if(!v.HasValue)
             {
                 return false;
             }
 
-            return Equals((Vector3) obj);
+            return Equals(v.Value);
         
         }
 
@@ -278,12 +280,12 @@ namespace Epicycle.Math.Geometry
             return _x.GetHashCode() ^ _y.GetHashCode() ^ _z.GetHashCode();
         }
 
-        public static bool operator ==(Vector3 v, Vector3 w)
+        public static bool operator ==(Vector3f v, Vector3f w)
         {
             return v.Equals(w);
         }
 
-        public static bool operator !=(Vector3 v, Vector3 w)
+        public static bool operator !=(Vector3f v, Vector3f w)
         {
             return !v.Equals(w);
         }
@@ -301,7 +303,7 @@ namespace Epicycle.Math.Geometry
     
         #region Norm & Distance
 
-        public double Norm2
+        public float Norm2
         {
             get { return (_x * _x) + (_y * _y) + (_z * _z); }
         }
@@ -311,18 +313,18 @@ namespace Epicycle.Math.Geometry
             get { return Math.Sqrt(Norm2); }
         }
 
-        public static double Distance2(Vector3 v, Vector3 w)
+        public static float Distance2(Vector3f v, Vector3f w)
         {
             return (v - w).Norm2;
         }
 
-        public static double Distance(Vector3 v, Vector3 w)
+        public static double Distance(Vector3f v, Vector3f w)
         {
             return (v - w).Norm;
         }
 
     
-        public Vector3 Normalized
+        public Vector3f Normalized
         {
             get
             {
@@ -333,7 +335,7 @@ namespace Epicycle.Math.Geometry
                     return UnitX;
                 }
 
-                return this / norm;
+                return this / ((float)norm);
             }
         }
     
@@ -342,65 +344,65 @@ namespace Epicycle.Math.Geometry
     
         #region Algebra
 
-        public static Vector3 operator +(Vector3 v)
+        public static Vector3f operator +(Vector3f v)
         {
             return v;
         }
 
-        public static Vector3 operator -(Vector3 v)
+        public static Vector3f operator -(Vector3f v)
         {
-            return new Vector3(-v._x, -v._y, -v._z);
+            return new Vector3f(-v._x, -v._y, -v._z);
         }
 
-        public static Vector3 operator *(Vector3 v, double a)
+        public static Vector3f operator *(Vector3f v, float a)
         {
-            return new Vector3(v._x * a, v._y * a, v._z * a);
+            return new Vector3f(v._x * a, v._y * a, v._z * a);
         }
 
-        public static Vector3 operator *(double a, Vector3 v)
+        public static Vector3f operator *(float a, Vector3f v)
         {
             return v * a;
         }
 
-        public static Vector3 operator /(Vector3 v, double a)
+        public static Vector3f operator /(Vector3f v, float a)
         {
-            return new Vector3(v._x / a, v._y / a, v._z / a);
+            return new Vector3f(v._x / a, v._y / a, v._z / a);
         }
 
-        public static Vector3 operator +(Vector3 v, Vector3 w)
+        public static Vector3f operator +(Vector3f v, Vector3f w)
         {
-            return new Vector3(v._x + w._x, v._y + w._y, v._z + w._z);
+            return new Vector3f(v._x + w._x, v._y + w._y, v._z + w._z);
         }
 
-        public static Vector3 operator -(Vector3 v, Vector3 w)
+        public static Vector3f operator -(Vector3f v, Vector3f w)
         {
-            return new Vector3(v._x - w._x, v._y - w._y, v._z - w._z);
+            return new Vector3f(v._x - w._x, v._y - w._y, v._z - w._z);
         }
 
-        public static double operator *(Vector3 v, Vector3 w)
+        public static float operator *(Vector3f v, Vector3f w)
         {
             return (v._x * w._x) + (v._y * w._y) + (v._z * w._z);
         }
 
     
-        public Vector3 Cross(Vector3 v)
+        public Vector3f Cross(Vector3f v)
         {
-            return new Vector3(_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
+            return new Vector3f(_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
         }
     
 
-        public static Vector3 Mul(Vector3 v, Vector3 w)
+        public static Vector3f Mul(Vector3f v, Vector3f w)
         {
-            return new Vector3(v._x * w._x, v._y * w._y, v._z * w._z);
+            return new Vector3f(v._x * w._x, v._y * w._y, v._z * w._z);
         }
 
-        public static Vector3 Div(Vector3 v, Vector3 w)
+        public static Vector3f Div(Vector3f v, Vector3f w)
         {
-            return new Vector3(v._x / w._x, v._y / w._y, v._z / w._z);
+            return new Vector3f(v._x / w._x, v._y / w._y, v._z / w._z);
         }
     
     
-        public static double Angle(Vector3 v, Vector3 w)
+        public static double Angle(Vector3f v, Vector3f w)
         {
             var normprod = Math.Sqrt(v.Norm2 * w.Norm2);
 
