@@ -1,4 +1,4 @@
-# Epicycle.Math-cs 0.1.6.0 [IN DEVELOPMENT]
+# Epicycle.Math-cs 0.1.6.0
 Epicycle .NET math library. Includes: 2D/3D geometry, linear algebra, differential geometry, stochastic processes, Kalman filter.
 
 ***Note***: *This library is in it's 0.X version, that means that it's still in active development and backward compatibility is not guaranteed!*
@@ -63,29 +63,29 @@ Copyright 2015 Epicycle (http://epicycle.org)
 ## Release Notes
 ### Version 0.1 
 
-* **Version 0.1.6** [IN DEVELOPMENT]
+* **Version 0.1.6.0** [2015-07-16]
   * Libraries upgrade
   * Epicycle.Math.Geometry:
     * Vector: Implementing the full matrix of (int, long, float, double)X(2D, 3D, 4D) using code generation
 
-* **Version 0.1.5** [2015-01-27]
+* **Version 0.1.5.0** [2015-01-27]
   * BUG FIX: Epicycle.Math.Geometry.Quaternion.Dot is wrong
 
-* **Version 0.1.4** [2015-01-26]
+* **Version 0.1.4.0** [2015-01-26]
   * Adding Epicycle.Math.Calculus.Derivatives
   * Adding Epicycle.Math.Calculus.Interpolation
 
-* **Version 0.1.3** [2015-01-13]
+* **Version 0.1.3.0** [2015-01-13]
   * Moving Epicycle.Math.Windows to Epicycle.Graphics
 
-* **Version 0.1.2** [2015-01-12]
+* **Version 0.1.2.0** [2015-01-12]
   * Adding support for **.NET 3.5**
   * Upgrading to Epicycle.Commons-cs.0.1.5.0
   * Upgrading to MathNet.Numerics.3.4.0
 
-* **Version 0.1.1** [2015-01-08]
+* **Version 0.1.1.0** [2015-01-08]
   * Adding support for **.NET 4.0**
   * Fixing namespaces
 
-* **Version 0.1.0** [2015-01-08]
+* **Version 0.1.0.0** [2015-01-08]
   * Initial release
