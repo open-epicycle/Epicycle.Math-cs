@@ -153,7 +153,10 @@
     <Compile Include="Geometry\Vector2i.cs" />
     <Compile Include="Geometry\Vector2iUtils.cs" />
     <Compile Include="Geometry\Vector3.cs" />
+    <Compile Include="Geometry\Vector3L.cs" />
     <Compile Include="Geometry\Vector3Utils.cs" />
+    <Compile Include="Geometry\Vector3f.cs" />
+    <Compile Include="Geometry\Vector3i.cs" />
     <Compile Include="LinearAlgebra\BaseMatrix.cs" />
     <Compile Include="LinearAlgebra\BaseSquareMatrix.cs" />
     <Compile Include="LinearAlgebra\IMatrix.cs" />

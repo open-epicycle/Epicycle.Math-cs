@@ -1,0 +1,455 @@
+﻿[%#
+
+def init(_):
+    def generate_dotnet_types_config():
+        sint_types = ['sbyte', 'short', 'int', 'long']
+        float_types = ['float', 'double' ]
+
+        identity = lambda x: x
+        cast = lambda t: lambda x: "((%s)%s)" % (t, x)
+        round = lambda t: lambda x: "((%s)Math.Round(%s))" % (t, x)
+        
+        all_types = sint_types + float_types
+        
+        types = {}
+        for t in all_types:
+            types[t] = {}
+            types[t]['name'] = t
+            types[t]['size'] = {'sbyte': 1, 'short': 2, 'int': 4, 'long': 8, 'float': 4, 'double': 8}[t]
+            types[t]['suffix'] = {'sbyte': 'b', 'short': 's', 'int': 'i', 'long': 'L', 'float': 'f', 'double': '', 'decimal': 'm'}[t]
+            
+            if t in sint_types:
+                category = "sint"
+            elif t in float_types:
+                category = "float"
+            
+            types[t]['category'] = category
+            
+        for to_type in all_types:
+            conv_config = {}
+        
+            for from_type in all_types:
+                conv_from_config = {}
+            
+                from_category = types[from_type]['category']
+                to_category = types[to_type]['category']
+                
+                conv = identity
+                convr = identity
+
+                if from_category == to_category:
+                    is_implicit = types[from_type]['size'] <= types[to_type]['size']
+                    conv = identity if is_implicit else cast(to_type)
+                    convr = conv
+                elif from_category == "sint" and to_category == "float":
+                    is_implicit = True
+                elif from_category == "float" and to_category == "sint":
+                    is_implicit = False
+                    conv = cast(to_type)
+                    convr = round(to_type) 
+                
+                conv_from_config['conv_op_type'] = ("implicit" if is_implicit else "explicit") if from_type != to_type else "none"
+                conv_from_config['conv'] = conv
+                conv_from_config['convr'] = convr
+                conv_from_config['is_implicit'] = is_implicit
+                
+                conv_config[from_type] = conv_from_config
+                
+            types[to_type]['conv'] = conv_config
+            
+        return types
+    
+    def generate_element_config():
+        names = ['x', 'y', 'z', 't']
+        
+        elements = []
+        for i, name in enumerate(names):
+            config = {}
+            
+            config['index'] = i
+            config['prop_name'] = name.upper()
+            config['arg_name'] = name.lower()
+            config['member_name'] = "_%s" % name.lower()
+            config['axis_name'] = name.upper()
+            config['unit_const_name'] = "Unit%s" % name.upper()
+            
+            elements.append(config)
+            
+        return elements
+    
+    def generate_var_config(supported_dimension, supported_types, dotnet_types_config, elements_config):
+        var_config = {}
+        for type in supported_types:
+            for dimension in supported_dimension:
+                config = Params()
+
+                dotnet_type_config = dotnet_types_config[type]
+                
+                config.type_config = dotnet_type_config
+                config.name = "Vector%d%s" % (dimension, dotnet_type_config['suffix'])
+                config.size = dotnet_type_config['size'] * dimension
+                config.is_class = config.size > 16
+                
+                config.elements = elements_config[:dimension]
+                
+                config.convFrom = {}
+                config.convrFrom = {}
+                config.convOpType = {}
+                
+                for from_type in supported_types:
+                    config.convFrom[from_type] = dotnet_type_config['conv'][from_type]['conv']
+                    config.convrFrom[from_type] = dotnet_type_config['conv'][from_type]['convr']
+                    config.convOpType[from_type] = dotnet_type_config['conv'][from_type]['conv_op_type']
+                
+                config.normalizedSupport = dotnet_type_config['category'] == "float"
+                
+                var_config[dimension, type] = config
+
+        return var_config
+    
+    dotnet_types_config = generate_dotnet_types_config()
+    elements_config = generate_element_config()
+
+    _.dimension = int(_.D)
+    _.dimension_name = "%dD" % _.dimension
+    _.types = ['int', 'long', 'float', 'double']
+    _.dimensions = [2, 3]
+    _.var_config = generate_var_config(_.dimensions, _.types, dotnet_types_config, elements_config)
+    
+    _.var_types_config = {}
+    for t in _.types:
+        _.var_types_config[t] = _.var_config[_.dimension, t]
+    
+    _.var_dimensions = {}
+    for d in _.dimensions:
+        _.var_dimensions[d] = _.var_config[d, _.T]
+    
+    _.config = _.var_types_config[_.T]
+    _.elements = _.config.elements
+    _.name = _.config.name
+    _.class_or_struct = "sealed class" if _.config.is_class else "struct"
+
+init(_)
+    
+#%]
+
+public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
+{
+    [*# _.elements ::
+    public [#T#] [=# _item_['prop_name'] #=]
+    {
+        get { return [=# _item_['member_name'] #=]; }
+    }
+    #*]
+    
+    [*# _.elements ::
+    private readonly [#T#] [=# _item_['member_name'] #=];
+    #*]
+
+    public enum Axis
+    {
+        [*# _.elements ::[=# _item_['axis_name'] #=] = [=# _item_['index'] #=], |*|
+        #*]
+        Count = [# dimension #] // used in for loops
+    }
+
+    public [#T#] this[Axis axis]
+    {
+        get
+        {
+            switch (axis)
+            {
+                [*# _.elements ::
+                case Axis.[=# _item_['axis_name'] #=]:
+                    return [=# _item_['member_name'] #=];
+                #*]
+                default:
+                    throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
+            }
+        }
+    }
+
+    #region creation
+
+    public [#name#]([*# _.elements ::[#T#] [=# _item_['arg_name'] #=]|*|, #*])
+    {
+        [*# _.elements ::[=# _item_['member_name'] #=] = [=# _item_['arg_name'] #=];|*|
+        #*]
+    }
+    
+    [?# _.dimension > _.dimensions[0] :? [=# v = "".join([x['arg_name'] for x in _.elements[:-1]]) ||| #=]
+    public [#name#]([=# _.var_dimensions[2].name #=] [=# v #=], [#T#] [=# _.elements[-1]['arg_name'] #=] = 0)
+    {
+        [*# _.elements[:-1] ::[=# _item_['member_name'] #=] = [=# v #=].[=# _item_['prop_name'] #=];|*|
+        #*]
+        [=# _.elements[-1]['member_name'] #=] = [=# _.elements[-1]['arg_name'] #=];
+    }
+    #?]
+    
+[*# _.types ::
+    public [#name#]([=# _.var_types_config[_item_].name #=] v)
+    {
+        [*1# _.elements ::[=# _item1_['member_name'] #=] = [=# _.config.convrFrom[_item_]("v.%s" % _item1_['prop_name']) #=];|*1|
+        #*1]
+    }
+#*]
+
+    public [#name#](OVector v)
+    {
+        ArgAssert.Equal(v.Dimension, "v.Dimension", [#dimension#], "[#dimension#]");
+
+        [*# _.elements ::[=# _item_['member_name'] #=] = [=# _.config.convrFrom['double']("v[%d]" % _item_['index']) #=];|*|
+        #*]
+    }
+    
+    public [#T#][] ToArray()
+    {
+        return new [#T#][] { [*# _.elements ::[=# _item_['member_name'] #=]|*|, #*] };
+    }
+    
+    [*# _.types ::
+    [?# _.config.convOpType[_item_] != "none" :?
+    public static [=# _.config.convOpType[_item_] #=] operator [#name#]([=# _.var_types_config[_item_].name #=] v)
+    {
+        return new [#name#](v);
+    }
+    #?]
+    #*]
+
+    [?# _.dimension > _.dimensions[0] :?
+    public static explicit operator [#name#]([=# _.var_dimensions[_.dimension - 1].name if _.dimension >= _.dimensions[0] else "" #=] v)
+    {
+        return new [#name#](v);
+    }
+    #?]
+
+    public static explicit operator [#name#](OVector v)
+    {
+        return new [#name#](v);
+    }
+
+    public static implicit operator OVector([#name#] v)
+    {
+        return new Vector([*# _.elements ::v.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+    
+    #endregion
+
+    #region subvectors
+    
+    [?# _.dimension == 3 :?
+    public [=# _.var_dimensions[2].name #=] XY
+    {
+        get { return new [=# _.var_dimensions[2].name #=](X, Y); }
+    }
+
+    public [=# _.var_dimensions[2].name #=] YZ
+    {
+        get { return new [=# _.var_dimensions[2].name #=](Y, Z); }
+    }
+
+    public [=# _.var_dimensions[2].name #=] ZX
+    {
+        get { return new [=# _.var_dimensions[2].name #=](Z, X); }
+    }
+    #?]
+    
+    #endregion
+    
+    #region equality
+
+    public bool Equals([#name#] v)
+    {
+        return [*# _.elements ::[=# _item_['member_name'] #=] == v.[=# _item_['member_name'] #=]|*| && #*];
+    }
+
+    public override bool Equals(object obj)
+    {
+[?# not _.config.is_class :?
+        var v = obj as [#name#]?;
+
+        if(!v.HasValue)
+        {
+            return false;
+        }
+
+        return Equals(v.Value);
+#?][?# _.config.is_class :?
+        if(obj == null || !(obj is [#name#]))
+        {
+            return false;
+        }
+        
+        return Equals(([#name#]) obj);
+#?]
+    }
+
+    public override int GetHashCode()
+    {
+        return [*# _.elements ::[=# _item_['member_name'] #=].GetHashCode()|*| ^ #*];
+    }
+    
+    public static bool operator ==([#name#] v, [#name#] w)
+    {
+        return v.Equals(w);
+    }
+
+    public static bool operator !=([#name#] v, [#name#] w)
+    {
+        return !v.Equals(w);
+    }
+
+    #endregion
+
+    #region norm
+
+    public [#T#] Norm2
+    {
+        get { return [*# _.elements ::([=# _item_['member_name'] #=] * [=# _item_['member_name'] #=])|*| + #*]; }
+    }
+    
+    public double Norm
+    {
+        get { return Math.Sqrt(Norm2); }
+    }
+
+    public static [#T#] Distance2([#name#] v, [#name#] w)
+    {
+        return (v - w).Norm2;
+    }
+    
+    public static double Distance([#name#] v, [#name#] w)
+    {
+        return (v - w).Norm;
+    }
+    
+[?# _.config.normalizedSupport :?
+    public [#name#] Normalized
+    {
+        get
+        {
+            var norm = this.Norm;
+
+            if (norm < BasicMath.Epsilon)
+            {
+                return UnitX;
+            }
+
+            return this / [=# _.config.convrFrom['double']("norm") #=];
+        }
+    }
+#?]
+
+    #endregion
+
+    #region algebra
+
+    public static [#name#] operator +([#name#] v)
+    {
+        return v;
+    }
+
+    public static [#name#] operator -([#name#] v)
+    {
+        return new [#name#]([*# _.elements ::-v.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+
+    public static [#name#] operator *([#name#] v, [#T#] a)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] * a|*|, #*]);
+    }
+
+    public static [#name#] operator *([#T#] a, [#name#] v)
+    {
+        return v * a;
+    }
+
+    public static [#name#] operator /([#name#] v, [#T#] a)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] / a|*|, #*]);
+    }
+
+    public static [#name#] operator +([#name#] v, [#name#] w)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] + w.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+
+    public static [#name#] operator -([#name#] v, [#name#] w)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] - w.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+
+    public static [#T#] operator *([#name#] v, [#name#] w)
+    {
+        return [*# _.elements ::(v.[=# _item_['member_name'] #=] * w.[=# _item_['member_name'] #=])|*| + #*];
+    }
+
+    [?# _.dimension == 2 :?
+    public [#T#] Cross([#name#] v)
+    {
+        return _x * v._y - _y * v._x;
+    }
+    #?][?# _.dimension == 3 :?
+    public [#name#] Cross([#name#] v)
+    {
+        return new [#name#](_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
+    }
+    #?]
+    
+    public static [#name#] Mul([#name#] v, [#name#] w)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] * w.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+    
+    public static [#name#] Div([#name#] v, [#name#] w)
+    {
+        return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] / w.[=# _item_['member_name'] #=]|*|, #*]);
+    }
+
+    #endregion
+
+    #region static
+
+    public static readonly [#name#] Zero = new [#name#]([*# _.elements ::0|*|, #*]);
+    [*# _.elements ::
+    public static readonly [#name#] [=# _item_['unit_const_name'] #=] = new [#name#]([*1# _.elements ::[=# 1 if _item_['index'] == _item1_['index'] else 0 #=]|*1|, #*1]);
+    #*]
+    
+    public static [#name#] Unit(Axis axis)
+    {
+        switch (axis)
+        {
+            [*# _.elements ::
+            case Axis.[=# _item_['axis_name'] #=]:
+                return [=# _item_['unit_const_name'] #=];
+            #*]
+
+            default:
+                throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
+        }
+    }
+
+    [?# _.dimension == 2 :?
+    public static double Angle([#name#] v, [#name#] w)
+    {
+        var vwcos = v * w;
+        var vwsin = v.Cross(w);
+
+        return Math.Atan2(vwsin, vwcos);
+    }
+    #?][?# _.dimension == 3 :?
+    public static double Angle([#name#] v, [#name#] w)
+    {
+        var normprod = Math.Sqrt(v.Norm2 * w.Norm2);
+
+        return BasicMath.Acos(v * w / normprod);
+    }
+    #?]
+
+    #endregion
+
+    public override string ToString()
+    {
+        return string.Format("([*# _.elements ::{[=# _item_['index'] #=]}|*|, #*])", [*# _.elements ::[=# _item_['member_name'] #=]|*|, #*]);
+    }
+}
