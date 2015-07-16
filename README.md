@@ -65,6 +65,8 @@ Copyright 2015 Epicycle (http://epicycle.org)
 
 * **Version 0.1.6** [IN DEVELOPMENT]
   * Libraries upgrade
+  * Epicycle.Math.Geometry:
+    * Vector: Implementing the full matrix of (int, long, float, double)X(2D, 3D, 4D) using code generation
 
 * **Version 0.1.5** [2015-01-27]
   * BUG FIX: Epicycle.Math.Geometry.Quaternion.Dot is wrong
