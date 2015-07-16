@@ -25,25 +25,42 @@ namespace Epicycle.Math.Geometry
 
     // [### VectorN.cs.TEMPLATE> T = int, D = 3
     ﻿
-
     public struct Vector3i : IEquatable<Vector3i>
     {
+        #region Constants
+
+        public static readonly Vector3i Zero = new Vector3i(0, 0, 0);
     
-        public int X
+        public static readonly Vector3i UnitX = new Vector3i(1, 0, 0);
+    
+        public static readonly Vector3i UnitY = new Vector3i(0, 1, 0);
+    
+        public static readonly Vector3i UnitZ = new Vector3i(0, 0, 1);
+    
+
+        public static Vector3i Unit(Axis axis)
         {
-            get { return _x; }
+            switch (axis)
+            {
+            
+                case Axis.X:
+                    return UnitX;
+            
+                case Axis.Y:
+                    return UnitY;
+            
+                case Axis.Z:
+                    return UnitZ;
+            
+
+                default:
+                    throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
+            }
         }
-    
-        public int Y
-        {
-            get { return _y; }
-        }
-    
-        public int Z
-        {
-            get { return _z; }
-        }
-    
+
+        #endregion
+
+        #region Members
     
     
         private readonly int _x;
@@ -52,46 +69,18 @@ namespace Epicycle.Math.Geometry
     
         private readonly int _z;
     
-
-        public enum Axis
-        {
-            X = 0, 
-            Y = 1, 
-            Z = 2, 
-            Count = 3 // used in for loops
-        }
-
-        public int this[Axis axis]
-        {
-            get
-            {
-                switch (axis)
-                {
-                
-                    case Axis.X:
-                        return _x;
-                
-                    case Axis.Y:
-                        return _y;
-                
-                    case Axis.Z:
-                        return _z;
-                
-                    default:
-                        throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
-                }
-            }
-        }
-
-        #region creation
-
+    
+        #endregion
+    
+        #region Construction and conversion
+    
         public Vector3i(int x, int y, int z)
         {
             _x = x;
             _y = y;
             _z = z;
         }
-    
+
      
         public Vector3i(Vector2i xy, int z = 0)
         {
@@ -100,36 +89,36 @@ namespace Epicycle.Math.Geometry
             _z = z;
         }
     
-    
 
+    
         public Vector3i(Vector3i v)
         {
             _x = v.X;
             _y = v.Y;
             _z = v.Z;
         }
-
+    
         public Vector3i(Vector3L v)
         {
             _x = ((int)v.X);
             _y = ((int)v.Y);
             _z = ((int)v.Z);
         }
-
+    
         public Vector3i(Vector3f v)
         {
             _x = ((int)Math.Round(v.X));
             _y = ((int)Math.Round(v.Y));
             _z = ((int)Math.Round(v.Z));
         }
-
+    
         public Vector3i(Vector3 v)
         {
             _x = ((int)Math.Round(v.X));
             _y = ((int)Math.Round(v.Y));
             _z = ((int)Math.Round(v.Z));
         }
-
+    
 
         public Vector3i(OVector v)
         {
@@ -139,12 +128,12 @@ namespace Epicycle.Math.Geometry
             _y = ((int)Math.Round(v[1]));
             _z = ((int)Math.Round(v[2]));
         }
-    
+
         public int[] ToArray()
         {
             return new int[] { _x, _y, _z };
         }
-    
+
     
     
     
@@ -186,10 +175,65 @@ namespace Epicycle.Math.Geometry
         {
             return new Vector(v._x, v._y, v._z);
         }
+
+        #endregion
+    
+        #region Properties
+    
+    
+        public int X
+        {
+            get { return _x; }
+        }
+    
+        public int Y
+        {
+            get { return _y; }
+        }
+    
+        public int Z
+        {
+            get { return _z; }
+        }
+    
     
         #endregion
+    
+        #region Axis
+    
+        public enum Axis
+        {
+            X = 0, 
+            Y = 1, 
+            Z = 2, 
+            Count = 3 // used in for loops
+        }
 
-        #region subvectors
+        public int this[Axis axis]
+        {
+            get
+            {
+                switch (axis)
+                {
+                
+                    case Axis.X:
+                        return _x;
+                
+                    case Axis.Y:
+                        return _y;
+                
+                    case Axis.Z:
+                        return _z;
+                
+                    default:
+                        throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
+                }
+            }
+        }
+    
+        #endregion
+    
+        #region Sub-vectors
     
     
         public Vector2i XY
@@ -210,7 +254,7 @@ namespace Epicycle.Math.Geometry
     
         #endregion
     
-        #region equality
+        #region Equality & HashCode
 
         public bool Equals(Vector3i v)
         {
@@ -219,7 +263,7 @@ namespace Epicycle.Math.Geometry
 
         public override bool Equals(object obj)
         {
-
+        
             var v = obj as Vector3i?;
 
             if(!v.HasValue)
@@ -228,14 +272,14 @@ namespace Epicycle.Math.Geometry
             }
 
             return Equals(v.Value);
-
+        
         }
 
         public override int GetHashCode()
         {
             return _x.GetHashCode() ^ _y.GetHashCode() ^ _z.GetHashCode();
         }
-    
+
         public static bool operator ==(Vector3i v, Vector3i w)
         {
             return v.Equals(w);
@@ -247,14 +291,23 @@ namespace Epicycle.Math.Geometry
         }
 
         #endregion
-
-        #region norm
+    
+        #region ToString
+    
+        public override string ToString()
+        {
+            return string.Format("({0}, {1}, {2})", _x, _y, _z);
+        }
+    
+        #endregion
+    
+        #region Norm & Distance
 
         public int Norm2
         {
             get { return (_x * _x) + (_y * _y) + (_z * _z); }
         }
-    
+
         public double Norm
         {
             get { return Math.Sqrt(Norm2); }
@@ -264,17 +317,17 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm2;
         }
-    
+
         public static double Distance(Vector3i v, Vector3i w)
         {
             return (v - w).Norm;
         }
+
     
-
-
+    
         #endregion
-
-        #region algebra
+    
+        #region Algebra
 
         public static Vector3i operator +(Vector3i v)
         {
@@ -322,50 +375,17 @@ namespace Epicycle.Math.Geometry
             return new Vector3i(_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
         }
     
-    
+
         public static Vector3i Mul(Vector3i v, Vector3i w)
         {
             return new Vector3i(v._x * w._x, v._y * w._y, v._z * w._z);
         }
-    
+
         public static Vector3i Div(Vector3i v, Vector3i w)
         {
             return new Vector3i(v._x / w._x, v._y / w._y, v._z / w._z);
         }
-
-        #endregion
-
-        #region static
-
-        public static readonly Vector3i Zero = new Vector3i(0, 0, 0);
     
-        public static readonly Vector3i UnitX = new Vector3i(1, 0, 0);
-    
-        public static readonly Vector3i UnitY = new Vector3i(0, 1, 0);
-    
-        public static readonly Vector3i UnitZ = new Vector3i(0, 0, 1);
-    
-    
-        public static Vector3i Unit(Axis axis)
-        {
-            switch (axis)
-            {
-            
-                case Axis.X:
-                    return UnitX;
-            
-                case Axis.Y:
-                    return UnitY;
-            
-                case Axis.Z:
-                    return UnitZ;
-            
-
-                default:
-                    throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
-            }
-        }
-
     
         public static double Angle(Vector3i v, Vector3i w)
         {
@@ -376,11 +396,6 @@ namespace Epicycle.Math.Geometry
     
 
         #endregion
-
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2})", _x, _y, _z);
-        }
     }
     // ###]
 }

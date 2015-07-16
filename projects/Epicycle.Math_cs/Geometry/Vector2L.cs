@@ -27,88 +27,81 @@ namespace Epicycle.Math.Geometry
 
     // [### VectorN.cs.TEMPLATE> T = long, D = 2
     ﻿
-
     public struct Vector2L : IEquatable<Vector2L>
     {
+        #region Constants
+
+        public static readonly Vector2L Zero = new Vector2L(0, 0);
     
-        public long X
+        public static readonly Vector2L UnitX = new Vector2L(1, 0);
+    
+        public static readonly Vector2L UnitY = new Vector2L(0, 1);
+    
+
+        public static Vector2L Unit(Axis axis)
         {
-            get { return _x; }
+            switch (axis)
+            {
+            
+                case Axis.X:
+                    return UnitX;
+            
+                case Axis.Y:
+                    return UnitY;
+            
+
+                default:
+                    throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
+            }
         }
-    
-        public long Y
-        {
-            get { return _y; }
-        }
-    
+
+        #endregion
+
+        #region Members
     
     
         private readonly long _x;
     
         private readonly long _y;
     
-
-        public enum Axis
-        {
-            X = 0, 
-            Y = 1, 
-            Count = 2 // used in for loops
-        }
-
-        public long this[Axis axis]
-        {
-            get
-            {
-                switch (axis)
-                {
-                
-                    case Axis.X:
-                        return _x;
-                
-                    case Axis.Y:
-                        return _y;
-                
-                    default:
-                        throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
-                }
-            }
-        }
-
-        #region creation
-
+    
+        #endregion
+    
+        #region Construction and conversion
+    
         public Vector2L(long x, long y)
         {
             _x = x;
             _y = y;
         }
-    
-    
+
     
 
+    
         public Vector2L(Vector2i v)
         {
             _x = v.X;
             _y = v.Y;
         }
-
+    
         public Vector2L(Vector2L v)
         {
             _x = v.X;
             _y = v.Y;
         }
-
+    
         public Vector2L(Vector2f v)
         {
             _x = ((long)Math.Round(v.X));
             _y = ((long)Math.Round(v.Y));
         }
-
+    
         public Vector2L(Vector2 v)
         {
             _x = ((long)Math.Round(v.X));
             _y = ((long)Math.Round(v.Y));
         }
-
+    
 
         public Vector2L(OVector v)
         {
@@ -117,12 +110,12 @@ namespace Epicycle.Math.Geometry
             _x = ((long)Math.Round(v[0]));
             _y = ((long)Math.Round(v[1]));
         }
-    
+
         public long[] ToArray()
         {
             return new long[] { _x, _y };
         }
-    
+
     
     
         public static implicit operator Vector2L(Vector2i v)
@@ -159,16 +152,62 @@ namespace Epicycle.Math.Geometry
         {
             return new Vector(v._x, v._y);
         }
-    
-        #endregion
 
-        #region subvectors
+        #endregion
+    
+        #region Properties
+    
+    
+        public long X
+        {
+            get { return _x; }
+        }
+    
+        public long Y
+        {
+            get { return _y; }
+        }
+    
+    
+        #endregion
+    
+        #region Axis
+    
+        public enum Axis
+        {
+            X = 0, 
+            Y = 1, 
+            Count = 2 // used in for loops
+        }
+
+        public long this[Axis axis]
+        {
+            get
+            {
+                switch (axis)
+                {
+                
+                    case Axis.X:
+                        return _x;
+                
+                    case Axis.Y:
+                        return _y;
+                
+                    default:
+                        throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
+                }
+            }
+        }
+    
+        #endregion
+    
+        #region Sub-vectors
     
     
     
         #endregion
     
-        #region equality
+        #region Equality & HashCode
 
         public bool Equals(Vector2L v)
         {
@@ -177,7 +216,7 @@ namespace Epicycle.Math.Geometry
 
         public override bool Equals(object obj)
         {
-
+        
             var v = obj as Vector2L?;
 
             if(!v.HasValue)
@@ -186,14 +225,14 @@ namespace Epicycle.Math.Geometry
             }
 
             return Equals(v.Value);
-
+        
         }
 
         public override int GetHashCode()
         {
             return _x.GetHashCode() ^ _y.GetHashCode();
         }
-    
+
         public static bool operator ==(Vector2L v, Vector2L w)
         {
             return v.Equals(w);
@@ -205,14 +244,23 @@ namespace Epicycle.Math.Geometry
         }
 
         #endregion
-
-        #region norm
+    
+        #region ToString
+    
+        public override string ToString()
+        {
+            return string.Format("({0}, {1})", _x, _y);
+        }
+    
+        #endregion
+    
+        #region Norm & Distance
 
         public long Norm2
         {
             get { return (_x * _x) + (_y * _y); }
         }
-    
+
         public double Norm
         {
             get { return Math.Sqrt(Norm2); }
@@ -222,17 +270,17 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm2;
         }
-    
+
         public static double Distance(Vector2L v, Vector2L w)
         {
             return (v - w).Norm;
         }
+
     
-
-
+    
         #endregion
-
-        #region algebra
+    
+        #region Algebra
 
         public static Vector2L operator +(Vector2L v)
         {
@@ -280,45 +328,17 @@ namespace Epicycle.Math.Geometry
             return _x * v._y - _y * v._x;
         }
     
-    
+
         public static Vector2L Mul(Vector2L v, Vector2L w)
         {
             return new Vector2L(v._x * w._x, v._y * w._y);
         }
-    
+
         public static Vector2L Div(Vector2L v, Vector2L w)
         {
             return new Vector2L(v._x / w._x, v._y / w._y);
         }
-
-        #endregion
-
-        #region static
-
-        public static readonly Vector2L Zero = new Vector2L(0, 0);
     
-        public static readonly Vector2L UnitX = new Vector2L(1, 0);
-    
-        public static readonly Vector2L UnitY = new Vector2L(0, 1);
-    
-    
-        public static Vector2L Unit(Axis axis)
-        {
-            switch (axis)
-            {
-            
-                case Axis.X:
-                    return UnitX;
-            
-                case Axis.Y:
-                    return UnitY;
-            
-
-                default:
-                    throw new IndexOutOfRangeException("Invalid 2D axis " + axis.ToString());
-            }
-        }
-
     
         public static double Angle(Vector2L v, Vector2L w)
         {
@@ -330,11 +350,6 @@ namespace Epicycle.Math.Geometry
     
 
         #endregion
-
-        public override string ToString()
-        {
-            return string.Format("({0}, {1})", _x, _y);
-        }
     }
      // ###]
  }

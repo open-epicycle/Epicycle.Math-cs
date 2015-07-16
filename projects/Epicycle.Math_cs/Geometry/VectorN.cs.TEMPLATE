@@ -132,51 +132,47 @@ def init(_):
 init(_)
     
 #%]
-
 public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
 {
+    #region Constants
+
+    public static readonly [#name#] Zero = new [#name#]([*# _.elements ::0|*|, #*]);
     [*# _.elements ::
-    public [#T#] [=# _item_['prop_name'] #=]
-    {
-        get { return [=# _item_['member_name'] #=]; }
-    }
+    public static readonly [#name#] [=# _item_['unit_const_name'] #=] = new [#name#]([*1# _.elements ::[=# 1 if _item_['index'] == _item1_['index'] else 0 #=]|*1|, #*1]);
     #*]
+
+    public static [#name#] Unit(Axis axis)
+    {
+        switch (axis)
+        {
+            [*# _.elements ::
+            case Axis.[=# _item_['axis_name'] #=]:
+                return [=# _item_['unit_const_name'] #=];
+            #*]
+
+            default:
+                throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
+        }
+    }
+
+    #endregion
+
+    #region Members
     
     [*# _.elements ::
     private readonly [#T#] [=# _item_['member_name'] #=];
     #*]
-
-    public enum Axis
-    {
-        [*# _.elements ::[=# _item_['axis_name'] #=] = [=# _item_['index'] #=], |*|
-        #*]
-        Count = [# dimension #] // used in for loops
-    }
-
-    public [#T#] this[Axis axis]
-    {
-        get
-        {
-            switch (axis)
-            {
-                [*# _.elements ::
-                case Axis.[=# _item_['axis_name'] #=]:
-                    return [=# _item_['member_name'] #=];
-                #*]
-                default:
-                    throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
-            }
-        }
-    }
-
-    #region creation
-
+    
+    #endregion
+    
+    #region Construction and conversion
+    
     public [#name#]([*# _.elements ::[#T#] [=# _item_['arg_name'] #=]|*|, #*])
     {
         [*# _.elements ::[=# _item_['member_name'] #=] = [=# _item_['arg_name'] #=];|*|
         #*]
     }
-    
+
     [?# _.dimension > _.dimensions[0] :? [=# v = "".join([x['arg_name'] for x in _.elements[:-1]]) ||| #=]
     public [#name#]([=# _.var_dimensions[_.dimension - 1].name #=] [=# v #=], [#T#] [=# _.elements[-1]['arg_name'] #=] = 0)
     {
@@ -185,14 +181,14 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
         [=# _.elements[-1]['member_name'] #=] = [=# _.elements[-1]['arg_name'] #=];
     }
     #?]
-    
-[*# _.types ::
+
+    [*# _.types ::
     public [#name#]([=# _.var_types_config[_item_].name #=] v)
     {
         [*1# _.elements ::[=# _item1_['member_name'] #=] = [=# _.config.convrFrom[_item_]("v.%s" % _item1_['prop_name']) #=];|*1|
         #*1]
     }
-#*]
+    #*]
 
     public [#name#](OVector v)
     {
@@ -201,12 +197,12 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
         [*# _.elements ::[=# _item_['member_name'] #=] = [=# _.config.convrFrom['double']("v[%d]" % _item_['index']) #=];|*|
         #*]
     }
-    
+
     public [#T#][] ToArray()
     {
         return new [#T#][] { [*# _.elements ::[=# _item_['member_name'] #=]|*|, #*] };
     }
-    
+
     [*# _.types ::
     [?# _.config.convOpType[_item_] != "none" :?
     public static [=# _.config.convOpType[_item_] #=] operator [#name#]([=# _.var_types_config[_item_].name #=] v)
@@ -232,10 +228,48 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     {
         return new Vector([*# _.elements ::v.[=# _item_['member_name'] #=]|*|, #*]);
     }
+
+    #endregion
+    
+    #region Properties
+    
+    [*# _.elements ::
+    public [#T#] [=# _item_['prop_name'] #=]
+    {
+        get { return [=# _item_['member_name'] #=]; }
+    }
+    #*]
     
     #endregion
+    
+    #region Axis
+    
+    public enum Axis
+    {
+        [*# _.elements ::[=# _item_['axis_name'] #=] = [=# _item_['index'] #=], |*|
+        #*]
+        Count = [# dimension #] // used in for loops
+    }
 
-    #region subvectors
+    public [#T#] this[Axis axis]
+    {
+        get
+        {
+            switch (axis)
+            {
+                [*# _.elements ::
+                case Axis.[=# _item_['axis_name'] #=]:
+                    return [=# _item_['member_name'] #=];
+                #*]
+                default:
+                    throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
+            }
+        }
+    }
+    
+    #endregion
+    
+    #region Sub-vectors
     
     [?# _.dimension == 3 :?
     public [=# _.var_dimensions[2].name #=] XY
@@ -261,7 +295,7 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     
     #endregion
     
-    #region equality
+    #region Equality & HashCode
 
     public bool Equals([#name#] v)
     {
@@ -270,7 +304,7 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
 
     public override bool Equals(object obj)
     {
-[?# not _.config.is_class :?
+        [?# not _.config.is_class :?
         var v = obj as [#name#]?;
 
         if(!v.HasValue)
@@ -279,21 +313,21 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
         }
 
         return Equals(v.Value);
-#?][?# _.config.is_class :?
+        #?][?# _.config.is_class :?
         if(obj == null || !(obj is [#name#]))
         {
             return false;
         }
-        
+
         return Equals(([#name#]) obj);
-#?]
+        #?]
     }
 
     public override int GetHashCode()
     {
         return [*# _.elements ::[=# _item_['member_name'] #=].GetHashCode()|*| ^ #*];
     }
-    
+
     public static bool operator ==([#name#] v, [#name#] w)
     {
         return v.Equals(w);
@@ -305,14 +339,23 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     }
 
     #endregion
-
-    #region norm
+    
+    #region ToString
+    
+    public override string ToString()
+    {
+        return string.Format("([*# _.elements ::{[=# _item_['index'] #=]}|*|, #*])", [*# _.elements ::[=# _item_['member_name'] #=]|*|, #*]);
+    }
+    
+    #endregion
+    
+    #region Norm & Distance
 
     public [#T#] Norm2
     {
         get { return [*# _.elements ::([=# _item_['member_name'] #=] * [=# _item_['member_name'] #=])|*| + #*]; }
     }
-    
+
     public double Norm
     {
         get { return Math.Sqrt(Norm2); }
@@ -322,13 +365,13 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     {
         return (v - w).Norm2;
     }
-    
+
     public static double Distance([#name#] v, [#name#] w)
     {
         return (v - w).Norm;
     }
-    
-[?# _.config.normalizedSupport :?
+
+    [?# _.config.normalizedSupport :?
     public [#name#] Normalized
     {
         get
@@ -343,11 +386,11 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
             return this / [=# _.config.convrFrom['double']("norm") #=];
         }
     }
-#?]
-
+    #?]
+    
     #endregion
-
-    #region algebra
+    
+    #region Algebra
 
     public static [#name#] operator +([#name#] v)
     {
@@ -400,40 +443,17 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
         return new [#name#](_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
     }
     #?]
-    
+
     public static [#name#] Mul([#name#] v, [#name#] w)
     {
         return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] * w.[=# _item_['member_name'] #=]|*|, #*]);
     }
-    
+
     public static [#name#] Div([#name#] v, [#name#] w)
     {
         return new [#name#]([*# _.elements ::v.[=# _item_['member_name'] #=] / w.[=# _item_['member_name'] #=]|*|, #*]);
     }
-
-    #endregion
-
-    #region static
-
-    public static readonly [#name#] Zero = new [#name#]([*# _.elements ::0|*|, #*]);
-    [*# _.elements ::
-    public static readonly [#name#] [=# _item_['unit_const_name'] #=] = new [#name#]([*1# _.elements ::[=# 1 if _item_['index'] == _item1_['index'] else 0 #=]|*1|, #*1]);
-    #*]
     
-    public static [#name#] Unit(Axis axis)
-    {
-        switch (axis)
-        {
-            [*# _.elements ::
-            case Axis.[=# _item_['axis_name'] #=]:
-                return [=# _item_['unit_const_name'] #=];
-            #*]
-
-            default:
-                throw new IndexOutOfRangeException("Invalid [#dimension_name#] axis " + axis.ToString());
-        }
-    }
-
     [?# _.dimension == 2 :?
     public static double Angle([#name#] v, [#name#] w)
     {
@@ -452,9 +472,4 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     #?]
 
     #endregion
-
-    public override string ToString()
-    {
-        return string.Format("([*# _.elements ::{[=# _item_['index'] #=]}|*|, #*])", [*# _.elements ::[=# _item_['member_name'] #=]|*|, #*]);
-    }
 }

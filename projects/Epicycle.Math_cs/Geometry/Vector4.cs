@@ -25,30 +25,47 @@ namespace Epicycle.Math.Geometry
 
     // [### VectorN.cs.TEMPLATE> T = double, D = 4
     ﻿
-
     public sealed class Vector4 : IEquatable<Vector4>
     {
+        #region Constants
+
+        public static readonly Vector4 Zero = new Vector4(0, 0, 0, 0);
     
-        public double X
+        public static readonly Vector4 UnitX = new Vector4(1, 0, 0, 0);
+    
+        public static readonly Vector4 UnitY = new Vector4(0, 1, 0, 0);
+    
+        public static readonly Vector4 UnitZ = new Vector4(0, 0, 1, 0);
+    
+        public static readonly Vector4 UnitT = new Vector4(0, 0, 0, 1);
+    
+
+        public static Vector4 Unit(Axis axis)
         {
-            get { return _x; }
+            switch (axis)
+            {
+            
+                case Axis.X:
+                    return UnitX;
+            
+                case Axis.Y:
+                    return UnitY;
+            
+                case Axis.Z:
+                    return UnitZ;
+            
+                case Axis.T:
+                    return UnitT;
+            
+
+                default:
+                    throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
+            }
         }
-    
-        public double Y
-        {
-            get { return _y; }
-        }
-    
-        public double Z
-        {
-            get { return _z; }
-        }
-    
-        public double T
-        {
-            get { return _t; }
-        }
-    
+
+        #endregion
+
+        #region Members
     
     
         private readonly double _x;
@@ -59,43 +76,11 @@ namespace Epicycle.Math.Geometry
     
         private readonly double _t;
     
-
-        public enum Axis
-        {
-            X = 0, 
-            Y = 1, 
-            Z = 2, 
-            T = 3, 
-            Count = 4 // used in for loops
-        }
-
-        public double this[Axis axis]
-        {
-            get
-            {
-                switch (axis)
-                {
-                
-                    case Axis.X:
-                        return _x;
-                
-                    case Axis.Y:
-                        return _y;
-                
-                    case Axis.Z:
-                        return _z;
-                
-                    case Axis.T:
-                        return _t;
-                
-                    default:
-                        throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
-                }
-            }
-        }
-
-        #region creation
-
+    
+        #endregion
+    
+        #region Construction and conversion
+    
         public Vector4(double x, double y, double z, double t)
         {
             _x = x;
@@ -103,7 +88,7 @@ namespace Epicycle.Math.Geometry
             _z = z;
             _t = t;
         }
-    
+
      
         public Vector4(Vector3 xyz, double t = 0)
         {
@@ -113,8 +98,8 @@ namespace Epicycle.Math.Geometry
             _t = t;
         }
     
-    
 
+    
         public Vector4(Vector4i v)
         {
             _x = v.X;
@@ -122,7 +107,7 @@ namespace Epicycle.Math.Geometry
             _z = v.Z;
             _t = v.T;
         }
-
+    
         public Vector4(Vector4L v)
         {
             _x = v.X;
@@ -130,7 +115,7 @@ namespace Epicycle.Math.Geometry
             _z = v.Z;
             _t = v.T;
         }
-
+    
         public Vector4(Vector4f v)
         {
             _x = v.X;
@@ -138,7 +123,7 @@ namespace Epicycle.Math.Geometry
             _z = v.Z;
             _t = v.T;
         }
-
+    
         public Vector4(Vector4 v)
         {
             _x = v.X;
@@ -146,7 +131,7 @@ namespace Epicycle.Math.Geometry
             _z = v.Z;
             _t = v.T;
         }
-
+    
 
         public Vector4(OVector v)
         {
@@ -157,12 +142,12 @@ namespace Epicycle.Math.Geometry
             _z = v[2];
             _t = v[3];
         }
-    
+
         public double[] ToArray()
         {
             return new double[] { _x, _y, _z, _t };
         }
-    
+
     
     
         public static implicit operator Vector4(Vector4i v)
@@ -204,10 +189,74 @@ namespace Epicycle.Math.Geometry
         {
             return new Vector(v._x, v._y, v._z, v._t);
         }
+
+        #endregion
+    
+        #region Properties
+    
+    
+        public double X
+        {
+            get { return _x; }
+        }
+    
+        public double Y
+        {
+            get { return _y; }
+        }
+    
+        public double Z
+        {
+            get { return _z; }
+        }
+    
+        public double T
+        {
+            get { return _t; }
+        }
+    
     
         #endregion
+    
+        #region Axis
+    
+        public enum Axis
+        {
+            X = 0, 
+            Y = 1, 
+            Z = 2, 
+            T = 3, 
+            Count = 4 // used in for loops
+        }
 
-        #region subvectors
+        public double this[Axis axis]
+        {
+            get
+            {
+                switch (axis)
+                {
+                
+                    case Axis.X:
+                        return _x;
+                
+                    case Axis.Y:
+                        return _y;
+                
+                    case Axis.Z:
+                        return _z;
+                
+                    case Axis.T:
+                        return _t;
+                
+                    default:
+                        throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
+                }
+            }
+        }
+    
+        #endregion
+    
+        #region Sub-vectors
     
     
         public Vector3 XYZ
@@ -218,7 +267,7 @@ namespace Epicycle.Math.Geometry
     
         #endregion
     
-        #region equality
+        #region Equality & HashCode
 
         public bool Equals(Vector4 v)
         {
@@ -227,21 +276,21 @@ namespace Epicycle.Math.Geometry
 
         public override bool Equals(object obj)
         {
-
+        
             if(obj == null || !(obj is Vector4))
             {
                 return false;
             }
-        
-            return Equals((Vector4) obj);
 
+            return Equals((Vector4) obj);
+        
         }
 
         public override int GetHashCode()
         {
             return _x.GetHashCode() ^ _y.GetHashCode() ^ _z.GetHashCode() ^ _t.GetHashCode();
         }
-    
+
         public static bool operator ==(Vector4 v, Vector4 w)
         {
             return v.Equals(w);
@@ -253,14 +302,23 @@ namespace Epicycle.Math.Geometry
         }
 
         #endregion
-
-        #region norm
+    
+        #region ToString
+    
+        public override string ToString()
+        {
+            return string.Format("({0}, {1}, {2}, {3})", _x, _y, _z, _t);
+        }
+    
+        #endregion
+    
+        #region Norm & Distance
 
         public double Norm2
         {
             get { return (_x * _x) + (_y * _y) + (_z * _z) + (_t * _t); }
         }
-    
+
         public double Norm
         {
             get { return Math.Sqrt(Norm2); }
@@ -270,13 +328,13 @@ namespace Epicycle.Math.Geometry
         {
             return (v - w).Norm2;
         }
-    
+
         public static double Distance(Vector4 v, Vector4 w)
         {
             return (v - w).Norm;
         }
-    
 
+    
         public Vector4 Normalized
         {
             get
@@ -291,11 +349,11 @@ namespace Epicycle.Math.Geometry
                 return this / norm;
             }
         }
-
-
+    
+    
         #endregion
-
-        #region algebra
+    
+        #region Algebra
 
         public static Vector4 operator +(Vector4 v)
         {
@@ -338,63 +396,20 @@ namespace Epicycle.Math.Geometry
         }
 
     
-    
+
         public static Vector4 Mul(Vector4 v, Vector4 w)
         {
             return new Vector4(v._x * w._x, v._y * w._y, v._z * w._z, v._t * w._t);
         }
-    
+
         public static Vector4 Div(Vector4 v, Vector4 w)
         {
             return new Vector4(v._x / w._x, v._y / w._y, v._z / w._z, v._t / w._t);
         }
-
-        #endregion
-
-        #region static
-
-        public static readonly Vector4 Zero = new Vector4(0, 0, 0, 0);
     
-        public static readonly Vector4 UnitX = new Vector4(1, 0, 0, 0);
-    
-        public static readonly Vector4 UnitY = new Vector4(0, 1, 0, 0);
-    
-        public static readonly Vector4 UnitZ = new Vector4(0, 0, 1, 0);
-    
-        public static readonly Vector4 UnitT = new Vector4(0, 0, 0, 1);
-    
-    
-        public static Vector4 Unit(Axis axis)
-        {
-            switch (axis)
-            {
-            
-                case Axis.X:
-                    return UnitX;
-            
-                case Axis.Y:
-                    return UnitY;
-            
-                case Axis.Z:
-                    return UnitZ;
-            
-                case Axis.T:
-                    return UnitT;
-            
-
-                default:
-                    throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
-            }
-        }
-
     
 
         #endregion
-
-        public override string ToString()
-        {
-            return string.Format("({0}, {1}, {2}, {3})", _x, _y, _z, _t);
-        }
     }
     // ###]
 }
