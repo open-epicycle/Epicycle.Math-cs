@@ -113,7 +113,7 @@ def init(_):
     _.dimension = int(_.D)
     _.dimension_name = "%dD" % _.dimension
     _.types = ['int', 'long', 'float', 'double']
-    _.dimensions = [2, 3]
+    _.dimensions = [2, 3, 4]
     _.var_config = generate_var_config(_.dimensions, _.types, dotnet_types_config, elements_config)
     
     _.var_types_config = {}
@@ -178,7 +178,7 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     }
     
     [?# _.dimension > _.dimensions[0] :? [=# v = "".join([x['arg_name'] for x in _.elements[:-1]]) ||| #=]
-    public [#name#]([=# _.var_dimensions[2].name #=] [=# v #=], [#T#] [=# _.elements[-1]['arg_name'] #=] = 0)
+    public [#name#]([=# _.var_dimensions[_.dimension - 1].name #=] [=# v #=], [#T#] [=# _.elements[-1]['arg_name'] #=] = 0)
     {
         [*# _.elements[:-1] ::[=# _item_['member_name'] #=] = [=# v #=].[=# _item_['prop_name'] #=];|*|
         #*]
@@ -240,17 +240,22 @@ public [#class_or_struct#] [#name#] : IEquatable<[#name#]>
     [?# _.dimension == 3 :?
     public [=# _.var_dimensions[2].name #=] XY
     {
-        get { return new [=# _.var_dimensions[2].name #=](X, Y); }
+        get { return new [=# _.var_dimensions[2].name #=](_x, _y); }
     }
 
     public [=# _.var_dimensions[2].name #=] YZ
     {
-        get { return new [=# _.var_dimensions[2].name #=](Y, Z); }
+        get { return new [=# _.var_dimensions[2].name #=](_y, _z); }
     }
 
     public [=# _.var_dimensions[2].name #=] ZX
     {
-        get { return new [=# _.var_dimensions[2].name #=](Z, X); }
+        get { return new [=# _.var_dimensions[2].name #=](_z, _x); }
+    }
+    #?][?# _.dimension == 4 :?
+    public [=# _.var_dimensions[3].name #=] XYZ
+    {
+        get { return new [=# _.var_dimensions[3].name #=](_x, _y, _z); }
     }
     #?]
     

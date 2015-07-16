@@ -23,10 +23,10 @@ namespace Epicycle.Math.Geometry
 {
     using System;
 
-    // [### VectorN.cs.TEMPLATE> T = int, D = 3
+    // [### VectorN.cs.TEMPLATE> T = int, D = 4
     ﻿
 
-    public struct Vector3i : IEquatable<Vector3i>
+    public struct Vector4i : IEquatable<Vector4i>
     {
     
         public int X
@@ -44,6 +44,11 @@ namespace Epicycle.Math.Geometry
             get { return _z; }
         }
     
+        public int T
+        {
+            get { return _t; }
+        }
+    
     
     
         private readonly int _x;
@@ -52,13 +57,16 @@ namespace Epicycle.Math.Geometry
     
         private readonly int _z;
     
+        private readonly int _t;
+    
 
         public enum Axis
         {
             X = 0, 
             Y = 1, 
             Z = 2, 
-            Count = 3 // used in for loops
+            T = 3, 
+            Count = 4 // used in for loops
         }
 
         public int this[Axis axis]
@@ -77,114 +85,124 @@ namespace Epicycle.Math.Geometry
                     case Axis.Z:
                         return _z;
                 
+                    case Axis.T:
+                        return _t;
+                
                     default:
-                        throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
+                        throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
                 }
             }
         }
 
         #region creation
 
-        public Vector3i(int x, int y, int z)
+        public Vector4i(int x, int y, int z, int t)
         {
             _x = x;
             _y = y;
             _z = z;
+            _t = t;
         }
     
      
-        public Vector3i(Vector2i xy, int z = 0)
+        public Vector4i(Vector3i xyz, int t = 0)
         {
-            _x = xy.X;
-            _y = xy.Y;
-            _z = z;
+            _x = xyz.X;
+            _y = xyz.Y;
+            _z = xyz.Z;
+            _t = t;
         }
     
     
 
-        public Vector3i(Vector3i v)
+        public Vector4i(Vector4i v)
         {
             _x = v.X;
             _y = v.Y;
             _z = v.Z;
+            _t = v.T;
         }
 
-        public Vector3i(Vector3L v)
+        public Vector4i(Vector4L v)
         {
             _x = ((int)v.X);
             _y = ((int)v.Y);
             _z = ((int)v.Z);
+            _t = ((int)v.T);
         }
 
-        public Vector3i(Vector3f v)
+        public Vector4i(Vector4f v)
         {
             _x = ((int)Math.Round(v.X));
             _y = ((int)Math.Round(v.Y));
             _z = ((int)Math.Round(v.Z));
+            _t = ((int)Math.Round(v.T));
         }
 
-        public Vector3i(Vector3 v)
+        public Vector4i(Vector4 v)
         {
             _x = ((int)Math.Round(v.X));
             _y = ((int)Math.Round(v.Y));
             _z = ((int)Math.Round(v.Z));
+            _t = ((int)Math.Round(v.T));
         }
 
 
-        public Vector3i(OVector v)
+        public Vector4i(OVector v)
         {
-            ArgAssert.Equal(v.Dimension, "v.Dimension", 3, "3");
+            ArgAssert.Equal(v.Dimension, "v.Dimension", 4, "4");
 
             _x = ((int)Math.Round(v[0]));
             _y = ((int)Math.Round(v[1]));
             _z = ((int)Math.Round(v[2]));
+            _t = ((int)Math.Round(v[3]));
         }
     
         public int[] ToArray()
         {
-            return new int[] { _x, _y, _z };
+            return new int[] { _x, _y, _z, _t };
         }
     
     
     
     
     
-        public static explicit operator Vector3i(Vector3L v)
+        public static explicit operator Vector4i(Vector4L v)
         {
-            return new Vector3i(v);
+            return new Vector4i(v);
         }
     
     
     
-        public static explicit operator Vector3i(Vector3f v)
+        public static explicit operator Vector4i(Vector4f v)
         {
-            return new Vector3i(v);
+            return new Vector4i(v);
         }
     
     
     
-        public static explicit operator Vector3i(Vector3 v)
+        public static explicit operator Vector4i(Vector4 v)
         {
-            return new Vector3i(v);
+            return new Vector4i(v);
         }
     
     
 
     
-        public static explicit operator Vector3i(Vector2i v)
+        public static explicit operator Vector4i(Vector3i v)
         {
-            return new Vector3i(v);
+            return new Vector4i(v);
         }
     
 
-        public static explicit operator Vector3i(OVector v)
+        public static explicit operator Vector4i(OVector v)
         {
-            return new Vector3i(v);
+            return new Vector4i(v);
         }
 
-        public static implicit operator OVector(Vector3i v)
+        public static implicit operator OVector(Vector4i v)
         {
-            return new Vector(v._x, v._y, v._z);
+            return new Vector(v._x, v._y, v._z, v._t);
         }
     
         #endregion
@@ -192,19 +210,9 @@ namespace Epicycle.Math.Geometry
         #region subvectors
     
     
-        public Vector2i XY
+        public Vector3i XYZ
         {
-            get { return new Vector2i(_x, _y); }
-        }
-
-        public Vector2i YZ
-        {
-            get { return new Vector2i(_y, _z); }
-        }
-
-        public Vector2i ZX
-        {
-            get { return new Vector2i(_z, _x); }
+            get { return new Vector3i(_x, _y, _z); }
         }
     
     
@@ -212,15 +220,15 @@ namespace Epicycle.Math.Geometry
     
         #region equality
 
-        public bool Equals(Vector3i v)
+        public bool Equals(Vector4i v)
         {
-            return _x == v._x && _y == v._y && _z == v._z;
+            return _x == v._x && _y == v._y && _z == v._z && _t == v._t;
         }
 
         public override bool Equals(object obj)
         {
 
-            var v = obj as Vector3i?;
+            var v = obj as Vector4i?;
 
             if(!v.HasValue)
             {
@@ -233,15 +241,15 @@ namespace Epicycle.Math.Geometry
 
         public override int GetHashCode()
         {
-            return _x.GetHashCode() ^ _y.GetHashCode() ^ _z.GetHashCode();
+            return _x.GetHashCode() ^ _y.GetHashCode() ^ _z.GetHashCode() ^ _t.GetHashCode();
         }
     
-        public static bool operator ==(Vector3i v, Vector3i w)
+        public static bool operator ==(Vector4i v, Vector4i w)
         {
             return v.Equals(w);
         }
 
-        public static bool operator !=(Vector3i v, Vector3i w)
+        public static bool operator !=(Vector4i v, Vector4i w)
         {
             return !v.Equals(w);
         }
@@ -252,7 +260,7 @@ namespace Epicycle.Math.Geometry
 
         public int Norm2
         {
-            get { return (_x * _x) + (_y * _y) + (_z * _z); }
+            get { return (_x * _x) + (_y * _y) + (_z * _z) + (_t * _t); }
         }
     
         public double Norm
@@ -260,12 +268,12 @@ namespace Epicycle.Math.Geometry
             get { return Math.Sqrt(Norm2); }
         }
 
-        public static int Distance2(Vector3i v, Vector3i w)
+        public static int Distance2(Vector4i v, Vector4i w)
         {
             return (v - w).Norm2;
         }
     
-        public static double Distance(Vector3i v, Vector3i w)
+        public static double Distance(Vector4i v, Vector4i w)
         {
             return (v - w).Norm;
         }
@@ -276,77 +284,74 @@ namespace Epicycle.Math.Geometry
 
         #region algebra
 
-        public static Vector3i operator +(Vector3i v)
+        public static Vector4i operator +(Vector4i v)
         {
             return v;
         }
 
-        public static Vector3i operator -(Vector3i v)
+        public static Vector4i operator -(Vector4i v)
         {
-            return new Vector3i(-v._x, -v._y, -v._z);
+            return new Vector4i(-v._x, -v._y, -v._z, -v._t);
         }
 
-        public static Vector3i operator *(Vector3i v, int a)
+        public static Vector4i operator *(Vector4i v, int a)
         {
-            return new Vector3i(v._x * a, v._y * a, v._z * a);
+            return new Vector4i(v._x * a, v._y * a, v._z * a, v._t * a);
         }
 
-        public static Vector3i operator *(int a, Vector3i v)
+        public static Vector4i operator *(int a, Vector4i v)
         {
             return v * a;
         }
 
-        public static Vector3i operator /(Vector3i v, int a)
+        public static Vector4i operator /(Vector4i v, int a)
         {
-            return new Vector3i(v._x / a, v._y / a, v._z / a);
+            return new Vector4i(v._x / a, v._y / a, v._z / a, v._t / a);
         }
 
-        public static Vector3i operator +(Vector3i v, Vector3i w)
+        public static Vector4i operator +(Vector4i v, Vector4i w)
         {
-            return new Vector3i(v._x + w._x, v._y + w._y, v._z + w._z);
+            return new Vector4i(v._x + w._x, v._y + w._y, v._z + w._z, v._t + w._t);
         }
 
-        public static Vector3i operator -(Vector3i v, Vector3i w)
+        public static Vector4i operator -(Vector4i v, Vector4i w)
         {
-            return new Vector3i(v._x - w._x, v._y - w._y, v._z - w._z);
+            return new Vector4i(v._x - w._x, v._y - w._y, v._z - w._z, v._t - w._t);
         }
 
-        public static int operator *(Vector3i v, Vector3i w)
+        public static int operator *(Vector4i v, Vector4i w)
         {
-            return (v._x * w._x) + (v._y * w._y) + (v._z * w._z);
+            return (v._x * w._x) + (v._y * w._y) + (v._z * w._z) + (v._t * w._t);
         }
 
     
-        public Vector3i Cross(Vector3i v)
+    
+        public static Vector4i Mul(Vector4i v, Vector4i w)
         {
-            return new Vector3i(_y * v._z - v._y * _z, _z * v._x - v._z * _x, _x * v._y - v._x * _y);
+            return new Vector4i(v._x * w._x, v._y * w._y, v._z * w._z, v._t * w._t);
         }
     
-    
-        public static Vector3i Mul(Vector3i v, Vector3i w)
+        public static Vector4i Div(Vector4i v, Vector4i w)
         {
-            return new Vector3i(v._x * w._x, v._y * w._y, v._z * w._z);
-        }
-    
-        public static Vector3i Div(Vector3i v, Vector3i w)
-        {
-            return new Vector3i(v._x / w._x, v._y / w._y, v._z / w._z);
+            return new Vector4i(v._x / w._x, v._y / w._y, v._z / w._z, v._t / w._t);
         }
 
         #endregion
 
         #region static
 
-        public static readonly Vector3i Zero = new Vector3i(0, 0, 0);
+        public static readonly Vector4i Zero = new Vector4i(0, 0, 0, 0);
     
-        public static readonly Vector3i UnitX = new Vector3i(1, 0, 0);
+        public static readonly Vector4i UnitX = new Vector4i(1, 0, 0, 0);
     
-        public static readonly Vector3i UnitY = new Vector3i(0, 1, 0);
+        public static readonly Vector4i UnitY = new Vector4i(0, 1, 0, 0);
     
-        public static readonly Vector3i UnitZ = new Vector3i(0, 0, 1);
+        public static readonly Vector4i UnitZ = new Vector4i(0, 0, 1, 0);
+    
+        public static readonly Vector4i UnitT = new Vector4i(0, 0, 0, 1);
     
     
-        public static Vector3i Unit(Axis axis)
+        public static Vector4i Unit(Axis axis)
         {
             switch (axis)
             {
@@ -360,26 +365,22 @@ namespace Epicycle.Math.Geometry
                 case Axis.Z:
                     return UnitZ;
             
+                case Axis.T:
+                    return UnitT;
+            
 
                 default:
-                    throw new IndexOutOfRangeException("Invalid 3D axis " + axis.ToString());
+                    throw new IndexOutOfRangeException("Invalid 4D axis " + axis.ToString());
             }
         }
 
-    
-        public static double Angle(Vector3i v, Vector3i w)
-        {
-            var normprod = Math.Sqrt(v.Norm2 * w.Norm2);
-
-            return BasicMath.Acos(v * w / normprod);
-        }
     
 
         #endregion
 
         public override string ToString()
         {
-            return string.Format("({0}, {1}, {2})", _x, _y, _z);
+            return string.Format("({0}, {1}, {2}, {3})", _x, _y, _z, _t);
         }
     }
     // ###]
