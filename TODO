@@ -1,1 +1,3 @@
+* BUG!!!: All public static bool operator ==(Vector3 v, Vector3 w) don't work when v is null!! (Use guidlines from https://msdn.microsoft.com/en-US/library/ms173147(v=vs.80).aspx)
 * Vecotr*: Take Axis out and create Axis#D
+* Take all the stuff from Graphic's MathUtils
